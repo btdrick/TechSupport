@@ -29,5 +29,10 @@ namespace TechSupport
                 errorMessage.Text = "Invalid username/password";
             }
         }
+
+        private void loginTextBox_TextChanged(object sender, EventArgs e)
+        {
+            errorMessage.Visible = false;
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace TechSupport
             this.label1 = new System.Windows.Forms.Label();
             this.usernameTextBox = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
-            this.errorMessage = new System.Windows.Forms.TextBox();
+            this.errorMessage = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,6 +101,7 @@ namespace TechSupport
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(150, 24);
             this.passwordTextBox.TabIndex = 2;
+            this.passwordTextBox.TextChanged += new System.EventHandler(this.loginTextBox_TextChanged);
             // 
             // label1
             // 
@@ -123,11 +124,13 @@ namespace TechSupport
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(150, 24);
             this.usernameTextBox.TabIndex = 1;
+            this.usernameTextBox.TextChanged += new System.EventHandler(this.loginTextBox_TextChanged);
             // 
             // loginButton
             // 
             this.loginButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.tableLayoutPanel1.SetColumnSpan(this.loginButton, 2);
+            this.loginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loginButton.Location = new System.Drawing.Point(115, 286);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(150, 40);
@@ -139,18 +142,16 @@ namespace TechSupport
             // errorMessage
             // 
             this.errorMessage.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.errorMessage.BackColor = System.Drawing.SystemColors.Menu;
-            this.errorMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.errorMessage.AutoSize = true;
             this.tableLayoutPanel1.SetColumnSpan(this.errorMessage, 2);
-            this.errorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorMessage.ForeColor = System.Drawing.Color.Red;
-            this.errorMessage.Location = new System.Drawing.Point(32, 251);
+            this.errorMessage.Location = new System.Drawing.Point(169, 248);
             this.errorMessage.Name = "errorMessage";
-            this.errorMessage.Size = new System.Drawing.Size(315, 16);
+            this.errorMessage.Size = new System.Drawing.Size(42, 18);
             this.errorMessage.TabIndex = 4;
-            this.errorMessage.TabStop = false;
             this.errorMessage.Text = "Error";
-            this.errorMessage.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.errorMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.errorMessage.Visible = false;
             // 
             // LoginForm
@@ -180,7 +181,7 @@ namespace TechSupport
         private System.Windows.Forms.TextBox usernameTextBox;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Button loginButton;
-        private System.Windows.Forms.TextBox errorMessage;
+        private System.Windows.Forms.Label errorMessage;
     }
 }
 
