@@ -17,5 +17,17 @@ namespace TechSupport
             InitializeComponent();
         }
 
+        //Validates username and password
+        private void loginButton_Click(object sender, EventArgs e)
+        {
+            if (usernameTextBox.Text == "Jane" && passwordTextBox.Text == "Test123")
+            {
+
+            } else
+            {
+                errorMessage.Visible = true;
+                errorMessage.Text = "Invalid username/password";
+            }
+        }
     }
 }
