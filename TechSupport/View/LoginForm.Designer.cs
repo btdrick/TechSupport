@@ -101,7 +101,7 @@ namespace TechSupport
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(150, 24);
             this.passwordTextBox.TabIndex = 2;
-            this.passwordTextBox.TextChanged += new System.EventHandler(this.loginTextBox_TextChanged);
+            this.passwordTextBox.TextChanged += new System.EventHandler(this.LoginTextBoxTextChangedEventHandle);
             // 
             // label1
             // 
@@ -124,7 +124,7 @@ namespace TechSupport
             this.usernameTextBox.Name = "usernameTextBox";
             this.usernameTextBox.Size = new System.Drawing.Size(150, 24);
             this.usernameTextBox.TabIndex = 1;
-            this.usernameTextBox.TextChanged += new System.EventHandler(this.loginTextBox_TextChanged);
+            this.usernameTextBox.TextChanged += new System.EventHandler(this.LoginTextBoxTextChangedEventHandle);
             // 
             // loginButton
             // 
@@ -137,7 +137,7 @@ namespace TechSupport
             this.loginButton.TabIndex = 3;
             this.loginButton.Text = "Login";
             this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
+            this.loginButton.Click += new System.EventHandler(this.LoginButtonClickEventHandle);
             // 
             // errorMessage
             // 
@@ -166,7 +166,7 @@ namespace TechSupport
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tech Support: Login";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginForm_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LoginFormClosedEventHandle);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

@@ -23,17 +23,29 @@ namespace TechSupport
             InitializeComponent();
         }
 
-        //Validates username and password
-        private void loginButton_Click(object sender, EventArgs e)
+        /*
+         * Hides errorMessage when login info changed.
+         */
+        private void LoginTextBoxTextChangedEventHandle(object sender, EventArgs e)
+        {
+            errorMessage.Visible = false;
+        }
+
+        /**
+         * Validates username and password
+         */
+        private void LoginButtonClickEventHandle(object sender, EventArgs e)
         {
             if (usernameTextBox.Text == "Jane" && passwordTextBox.Text == "Test123")
             {
-                MainForm mainForm = new MainForm();
-                mainForm.Owner = this;
-                mainForm.LabelText = usernameTextBox.Text;
+                MainForm mainForm = new MainForm
+                {
+                    Owner = this,
+                    LabelText = usernameTextBox.Text
+                };
                 mainForm.Show();
                 this.Hide();
-            } 
+            }
             else
             {
                 errorMessage.Visible = true;
@@ -41,14 +53,10 @@ namespace TechSupport
             }
         }
 
-        //Hides errorMessage when login info changed.
-        private void loginTextBox_TextChanged(object sender, EventArgs e)
-        {
-            errorMessage.Visible = false;
-        }
-
-        //Closes the application upon form closure.
-        private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)
+        /*
+         * Closes the application upon form closure.
+         */
+        private void LoginFormClosedEventHandle(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }

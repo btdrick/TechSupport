@@ -15,7 +15,9 @@ namespace TechSupport.View
      */
     public partial class MainForm : Form
     {
-        //Exposes label property to be manipulated
+        /*
+         * Exposes label property to be manipulated
+         */
         public string LabelText
         {
             get
@@ -28,21 +30,27 @@ namespace TechSupport.View
             }
         }
 
-        //Initializes MainForm
+        /*
+         * Initializes MainForm
+         */
         public MainForm()
         {
             InitializeComponent();
         }
 
-        //Hides current form and shows owner LoginForm
-        private void logoutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        /*
+         * Hides current form and shows owner LoginForm
+         */
+        private void LogoutLinkClickedEventHandle(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Owner.Show();
             this.Hide();
         }
 
-        //Closes the application upon form closure.
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        /*
+         * Closes the application upon form closure.
+         */
+        private void MainFormClosedEventHandle(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }

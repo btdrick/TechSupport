@@ -79,7 +79,7 @@ namespace TechSupport.View
             this.logoutLink.Text = "Logout";
             this.logoutLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.logoutLink.UseMnemonic = false;
-            this.logoutLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.logoutLink_LinkClicked);
+            this.logoutLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LogoutLinkClickedEventHandle);
             // 
             // MainForm
             // 
@@ -93,7 +93,7 @@ namespace TechSupport.View
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main Form";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormClosedEventHandle);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
