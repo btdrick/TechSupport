@@ -36,7 +36,7 @@ namespace TechSupport
          */
         private void LoginButtonClickEventHandle(object sender, EventArgs e)
         {
-            if (usernameTextBox.Text == "Jane" && passwordTextBox.Text == "Test123")
+            if (ValidateLogin())
             {
                 MainForm mainForm = new MainForm
                 {
@@ -51,6 +51,14 @@ namespace TechSupport
                 errorMessage.Visible = true;
                 errorMessage.Text = "Invalid username/password";
             }
+        }
+
+        /*
+         * Validates usernameTextBox entry for login.
+         */
+        private bool ValidateLogin()
+        {
+            return (usernameTextBox.Text == "Jane") && (passwordTextBox.Text == "Test123");
         }
 
         /*
