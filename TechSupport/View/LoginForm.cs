@@ -41,7 +41,7 @@ namespace TechSupport
         {
             if (ValidateLogin())
             {
-                mainForm.LabelText = usernameTextBox.Text;
+                mainForm.LabelText = "Welcome, " + usernameTextBox.Text + "!";
                 mainForm.Show();
                 this.Hide();
             }
