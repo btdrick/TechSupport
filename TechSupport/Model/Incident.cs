@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TechSupport.Model
 {
@@ -15,6 +11,12 @@ namespace TechSupport.Model
         public string Description { get; }
         public int CustomerID { get; }
 
+        /// <summary>
+        /// 3-param constructor
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="description"></param>
+        /// <param name="customerid"></param>
         public Incident(string title, string description, int customerid)
         {
             if (string.IsNullOrEmpty(title))
