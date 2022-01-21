@@ -28,7 +28,7 @@ namespace TechSupport.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void searchIncidentButton_Click(object sender, System.EventArgs e)
+        private void SearchIncidentButtonClick(object sender, System.EventArgs e)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace TechSupport.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void closeButton_Click(object sender, System.EventArgs e)
+        private void CloseButtonClick(object sender, System.EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }

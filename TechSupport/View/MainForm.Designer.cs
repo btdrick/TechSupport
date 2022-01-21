@@ -102,7 +102,7 @@ namespace TechSupport.View
             this.addIncidentButton.TabIndex = 2;
             this.addIncidentButton.Text = "Add Incident";
             this.addIncidentButton.UseVisualStyleBackColor = true;
-            this.addIncidentButton.Click += new System.EventHandler(this.addIncidentButton_Click);
+            this.addIncidentButton.Click += new System.EventHandler(this.AddIncidentButtonClick);
             // 
             // searchIncidentButton
             // 
@@ -113,7 +113,7 @@ namespace TechSupport.View
             this.searchIncidentButton.TabIndex = 3;
             this.searchIncidentButton.Text = "Search Incident";
             this.searchIncidentButton.UseVisualStyleBackColor = true;
-            this.searchIncidentButton.Click += new System.EventHandler(this.searchIncidentButton_Click);
+            this.searchIncidentButton.Click += new System.EventHandler(this.SearchIncidentButtonClick);
             // 
             // incidentDataGridView
             // 
@@ -159,7 +159,7 @@ namespace TechSupport.View
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tech Support: Home";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormClosedEventHandle);
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Load += new System.EventHandler(this.MainFormLoad);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.incidentDataGridView)).EndInit();

@@ -170,7 +170,7 @@ namespace TechSupport.View
             this.addIncidentButton.TabIndex = 3;
             this.addIncidentButton.Text = "Add";
             this.addIncidentButton.UseVisualStyleBackColor = true;
-            this.addIncidentButton.Click += new System.EventHandler(this.addIncidentButton_Click);
+            this.addIncidentButton.Click += new System.EventHandler(this.AddIncidentButtonClick);
             // 
             // cancelButton
             // 
@@ -181,7 +181,7 @@ namespace TechSupport.View
             this.cancelButton.TabIndex = 4;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            this.cancelButton.Click += new System.EventHandler(this.CancelButtonClick);
             // 
             // AddIncidentDialog
             // 

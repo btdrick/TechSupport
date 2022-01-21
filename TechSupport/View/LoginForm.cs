@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using TechSupport.Controller;
 using TechSupport.View;
 
 namespace TechSupport
@@ -10,16 +11,15 @@ namespace TechSupport
     /// </summary>
     public partial class LoginForm : Form
     {
-        private MainForm mainForm;
-
         //Initializes LoginForm
         public LoginForm()
         {
-            mainForm = new MainForm()
-            {
-                Owner = this,
-            };
             InitializeComponent();
+        }
+
+        public string UsernameLabel
+        {
+            get { return this.usernameTextBox.Text; }
         }
 
         /// <summary>
@@ -41,8 +41,7 @@ namespace TechSupport
         {
             if (ValidateLogin())
             {
-                mainForm.LabelText = "Welcome, " + usernameTextBox.Text + "!";
-                mainForm.Show();
+                FormProvider.MainForm.Show();
                 this.Hide();
             }
             else

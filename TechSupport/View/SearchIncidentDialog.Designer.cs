@@ -87,7 +87,7 @@ namespace TechSupport.View
             this.closeButton.TabIndex = 5;
             this.closeButton.Text = "Close";
             this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            this.closeButton.Click += new System.EventHandler(this.CloseButtonClick);
             // 
             // searchIncidentButton
             // 
@@ -98,7 +98,7 @@ namespace TechSupport.View
             this.searchIncidentButton.TabIndex = 4;
             this.searchIncidentButton.Text = "Search";
             this.searchIncidentButton.UseVisualStyleBackColor = true;
-            this.searchIncidentButton.Click += new System.EventHandler(this.searchIncidentButton_Click);
+            this.searchIncidentButton.Click += new System.EventHandler(this.SearchIncidentButtonClick);
             // 
             // searchDataGridView
             // 

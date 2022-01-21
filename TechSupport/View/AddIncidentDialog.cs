@@ -27,7 +27,7 @@ namespace TechSupport.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void addIncidentButton_Click(object sender, System.EventArgs e)
+        private void AddIncidentButtonClick(object sender, System.EventArgs e)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace TechSupport.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cancelButton_Click(object sender, System.EventArgs e)
+        private void CancelButtonClick(object sender, System.EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
         }
