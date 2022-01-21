@@ -194,7 +194,7 @@ namespace TechSupport.View
             this.MinimizeBox = false;
             this.Name = "AddIncidentDialog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AddIncidentDialog";
+            this.Text = "Tech Support: Add Incident";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.submitButtonLayoutPane.ResumeLayout(false);

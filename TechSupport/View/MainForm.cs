@@ -8,7 +8,6 @@ namespace TechSupport.View
     /// </summary>
     public partial class MainForm : Form
     {
-
         private readonly TechSupportController techSupportController;
 
         /// <summary>
@@ -89,6 +88,14 @@ namespace TechSupport.View
             {
                 this.RefreshDataGrid();
             }
+        }
+
+        private void searchIncidentButton_Click(object sender, System.EventArgs e)
+        {
+            Form searchIncidentDialog = new SearchIncidentDialog();
+            searchIncidentDialog.ShowDialog();
+
+            
         }
     }
 }
