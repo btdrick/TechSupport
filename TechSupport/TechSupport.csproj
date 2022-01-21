@@ -49,6 +49,12 @@
     <Compile Include="Controller\TechSupportController.cs" />
     <Compile Include="DAL\IncidentDAL.cs" />
     <Compile Include="Model\Incident.cs" />
+    <Compile Include="View\AddIncidentDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\AddIncidentDialog.Designer.cs">
+      <DependentUpon>AddIncidentDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +78,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\AddIncidentDialog.resx">
+      <DependentUpon>AddIncidentDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>

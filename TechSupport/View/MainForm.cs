@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using TechSupport.Controller;
 
 namespace TechSupport.View
 {
@@ -7,6 +8,9 @@ namespace TechSupport.View
     /// </summary>
     public partial class MainForm : Form
     {
+
+        private readonly TechSupportController techSupportController;
+
         /// <summary>
         /// Exposes label property to be manipulated
         /// </summary>
@@ -28,6 +32,7 @@ namespace TechSupport.View
         public MainForm()
         {
             InitializeComponent();
+            this.techSupportController = new TechSupportController();
         }
 
         /// <summary>
@@ -49,6 +54,41 @@ namespace TechSupport.View
         private void MainFormClosedEventHandle(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        /// <summary>
+        /// Loads the MainForm.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_Load(object sender, System.EventArgs e)
+        {
+            this.RefreshDataGrid();
+        }
+
+        /// <summary>
+        /// Refresh list of incident reports.
+        /// </summary>
+        private void RefreshDataGrid()
+        {
+            this.incidentDataGridView.DataSource = null;
+            this.incidentDataGridView.DataSource = this.techSupportController.GetIncidents();
+        }
+
+        /// <summary>
+        /// Handles event for addIncidentButton click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void addIncidentButton_Click(object sender, System.EventArgs e)
+        {
+            Form addIncidentDialog = new AddIncidentDialog();
+            DialogResult result = addIncidentDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                this.RefreshDataGrid();
+            }
         }
     }
 }
