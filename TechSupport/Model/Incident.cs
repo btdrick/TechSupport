@@ -29,7 +29,7 @@ namespace TechSupport.Model
             }
             if (customerid < 1)
             {
-                throw new ArgumentException("Invalid CustomerID", "customerid");
+                throw new ArgumentException("CustomerID must be greater than 0", "customerid");
             }
 
             this.Title = title;

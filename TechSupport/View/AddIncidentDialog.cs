@@ -38,10 +38,15 @@ namespace TechSupport.View
                 this.techSupportController.Add(new Incident(title, description, customerID));
 
                 this.DialogResult = DialogResult.OK;
-            }
-            catch (Exception ex)
+            } 
+            catch (ArgumentException ex)
             {
-                MessageBox.Show("Invalid input! \n" + Environment.NewLine + ex.Message, 
+                MessageBox.Show("Invalid input!\n\n" + ex.Message, 
+                    "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (FormatException fex)
+            {
+                MessageBox.Show("Invalid input!\n\nPlease enter a numeric value for CustomerID",
                     "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

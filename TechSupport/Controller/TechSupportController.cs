@@ -29,6 +29,11 @@ namespace TechSupport.Controller
             return this.incidentSource.GetIncidents();
         }
 
+        public List<Incident> GetIncidentsByCustomerID(int customerID)
+        { 
+            return this.incidentSource.GetIncidentsByCustomerID(customerID);
+        }
+
         /// <summary>
         /// Adds an incident report to the list.
         /// </summary>

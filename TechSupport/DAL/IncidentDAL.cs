@@ -29,6 +29,28 @@ namespace TechSupport.DAL
         }
 
         /// <summary>
+        /// Returns a list of incidents by CustomerID.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns>Incidents by CustomerID</returns>
+        public List<Incident> GetIncidentsByCustomerID(int customerID)
+        {
+            if (customerID < 1)
+            {
+                throw new ArgumentException("CustomerID must be value greater than 0", "customerID");
+            }
+
+            List<Incident> searchResults = new List<Incident>();
+            searchResults = _incidents.FindAll(incident => incident.CustomerID == customerID);
+
+            if (searchResults.Capacity == 0)
+            {
+                throw new ArgumentException("Customer either does not exist or hasn't submitted an incident report");
+            }
+            return searchResults;
+        }
+
+        /// <summary>
         /// Adds an Incident object to the list.
         /// </summary>
         /// <param name="incident"></param>

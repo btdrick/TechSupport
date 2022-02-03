@@ -33,11 +33,18 @@ namespace TechSupport.View
             try
             {
                 int inputCustomerID = int.Parse(this.customerIDTextBox.Text);
-                List<Incident> results = SearchByCustomerID(inputCustomerID);
+                List<Incident> results = 
+                    this.techSupportController.GetIncidentsByCustomerID(inputCustomerID);
                 this.RefreshDataGrid(results);
-            } catch (Exception ex)
+            } 
+            catch (ArgumentException ex)
             {
                 MessageBox.Show("Invalid CustomerID!\n\n" + ex.Message,
+                    "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
+            catch (Exception ex)
+            {
+                MessageBox.Show("Search Error!\n\nPlease enter a numeric value",
                     "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -50,29 +57,6 @@ namespace TechSupport.View
         private void CloseButtonClick(object sender, System.EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
-        }
-
-        /// <summary>
-        /// Returns a list of incidents by CustomerID.
-        /// </summary>
-        /// <param name="customerID"></param>
-        /// <returns>Incidents by CustomerID</returns>
-        private List<Incident> SearchByCustomerID(int customerID)
-        {
-            List<Incident> searchResults = new List<Incident>();
-            foreach (var incident in this.techSupportController.GetIncidents())
-            {
-                if (incident.CustomerID == customerID)
-                {
-                    searchResults.Add(incident);
-                }
-            }
-
-            if (searchResults.Capacity == 0)
-            {
-                throw new ArgumentException("Customer either does not exist or hasn't submitted an incident report");
-            }
-                return searchResults;
         }
 
         /// <summary>

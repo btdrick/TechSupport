@@ -67,12 +67,14 @@ namespace TechSupport.View
         /// <param name="e"></param>
         private void AddIncidentButtonClick(object sender, System.EventArgs e)
         {
-            Form addIncidentDialog = new AddIncidentDialog();
-            DialogResult result = addIncidentDialog.ShowDialog();
-
-            if (result == DialogResult.OK)
+            using (Form addIncidentDialog = new AddIncidentDialog())
             {
-                this.RefreshDataGrid();
+                DialogResult result = addIncidentDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    this.RefreshDataGrid();
+                }
             }
         }
 
@@ -83,10 +85,10 @@ namespace TechSupport.View
         /// <param name="e"></param>
         private void SearchIncidentButtonClick(object sender, System.EventArgs e)
         {
-            Form searchIncidentDialog = new SearchIncidentDialog();
-            searchIncidentDialog.ShowDialog();
-
-            
+            using (Form searchIncidentDialog = new SearchIncidentDialog())
+            {
+                searchIncidentDialog.ShowDialog();
+            }
         }
     }
 }
