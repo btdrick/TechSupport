@@ -39,14 +39,9 @@ namespace TechSupport.View
 
                 this.DialogResult = DialogResult.OK;
             } 
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Invalid input!\n\n" + ex.Message, 
-                    "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (FormatException fex)
-            {
-                MessageBox.Show("Invalid input!\n\nPlease enter a numeric value for CustomerID",
+                MessageBox.Show("Invalid input!\n\nAn incident must have a:\n - Title\n- Description\n- CustomerID greater than 0", 
                     "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

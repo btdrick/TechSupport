@@ -37,16 +37,11 @@ namespace TechSupport.View
                     this.techSupportController.GetIncidentsByCustomerID(inputCustomerID);
                 this.RefreshDataGrid(results);
             } 
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show("Invalid CustomerID!\n\n" + ex.Message,
-                    "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } 
             catch (Exception ex)
             {
-                MessageBox.Show("Search Error!\n\nPlease enter a numeric value",
-                    "Search Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                MessageBox.Show("Invalid CustomerID!\n\nCustomerID must be numeric and assigned to an incident",
+                    "Format Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } 
         }
 
         /// <summary>
