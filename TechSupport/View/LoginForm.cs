@@ -47,7 +47,6 @@ namespace TechSupport
             else
             {
                 errorMessage.Visible = true;
-                errorMessage.Text = "Invalid username/password";
             }
         }
 
