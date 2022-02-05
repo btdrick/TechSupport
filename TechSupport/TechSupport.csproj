@@ -50,6 +50,24 @@
     <Compile Include="Controller\TechSupportController.cs" />
     <Compile Include="DBAccess %28DAL%29\IncidentDAL.cs" />
     <Compile Include="Model\Incident.cs" />
+    <Compile Include="UserControls\AddIncidentUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\AddIncidentUserControl.Designer.cs">
+      <DependentUpon>AddIncidentUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\LoadInternalIncidentsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\LoadInternalIncidentsUserControl.Designer.cs">
+      <DependentUpon>LoadInternalIncidentsUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SearchIncidentUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\SearchIncidentUserControl.Designer.cs">
+      <DependentUpon>SearchIncidentUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +91,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\AddIncidentUserControl.resx">
+      <DependentUpon>AddIncidentUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\LoadInternalIncidentsUserControl.resx">
+      <DependentUpon>LoadInternalIncidentsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\SearchIncidentUserControl.resx">
+      <DependentUpon>SearchIncidentUserControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
