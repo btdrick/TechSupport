@@ -16,26 +16,26 @@ namespace TechSupport.UserControls
         {
             InitializeComponent();
             this.techSupportController = new TechSupportController();
-            this.RefreshLoadDataGrid();
+            this.RefreshDataGrid();
         }
 
         /// <summary>
         /// Refresh list of incident reports.
         /// </summary>
-        private void RefreshLoadDataGrid()
+        private void RefreshDataGrid()
         {
             this.incidentDataGridView.DataSource = null;
             this.incidentDataGridView.DataSource = this.techSupportController.GetIncidents();
         }
 
         /// <summary>
-        /// Handles the event for clicking the refresh button.
+        /// Handles the event for an incident being added to internal memory.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RefreshIncidentsDataGridButtonClick(object sender, EventArgs e)
+        private void IncidentDataGridViewVisibleChanged(object sender, EventArgs e)
         {
-            this.RefreshLoadDataGrid();
+            this.RefreshDataGrid();
         }
     }
 }

@@ -4,7 +4,7 @@ using TechSupport.Controller;
 
 namespace TechSupport
 {
-    static class Program
+    static class Driver
     {
         /// <summary>
         /// The main entry point for the application.
