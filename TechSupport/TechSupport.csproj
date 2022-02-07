@@ -48,13 +48,21 @@
   <ItemGroup>
     <Compile Include="Controller\FormProvider.cs" />
     <Compile Include="Controller\TechSupportController.cs" />
-    <Compile Include="DBAccess %28DAL%29\IncidentDAL.cs" />
+    <Compile Include="DAL\IncidentDAL.cs" />
+    <Compile Include="DAL\IncidentDBDAL.cs" />
+    <Compile Include="DAL\TechSupportDBConnection.cs" />
     <Compile Include="Model\Incident.cs" />
     <Compile Include="UserControls\AddIncidentUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\AddIncidentUserControl.Designer.cs">
       <DependentUpon>AddIncidentUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DisplayOpenIncidentsUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DisplayOpenIncidentsUserControl.Designer.cs">
+      <DependentUpon>DisplayOpenIncidentsUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\LoadInternalIncidentsUserControl.cs">
       <SubType>UserControl</SubType>
@@ -93,6 +101,9 @@
     </Compile>
     <EmbeddedResource Include="UserControls\AddIncidentUserControl.resx">
       <DependentUpon>AddIncidentUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DisplayOpenIncidentsUserControl.resx">
+      <DependentUpon>DisplayOpenIncidentsUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\LoadInternalIncidentsUserControl.resx">
       <DependentUpon>LoadInternalIncidentsUserControl.cs</DependentUpon>

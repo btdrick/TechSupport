@@ -27,7 +27,7 @@ namespace TechSupport.UserControls
             {
                 int inputCustomerID = int.Parse(this.searchCustomerIDTextBox.Text);
                 List<Incident> results =
-                    this.techSupportController.GetIncidentsByCustomerID(inputCustomerID);
+                    this.techSupportController.GetInternalIncidentsByCustomerID(inputCustomerID);
                 this.RefreshSearchIncidentDataGrid(results);
             }
             catch (Exception)
@@ -44,6 +44,11 @@ namespace TechSupport.UserControls
         {
             this.searchIncidentDataGridView.DataSource = null;
             this.searchIncidentDataGridView.DataSource = incidentsByID;
+            this.searchIncidentDataGridView.AutoGenerateColumns = false;
+            this.searchIncidentDataGridView.Columns["DateOpened"].Visible = false;
+            this.searchIncidentDataGridView.Columns["ProductCode"].Visible = false;
+            this.searchIncidentDataGridView.Columns["Technician"].Visible = false;
+            this.searchIncidentDataGridView.Columns["Customer"].Visible = false;
         }
 
         /// <summary>

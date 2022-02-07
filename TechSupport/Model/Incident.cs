@@ -7,10 +7,22 @@ namespace TechSupport.Model
     /// </summary>
     public class Incident
     {
-        public string Title { get; }
-        public string Description { get; }
-        public int CustomerID { get; }
+        public DateTime DateOpened { get; set; }
+        public string ProductCode { get; set; }
+        public string Title { get; set;  }
+        public string Description { get; set; }
+        public string Technician { get; set; }
+        public string Customer { get; set; }
+        public int CustomerID { get; set;  }        
+        
+        /// <summary>
+        /// 0-param constructor
+        /// </summary>
+        public Incident()
+        {
 
+        }
+        
         /// <summary>
         /// 3-param constructor
         /// </summary>

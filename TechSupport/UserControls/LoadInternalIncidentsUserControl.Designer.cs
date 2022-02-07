@@ -68,8 +68,7 @@ namespace TechSupport.UserControls
             this.incidentDataGridView.RowHeadersWidth = 51;
             this.incidentDataGridView.RowTemplate.Height = 24;
             this.incidentDataGridView.Size = new System.Drawing.Size(345, 179);
-            this.incidentDataGridView.TabIndex = 8;
-            this.incidentDataGridView.VisibleChanged += new System.EventHandler(this.IncidentDataGridViewVisibleChanged);
+            this.incidentDataGridView.TabIndex = 1;
             // 
             // label1
             // 
@@ -77,12 +76,12 @@ namespace TechSupport.UserControls
             this.label1.AutoSize = true;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(123, 28);
+            this.label1.Location = new System.Drawing.Point(69, 28);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 33);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Incidents";
+            this.label1.Size = new System.Drawing.Size(242, 33);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Internal Incidents";
             // 
             // LoadInternalIncidentsUserControl
             // 

@@ -28,7 +28,7 @@ namespace TechSupport.UserControls
                 var description = this.descriptionTextBox.Text;
                 var customerID = int.Parse(this.customerIDTextBox.Text);
 
-                this.techSupportController.Add(new Incident(title, description, customerID));
+                this.techSupportController.AddInternalIncident(new Incident(title, description, customerID));
                 this.addIncidentConfirmationLabel.Text = title + " incident has been added under CustomerID: " + customerID;
             }
             catch (Exception)

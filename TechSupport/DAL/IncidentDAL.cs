@@ -12,7 +12,7 @@ namespace TechSupport.DAL
         /// <summary>
         /// List containing Incident objects.
         /// </summary>
-        private static List<Incident> _incidents = new List<Incident>
+        private static readonly List<Incident> _incidents = new List<Incident>
         {
             //Default incidents
             new Incident("Lost Password", "none", 34),

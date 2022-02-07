@@ -135,7 +135,7 @@ namespace TechSupport.UserControls
             this.customerIDTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.customerIDTextBox.Name = "customerIDTextBox";
             this.customerIDTextBox.Size = new System.Drawing.Size(141, 23);
-            this.customerIDTextBox.TabIndex = 11;
+            this.customerIDTextBox.TabIndex = 2;
             this.customerIDTextBox.TextChanged += new System.EventHandler(this.AddIncidentTextFieldsChanged);
             // 
             // customerIDLabel
@@ -160,7 +160,7 @@ namespace TechSupport.UserControls
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
             this.descriptionTextBox.Size = new System.Drawing.Size(270, 48);
-            this.descriptionTextBox.TabIndex = 9;
+            this.descriptionTextBox.TabIndex = 1;
             this.descriptionTextBox.TextChanged += new System.EventHandler(this.AddIncidentTextFieldsChanged);
             // 
             // descriptionLabel
@@ -183,7 +183,7 @@ namespace TechSupport.UserControls
             this.titleTextBox.Margin = new System.Windows.Forms.Padding(2);
             this.titleTextBox.Name = "titleTextBox";
             this.titleTextBox.Size = new System.Drawing.Size(141, 23);
-            this.titleTextBox.TabIndex = 7;
+            this.titleTextBox.TabIndex = 0;
             this.titleTextBox.TextChanged += new System.EventHandler(this.AddIncidentTextFieldsChanged);
             // 
             // titleLabel
@@ -217,7 +217,7 @@ namespace TechSupport.UserControls
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AddIncidentUserControl";
             this.Size = new System.Drawing.Size(380, 280);
             this.tableLayoutPanel1.ResumeLayout(false);

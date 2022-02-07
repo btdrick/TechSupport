@@ -22,20 +22,15 @@ namespace TechSupport.UserControls
         /// <summary>
         /// Refresh list of incident reports.
         /// </summary>
-        private void RefreshDataGrid()
+        public void RefreshDataGrid()
         {
             this.incidentDataGridView.DataSource = null;
-            this.incidentDataGridView.DataSource = this.techSupportController.GetIncidents();
-        }
-
-        /// <summary>
-        /// Handles the event for an incident being added to internal memory.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void IncidentDataGridViewVisibleChanged(object sender, EventArgs e)
-        {
-            this.RefreshDataGrid();
+            this.incidentDataGridView.DataSource = this.techSupportController.GetInternalIncidents();
+            this.incidentDataGridView.AutoGenerateColumns = false;
+            this.incidentDataGridView.Columns["DateOpened"].Visible = false;
+            this.incidentDataGridView.Columns["ProductCode"].Visible = false;
+            this.incidentDataGridView.Columns["Technician"].Visible = false;
+            this.incidentDataGridView.Columns["Customer"].Visible = false;
         }
     }
 }

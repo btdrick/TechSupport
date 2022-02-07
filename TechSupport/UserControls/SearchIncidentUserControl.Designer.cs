@@ -54,13 +54,14 @@ namespace TechSupport.UserControls
             this.searchLayoutPanel.Controls.Add(this.searchCustomerIDTextBox, 1, 2);
             this.searchLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.searchLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.searchLayoutPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.searchLayoutPanel.Name = "searchLayoutPanel";
             this.searchLayoutPanel.RowCount = 4;
             this.searchLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.7561F));
             this.searchLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70.2439F));
-            this.searchLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.searchLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 67F));
-            this.searchLayoutPanel.Size = new System.Drawing.Size(514, 423);
+            this.searchLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.searchLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.searchLayoutPanel.Size = new System.Drawing.Size(386, 344);
             this.searchLayoutPanel.TabIndex = 2;
             // 
             // searchIncidentLabel
@@ -70,9 +71,10 @@ namespace TechSupport.UserControls
             this.searchIncidentLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.searchLayoutPanel.SetColumnSpan(this.searchIncidentLabel, 2);
             this.searchIncidentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchIncidentLabel.Location = new System.Drawing.Point(121, 25);
+            this.searchIncidentLabel.Location = new System.Drawing.Point(83, 21);
+            this.searchIncidentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.searchIncidentLabel.Name = "searchIncidentLabel";
-            this.searchIncidentLabel.Size = new System.Drawing.Size(271, 41);
+            this.searchIncidentLabel.Size = new System.Drawing.Size(220, 33);
             this.searchIncidentLabel.TabIndex = 2;
             this.searchIncidentLabel.Text = "Incident Search";
             // 
@@ -85,20 +87,22 @@ namespace TechSupport.UserControls
             this.tableLayoutPanel5.Controls.Add(this.searchIncidentButton, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.clearSearchButton, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(3, 358);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(2, 291);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(508, 62);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(382, 51);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // searchIncidentButton
             // 
             this.searchIncidentButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.searchIncidentButton.Location = new System.Drawing.Point(64, 11);
+            this.searchIncidentButton.Location = new System.Drawing.Point(48, 9);
+            this.searchIncidentButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.searchIncidentButton.Name = "searchIncidentButton";
-            this.searchIncidentButton.Size = new System.Drawing.Size(125, 40);
-            this.searchIncidentButton.TabIndex = 4;
+            this.searchIncidentButton.Size = new System.Drawing.Size(94, 32);
+            this.searchIncidentButton.TabIndex = 1;
             this.searchIncidentButton.Text = "Search";
             this.searchIncidentButton.UseVisualStyleBackColor = true;
             this.searchIncidentButton.Click += new System.EventHandler(this.SearchIncidentButtonClick);
@@ -106,10 +110,11 @@ namespace TechSupport.UserControls
             // clearSearchButton
             // 
             this.clearSearchButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.clearSearchButton.Location = new System.Drawing.Point(318, 11);
+            this.clearSearchButton.Location = new System.Drawing.Point(239, 9);
+            this.clearSearchButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.clearSearchButton.Name = "clearSearchButton";
-            this.clearSearchButton.Size = new System.Drawing.Size(125, 40);
-            this.clearSearchButton.TabIndex = 5;
+            this.clearSearchButton.Size = new System.Drawing.Size(94, 32);
+            this.clearSearchButton.TabIndex = 2;
             this.clearSearchButton.Text = "Clear";
             this.clearSearchButton.UseVisualStyleBackColor = true;
             this.clearSearchButton.Click += new System.EventHandler(this.ClearSearchButtonClicked);
@@ -120,22 +125,23 @@ namespace TechSupport.UserControls
             this.searchIncidentDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.searchIncidentDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.searchLayoutPanel.SetColumnSpan(this.searchIncidentDataGridView, 2);
-            this.searchIncidentDataGridView.Location = new System.Drawing.Point(18, 109);
+            this.searchIncidentDataGridView.Location = new System.Drawing.Point(14, 88);
+            this.searchIncidentDataGridView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.searchIncidentDataGridView.Name = "searchIncidentDataGridView";
             this.searchIncidentDataGridView.RowHeadersWidth = 51;
             this.searchIncidentDataGridView.RowTemplate.Height = 24;
-            this.searchIncidentDataGridView.Size = new System.Drawing.Size(478, 184);
-            this.searchIncidentDataGridView.TabIndex = 1;
+            this.searchIncidentDataGridView.Size = new System.Drawing.Size(358, 150);
+            this.searchIncidentDataGridView.TabIndex = 3;
             // 
             // searchTextBoxLabel
             // 
             this.searchTextBoxLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.searchTextBoxLabel.AutoSize = true;
             this.searchTextBoxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchTextBoxLabel.Location = new System.Drawing.Point(58, 322);
-            this.searchTextBoxLabel.Margin = new System.Windows.Forms.Padding(3, 0, 10, 0);
+            this.searchTextBoxLabel.Location = new System.Drawing.Point(28, 262);
+            this.searchTextBoxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 8, 0);
             this.searchTextBoxLabel.Name = "searchTextBoxLabel";
-            this.searchTextBoxLabel.Size = new System.Drawing.Size(189, 20);
+            this.searchTextBoxLabel.Size = new System.Drawing.Size(157, 17);
             this.searchTextBoxLabel.TabIndex = 3;
             this.searchTextBoxLabel.Text = "Search by Customer ID:";
             // 
@@ -143,20 +149,21 @@ namespace TechSupport.UserControls
             // 
             this.searchCustomerIDTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.searchCustomerIDTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchCustomerIDTextBox.Location = new System.Drawing.Point(267, 319);
-            this.searchCustomerIDTextBox.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.searchCustomerIDTextBox.Location = new System.Drawing.Point(201, 259);
+            this.searchCustomerIDTextBox.Margin = new System.Windows.Forms.Padding(8, 2, 2, 2);
             this.searchCustomerIDTextBox.Name = "searchCustomerIDTextBox";
-            this.searchCustomerIDTextBox.Size = new System.Drawing.Size(100, 26);
-            this.searchCustomerIDTextBox.TabIndex = 4;
+            this.searchCustomerIDTextBox.Size = new System.Drawing.Size(76, 23);
+            this.searchCustomerIDTextBox.TabIndex = 0;
             this.searchCustomerIDTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SearchIncidentUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.searchLayoutPanel);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "SearchIncidentUserControl";
-            this.Size = new System.Drawing.Size(514, 423);
+            this.Size = new System.Drawing.Size(386, 344);
             this.searchLayoutPanel.ResumeLayout(false);
             this.searchLayoutPanel.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);

@@ -10,42 +10,58 @@ namespace TechSupport.Controller
     /// </summary>
     public class TechSupportController
     {
-        private IncidentDAL incidentSource;
+        private readonly IncidentDAL incidentInternalSource;
+        private readonly IncidentDBDAL incidentDBSource;
 
         /// <summary>
         /// 0-param constructor.
         /// </summary>
         public TechSupportController()
         {
-            this.incidentSource = new IncidentDAL();
+            this.incidentInternalSource = new IncidentDAL();
+            this.incidentDBSource = new IncidentDBDAL();
         }
 
         /// <summary>
         /// Returns the contents of the Incident Report list.
         /// </summary>
         /// <returns>List of Incident objects</returns>
-        public List<Incident> GetIncidents()
+        public List<Incident> GetInternalIncidents()
         {
-            return this.incidentSource.GetIncidents();
+            return this.incidentInternalSource.GetIncidents();
         }
 
-        public List<Incident> GetIncidentsByCustomerID(int customerID)
+        /// <summary>
+        /// Get internal incidents assigned to a customerID.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public List<Incident> GetInternalIncidentsByCustomerID(int customerID)
         { 
-            return this.incidentSource.GetIncidentsByCustomerID(customerID);
+            return this.incidentInternalSource.GetIncidentsByCustomerID(customerID);
         }
 
         /// <summary>
         /// Adds an incident report to the list.
         /// </summary>
         /// <param name="incident"></param>
-        public void Add(Incident incident)
+        public void AddInternalIncident(Incident incident)
         {
             if (incident == null)
             {
                 throw new ArgumentNullException("Incident cannot be null");
             }
 
-            this.incidentSource.Add(incident);
+            this.incidentInternalSource.Add(incident);
+        }
+
+        /// <summary>
+        /// Gets the open incidents from TechSupport db source.
+        /// </summary>
+        /// <returns></returns>
+        public List<Incident> GetOpenIncidents()
+        {
+            return this.incidentDBSource.GetIncidents();
         }
     }
 }
