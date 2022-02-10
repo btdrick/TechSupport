@@ -45,5 +45,252 @@ namespace TechSupport.DAL
 
             return openIncidents;
         }
+
+        /// <summary>
+        /// Gets the ID of last Incident added
+        /// to the TechSupport db.
+        /// </summary>
+        /// <returns></returns>
+        public int GetLastIncidentID()
+        {
+            int lastIncidentID = 0;
+            string selectStatement = "SELECT TOP 1 IncidentID " +
+                                     "FROM Incidents " +
+                                     "ORDER BY IncidentID DESC";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            lastIncidentID = Convert.ToInt32(reader["IncidentID"]);
+                        }
+                    }
+                }
+            }
+
+            return lastIncidentID;
+        }
+
+        /// <summary>
+        /// Adds a new open incident to the TechSupport db.
+        /// </summary>
+        /// <param name="incident"></param>
+        public void AddOpenIncident(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Cannot add a null incident to the TechSupport database");
+            }
+            if (invalidNewIncidentFields(incident))
+            {
+                throw new ArgumentException("Invalid incident. One or more values are either null or invalid");
+            }
+            if (incident.CustomerID == 0)
+            {
+                incident.CustomerID = this.GetCustomerIDByName(incident.Customer);
+            }
+            if (incident.ProductCode == null || incident.ProductCode == "")
+            {
+                incident.ProductCode = this.GetProductCodeByName(incident.Product);
+            }
+
+            string selectStatement = "INSERT INTO Incidents (CustomerID, ProductCode, DateOpened, Title, \"Description\") " +
+                                     "VALUES(@customerid, @productcode, @dateopened, @title, @description)";
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("customerid", incident.CustomerID);
+                    selectCommand.Parameters.AddWithValue("productcode", incident.ProductCode);
+                    selectCommand.Parameters.AddWithValue("dateopened", incident.DateOpened);
+                    selectCommand.Parameters.AddWithValue("title", incident.Title);
+                    selectCommand.Parameters.AddWithValue("description", incident.Description);
+                    selectCommand.ExecuteScalar();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Validates whether an incident object has the fields 
+        /// needed to be added to the TechSupport db.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns></returns>
+        private bool invalidNewIncidentFields(Incident incident)
+        {
+            if (((incident.Customer == null || incident.Customer == "") && incident.CustomerID == 0) ||
+                ((incident.Product == null || incident.Product == "") && 
+                (incident.ProductCode == null || incident.ProductCode == "")) ||
+                incident.DateOpened == null || incident.Title == null || incident.Title == "" ||
+                incident.Description == null || incident.Description == "")
+            {
+                return true;
+            }
+            
+            return false;
+            
+        }
+
+        /// <summary>
+        /// Retrieves a customer's ID
+        /// from TechSupport db via their name.
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <returns></returns>
+        private int GetCustomerIDByName(string customerName)
+        {
+            if (customerName == null || customerName == "")
+            {
+                throw new ArgumentException("Cannot use null or empty customer name");
+            }
+            int customerID = 0;
+            string selectStatement = "SELECT CustomerID " +
+                                     "FROM Customers " +
+                                     "WHERE Name = @name";
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("name", customerName);
+                    customerID = Convert.ToInt32(selectCommand.ExecuteScalar());
+                }
+            }
+
+            return customerID;
+        }
+
+        /// <summary>
+        /// Retrieves a product's code
+        /// from TechSupport db via their name.
+        /// </summary>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        private string GetProductCodeByName(string productName)
+        {
+            if (productName == null || productName == "")
+            {
+                throw new ArgumentException("Cannot use null or empty product name");
+            }
+            string productCode = "";
+            string selectStatement = "SELECT ProductCode " +
+                                     "FROM Products " +
+                                     "WHERE Name = @name";
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("name", productName);
+                    productCode = Convert.ToString(selectCommand.ExecuteScalar());
+                }
+            }
+
+
+            return productCode;
+        }
+
+        /// <summary>
+        /// Retrieves customer names from TechSupport db.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetCustomerNames()
+        {
+            List<string> techSupportCustomerNames = new List<string>();
+            string selectStatement = "SELECT Name FROM Customers";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            techSupportCustomerNames.Add(reader["Name"].ToString());
+                        }
+                    }
+                }
+            }
+            
+            return techSupportCustomerNames;
+        }
+
+        /// <summary>
+        /// Retrieves product names from TechSupport db.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetProductNames()
+        {
+            List<string> techSupportProductNames = new List<string>();
+            string selectStatement = "SELECT Name FROM Products";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            techSupportProductNames.Add(reader["Name"].ToString());
+                        }
+                    }
+                }
+            }
+
+            return techSupportProductNames;
+        }
+
+        /// <summary>
+        /// Checks if product is already registered to customer.
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public bool ProductIsRegisteredToCustomer(string customerName, string productName)
+        {
+            if (customerName == null || customerName == "")
+            {
+                throw new ArgumentException("Customer name cannot be null or empty");
+            }
+            if (productName == null || productName == "")
+            {
+                throw new ArgumentException("Product name cannot be null or empty");
+            }
+
+            bool registrationExists = false;
+            string selectStatement = "SELECT CASE WHEN EXISTS " +
+                "(SELECT r.CustomerID, r.ProductCode " +
+                "FROM Registrations r " +
+                "JOIN Customers c ON c.Name = @customer " +
+                "JOIN Products p ON p.Name = @product " +
+                "WHERE r.CustomerID = c.CustomerID " +
+                "AND r.ProductCode = p.ProductCode) " +
+                "THEN CAST(1 AS BIT) " +
+                "ELSE CAST(0 AS BIT) " +
+                "END";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("customer", customerName);
+                    selectCommand.Parameters.AddWithValue("product", productName);
+                    registrationExists = Convert.ToBoolean(selectCommand.ExecuteScalar());
+                }
+            }
+
+            return registrationExists;
+        }
     }
 }

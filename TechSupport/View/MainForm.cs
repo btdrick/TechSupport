@@ -39,21 +39,22 @@ namespace TechSupport.View
             Application.Exit();
         }
 
+        /// <summary>
+        /// Handles the event of selecting a different tab.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TechSupportDashboardTabControlSelectedIndexChanged(object sender, System.EventArgs e)
         {
-            //if (this.techSupportDashboardTabControl.SelectedTab == this.techSupportDashboardTabControl.TabPages["displayOpenIncidentsTab"])
-            //{
-            //    this.displayOpenIncidentsUserControl.RefreshOpenIncidents();
-            //}
-            //if (this.techSupportDashboardTabControl.SelectedTab == this.techSupportDashboardTabControl.TabPages["loadInternalIncidentsTab"])
-            //{
-            //    this.loadInternalIncidentsUserControl.RefreshDataGrid();
-           // }
-
             switch (this.techSupportDashboardTabControl.SelectedIndex)
             {
+                case 0:
+                    this.addIncidentUserControl.RefreshComboBoxes();
+                    break;
                 case 1:
                     this.loadInternalIncidentsUserControl.RefreshDataGrid();
+                    break;
+                case 2:
                     break;
                 case 3:
                     this.displayOpenIncidentsUserControl.RefreshOpenIncidents();

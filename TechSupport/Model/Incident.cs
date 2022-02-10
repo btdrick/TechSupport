@@ -8,6 +8,7 @@ namespace TechSupport.Model
     public class Incident
     {
         public DateTime DateOpened { get; set; }
+        public string Product { get; set; }
         public string ProductCode { get; set; }
         public string Title { get; set;  }
         public string Description { get; set; }

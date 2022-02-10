@@ -37,7 +37,7 @@ namespace TechSupport.Controller
         /// <param name="customerID"></param>
         /// <returns></returns>
         public List<Incident> GetInternalIncidentsByCustomerID(int customerID)
-        { 
+        {
             return this.incidentInternalSource.GetIncidentsByCustomerID(customerID);
         }
 
@@ -55,6 +55,16 @@ namespace TechSupport.Controller
             this.incidentInternalSource.Add(incident);
         }
 
+        public void AddOpenIncident(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentNullException("Incident cannot be null");
+            }
+
+            this.incidentDBSource.AddOpenIncident(incident);
+        }
+
         /// <summary>
         /// Gets the open incidents from TechSupport db source.
         /// </summary>
@@ -62,6 +72,45 @@ namespace TechSupport.Controller
         public List<Incident> GetOpenIncidents()
         {
             return this.incidentDBSource.GetIncidents();
+        }
+
+        /// <summary>
+        /// Gets all customers from TechSupport db source.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetCustomerNames()
+        {
+            return this.incidentDBSource.GetCustomerNames();
+        }
+
+        /// <summary>
+        /// Gets all products from TechSupport db source.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetProductNames()
+        {
+            return this.incidentDBSource.GetProductNames();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="customerName"></param>
+        /// <param name="productName"></param>
+        /// <returns></returns>
+        public bool ValidateExistingProductRegistration(string customerName, string productName)
+        {
+            return this.incidentDBSource.ProductIsRegisteredToCustomer(customerName, productName);
+        }
+
+        /// <summary>
+        /// Gets most recent Incident ID from
+        /// TechSupport db.
+        /// </summary>
+        /// <returns></returns>
+        public int GetLastIncidentID()
+        {
+            return this.incidentDBSource.GetLastIncidentID();
         }
     }
 }

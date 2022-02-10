@@ -13,6 +13,36 @@ namespace TechSupport.UserControls
         {
             InitializeComponent();
             this.techSupportController = new TechSupportController();
+            this.RefreshComboBoxes();
+        }
+
+        /// <summary>
+        /// Populates the Customer ComboBox with
+        /// customer names from TechSupport db.
+        /// </summary>
+        private void RefreshCustomerComboBox()
+        {
+            this.customerComboBox.DataSource = null;
+            this.customerComboBox.DataSource = this.techSupportController.GetCustomerNames();
+        }
+
+        /// <summary>
+        /// Populates the Product ComboBox with
+        /// product names from TechSupport db.
+        /// </summary>
+        private void RefreshProductComboBox()
+        {
+            this.productComboBox.DataSource = null;
+            this.productComboBox.DataSource = this.techSupportController.GetProductNames();
+        }
+
+        /// <summary>
+        /// Helper method to refresh ComboBox fields.
+        /// </summary>
+        public void RefreshComboBoxes()
+        {
+            this.RefreshCustomerComboBox();
+            this.RefreshProductComboBox();
         }
 
         /// <summary>
@@ -24,16 +54,37 @@ namespace TechSupport.UserControls
         {
             try
             {
+                var customer = this.customerComboBox.SelectedValue.ToString();
+                var product = this.productComboBox.SelectedValue.ToString();
                 var title = char.ToUpper(this.titleTextBox.Text[0]) + this.titleTextBox.Text.Substring(1);
                 var description = this.descriptionTextBox.Text;
-                var customerID = int.Parse(this.customerIDTextBox.Text);
 
-                this.techSupportController.AddInternalIncident(new Incident(title, description, customerID));
-                this.addIncidentConfirmationLabel.Text = title + " incident has been added under CustomerID: " + customerID;
+                if (this.techSupportController.ValidateExistingProductRegistration(customer, product))
+                {
+
+                    Incident incidentToAdd = new Incident
+                    {
+                        Customer = customer,
+                        Product = product,
+                        DateOpened = DateTime.Now,
+                        Title = title,
+                        Description = description
+                    };
+                    
+                    this.techSupportController.AddOpenIncident(incidentToAdd);
+
+                    this.addIncidentConfirmationLabel.Text = "Confirmation: new incident added\n by "
+                    + this.customerComboBox.SelectedValue.ToString() + " with ID "
+                    + this.techSupportController.GetLastIncidentID();
+                } else
+                {
+                    MessageBox.Show(product + " is not registered to " + customer + ".",
+                        "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception)
             {
-                MessageBox.Show("Invalid input!\n\nAn incident must have a:\n - Title\n- Description\n- CustomerID greater than 0",
+                MessageBox.Show("Invalid input!\n\nAn incident must have a title and description.",
                     "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -43,15 +94,16 @@ namespace TechSupport.UserControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddIncidentCancelButtonClick(object sender, EventArgs e)
+        private void AddIncidentClearButtonClick(object sender, EventArgs e)
         {
-            if (this.titleTextBox.Text != "" &&
-            this.descriptionTextBox.Text != "" &&
-            this.customerIDTextBox.Text != "")
+            if (this.titleTextBox.Text != "" ||
+            this.descriptionTextBox.Text != "")
             {
+                this.customerComboBox.SelectedIndex = 0;
+                this.productComboBox.SelectedIndex = 0;
                 this.titleTextBox.Text = "";
                 this.descriptionTextBox.Text = "";
-                this.customerIDTextBox.Text = "";
+                
                 this.addIncidentConfirmationLabel.Text = "Fields cleared";
             }
         }
@@ -61,9 +113,12 @@ namespace TechSupport.UserControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddIncidentTextFieldsChanged(object sender, EventArgs e)
+        private void AddIncidentFieldsChanged(object sender, EventArgs e)
         {
-            this.addIncidentConfirmationLabel.Text = "";
+            if (this.addIncidentConfirmationLabel.Text != "")
+            {
+                this.addIncidentConfirmationLabel.Text = "";
+            }
         }
     }
 }
