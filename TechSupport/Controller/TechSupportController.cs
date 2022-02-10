@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TechSupport.DAL;
 using TechSupport.Model;
 
@@ -47,21 +46,15 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddInternalIncident(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentNullException("Incident cannot be null");
-            }
-
             this.incidentInternalSource.Add(incident);
         }
 
+        /// <summary>
+        /// Add an open incident to TechSupport db source.
+        /// </summary>
+        /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentNullException("Incident cannot be null");
-            }
-
             this.incidentDBSource.AddOpenIncident(incident);
         }
 
@@ -93,7 +86,8 @@ namespace TechSupport.Controller
         }
 
         /// <summary>
-        /// 
+        /// Validates whether a customer has registered a product
+        /// by customer name and product name.
         /// </summary>
         /// <param name="customerName"></param>
         /// <param name="productName"></param>

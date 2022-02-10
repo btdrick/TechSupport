@@ -33,7 +33,7 @@ namespace TechSupport.UserControls
             this.submitButtonLayoutPane = new System.Windows.Forms.TableLayoutPanel();
             this.addIncidentButton = new System.Windows.Forms.Button();
             this.addIncidentCancelButton = new System.Windows.Forms.Button();
-            this.addIncidentConfirmationLabel = new System.Windows.Forms.Label();
+            this.addIncidentStatusLabel = new System.Windows.Forms.Label();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
             this.titleTextBox = new System.Windows.Forms.TextBox();
@@ -53,7 +53,7 @@ namespace TechSupport.UserControls
             this.addIncidentTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.99408F));
             this.addIncidentTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.00592F));
             this.addIncidentTableLayoutPanel.Controls.Add(this.submitButtonLayoutPane, 0, 6);
-            this.addIncidentTableLayoutPanel.Controls.Add(this.addIncidentConfirmationLabel, 0, 5);
+            this.addIncidentTableLayoutPanel.Controls.Add(this.addIncidentStatusLabel, 0, 5);
             this.addIncidentTableLayoutPanel.Controls.Add(this.descriptionTextBox, 1, 4);
             this.addIncidentTableLayoutPanel.Controls.Add(this.descriptionLabel, 0, 4);
             this.addIncidentTableLayoutPanel.Controls.Add(this.titleTextBox, 1, 3);
@@ -119,19 +119,19 @@ namespace TechSupport.UserControls
             this.addIncidentCancelButton.UseVisualStyleBackColor = true;
             this.addIncidentCancelButton.Click += new System.EventHandler(this.AddIncidentClearButtonClick);
             // 
-            // addIncidentConfirmationLabel
+            // addIncidentStatusLabel
             // 
-            this.addIncidentConfirmationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.addIncidentConfirmationLabel.AutoSize = true;
-            this.addIncidentTableLayoutPanel.SetColumnSpan(this.addIncidentConfirmationLabel, 2);
-            this.addIncidentConfirmationLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addIncidentConfirmationLabel.Location = new System.Drawing.Point(190, 225);
-            this.addIncidentConfirmationLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.addIncidentConfirmationLabel.Name = "addIncidentConfirmationLabel";
-            this.addIncidentConfirmationLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.addIncidentConfirmationLabel.Size = new System.Drawing.Size(0, 20);
-            this.addIncidentConfirmationLabel.TabIndex = 12;
-            this.addIncidentConfirmationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.addIncidentStatusLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.addIncidentStatusLabel.AutoSize = true;
+            this.addIncidentTableLayoutPanel.SetColumnSpan(this.addIncidentStatusLabel, 2);
+            this.addIncidentStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addIncidentStatusLabel.Location = new System.Drawing.Point(190, 225);
+            this.addIncidentStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.addIncidentStatusLabel.Name = "addIncidentStatusLabel";
+            this.addIncidentStatusLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.addIncidentStatusLabel.Size = new System.Drawing.Size(0, 20);
+            this.addIncidentStatusLabel.TabIndex = 12;
+            this.addIncidentStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // descriptionTextBox
             // 
@@ -268,7 +268,7 @@ namespace TechSupport.UserControls
         private System.Windows.Forms.TableLayoutPanel submitButtonLayoutPane;
         private System.Windows.Forms.Button addIncidentButton;
         private System.Windows.Forms.Button addIncidentCancelButton;
-        private System.Windows.Forms.Label addIncidentConfirmationLabel;
+        private System.Windows.Forms.Label addIncidentStatusLabel;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.Label descriptionLabel;
         private System.Windows.Forms.TextBox titleTextBox;

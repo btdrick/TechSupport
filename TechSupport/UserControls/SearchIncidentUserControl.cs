@@ -6,10 +6,18 @@ using TechSupport.Model;
 
 namespace TechSupport.UserControls
 {
+    /// <summary>
+    /// This class models a User Control
+    /// which allows the user to search
+    /// for incidents stored in internal memory.
+    /// </summary>
     public partial class SearchIncidentUserControl : UserControl
     {
         private readonly TechSupportController techSupportController;
 
+        /// <summary>
+        /// Initialize the form.
+        /// </summary>
         public SearchIncidentUserControl()
         {
             InitializeComponent();
@@ -45,10 +53,13 @@ namespace TechSupport.UserControls
             this.searchIncidentDataGridView.DataSource = null;
             this.searchIncidentDataGridView.DataSource = incidentsByID;
             this.searchIncidentDataGridView.AutoGenerateColumns = false;
-            this.searchIncidentDataGridView.Columns["DateOpened"].Visible = false;
-            this.searchIncidentDataGridView.Columns["ProductCode"].Visible = false;
-            this.searchIncidentDataGridView.Columns["Technician"].Visible = false;
-            this.searchIncidentDataGridView.Columns["Customer"].Visible = false;
+            foreach (DataGridViewColumn column in this.searchIncidentDataGridView.Columns)
+            {
+                if (column.Name != "Title" && column.Name != "Description" && column.Name != "CustomerID")
+                {
+                    column.Visible = false;
+                }
+            }
         }
 
         /// <summary>

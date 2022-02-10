@@ -19,6 +19,9 @@ namespace TechSupport.UserControls
             this.techSupportController = new TechSupportController();
         }
 
+        /// <summary>
+        /// Refreshes the ListView of Open Incidents.
+        /// </summary>
         public void RefreshOpenIncidents()
         {
             try

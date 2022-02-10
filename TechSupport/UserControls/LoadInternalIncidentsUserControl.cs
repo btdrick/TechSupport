@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using TechSupport.Controller;
 
 namespace TechSupport.UserControls
 {
+    /// <summary>
+    /// This class models a User Control 
+    /// which allows the user to view 
+    /// incidents submitted to internal memory
+    /// </summary>
     public partial class LoadInternalIncidentsUserControl : UserControl
     {
         private readonly TechSupportController techSupportController;
 
+        /// <summary>
+        /// Initialize the Form.
+        /// </summary>
         public LoadInternalIncidentsUserControl()
         {
             InitializeComponent();
@@ -27,10 +30,13 @@ namespace TechSupport.UserControls
             this.incidentDataGridView.DataSource = null;
             this.incidentDataGridView.DataSource = this.techSupportController.GetInternalIncidents();
             this.incidentDataGridView.AutoGenerateColumns = false;
-            this.incidentDataGridView.Columns["DateOpened"].Visible = false;
-            this.incidentDataGridView.Columns["ProductCode"].Visible = false;
-            this.incidentDataGridView.Columns["Technician"].Visible = false;
-            this.incidentDataGridView.Columns["Customer"].Visible = false;
+            foreach (DataGridViewColumn column in this.incidentDataGridView.Columns)
+            {
+                if (column.Name != "Title" && column.Name != "Description" && column.Name != "CustomerID")
+                {
+                    column.Visible = false;
+                }
+            }
         }
     }
 }

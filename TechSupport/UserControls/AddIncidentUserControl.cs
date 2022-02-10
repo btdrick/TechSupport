@@ -5,10 +5,18 @@ using TechSupport.Model;
 
 namespace TechSupport.UserControls
 {
+    /// <summary>
+    /// This class models a User Control
+    /// where a user can submit a new open 
+    /// incident to the TechSupport database.
+    /// </summary>
     public partial class AddIncidentUserControl : UserControl
     {
         private readonly TechSupportController techSupportController;
 
+        /// <summary>
+        /// Initialize the form.
+        /// </summary>
         public AddIncidentUserControl()
         {
             InitializeComponent();
@@ -61,7 +69,6 @@ namespace TechSupport.UserControls
 
                 if (this.techSupportController.ValidateExistingProductRegistration(customer, product))
                 {
-
                     Incident incidentToAdd = new Incident
                     {
                         Customer = customer,
@@ -73,19 +80,17 @@ namespace TechSupport.UserControls
                     
                     this.techSupportController.AddOpenIncident(incidentToAdd);
 
-                    this.addIncidentConfirmationLabel.Text = "Confirmation: new incident added\n by "
-                    + this.customerComboBox.SelectedValue.ToString() + " with ID "
+                    this.addIncidentStatusLabel.Text = "Incident successfully added\n by "
+                    + this.customerComboBox.SelectedValue.ToString() + ". Incident ID is "
                     + this.techSupportController.GetLastIncidentID();
                 } else
                 {
-                    MessageBox.Show(product + " is not registered to " + customer + ".",
-                        "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.addIncidentStatusLabel.Text = product + " is not registered to " + customer + ".";
                 }
             }
             catch (Exception)
             {
-                MessageBox.Show("Invalid input!\n\nAn incident must have a title and description.",
-                    "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.addIncidentStatusLabel.Text = "An incident must have a title and description.";
             }
         }
 
@@ -104,7 +109,7 @@ namespace TechSupport.UserControls
                 this.titleTextBox.Text = "";
                 this.descriptionTextBox.Text = "";
                 
-                this.addIncidentConfirmationLabel.Text = "Fields cleared";
+                this.addIncidentStatusLabel.Text = "Fields cleared";
             }
         }
 
@@ -115,9 +120,9 @@ namespace TechSupport.UserControls
         /// <param name="e"></param>
         private void AddIncidentFieldsChanged(object sender, EventArgs e)
         {
-            if (this.addIncidentConfirmationLabel.Text != "")
+            if (this.addIncidentStatusLabel.Text != "")
             {
-                this.addIncidentConfirmationLabel.Text = "";
+                this.addIncidentStatusLabel.Text = "";
             }
         }
     }

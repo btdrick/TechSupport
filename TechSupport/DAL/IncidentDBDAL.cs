@@ -5,6 +5,9 @@ using TechSupport.Model;
 
 namespace TechSupport.DAL
 {
+    /// <summary>
+    /// Data Access Layer (DAL) for TechSupport database.
+    /// </summary>
     public class IncidentDBDAL
     {
         /// <summary>
@@ -86,7 +89,7 @@ namespace TechSupport.DAL
             {
                 throw new ArgumentException("Cannot add a null incident to the TechSupport database");
             }
-            if (invalidNewIncidentFields(incident))
+            if (InvalidNewIncidentFields(incident))
             {
                 throw new ArgumentException("Invalid incident. One or more values are either null or invalid");
             }
@@ -122,7 +125,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns></returns>
-        private bool invalidNewIncidentFields(Incident incident)
+        private bool InvalidNewIncidentFields(Incident incident)
         {
             if (((incident.Customer == null || incident.Customer == "") && incident.CustomerID == 0) ||
                 ((incident.Product == null || incident.Product == "") && 
