@@ -24,6 +24,7 @@ namespace TechSupport.UserControls
         /// </summary>
         public void RefreshOpenIncidents()
         {
+            this.openIncidentsListView.Items.Clear();
             try
             {
                 List<Incident> openIncidents = this.techSupportController.GetOpenIncidents();
