@@ -224,8 +224,10 @@ namespace TechSupport.UserControls
             // 
             this.customerComboBox.AllowDrop = true;
             this.customerComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerComboBox.DropDownHeight = 100;
             this.customerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.customerComboBox.FormattingEnabled = true;
+            this.customerComboBox.IntegralHeight = false;
             this.customerComboBox.Location = new System.Drawing.Point(123, 71);
             this.customerComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.customerComboBox.MaxDropDownItems = 5;

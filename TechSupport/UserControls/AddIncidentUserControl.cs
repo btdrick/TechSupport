@@ -67,30 +67,30 @@ namespace TechSupport.UserControls
                 var title = char.ToUpper(this.titleTextBox.Text[0]) + this.titleTextBox.Text.Substring(1);
                 var description = this.descriptionTextBox.Text;
 
-                if (this.techSupportController.ValidateExistingProductRegistration(customer, product))
+                Incident incidentToAdd = new Incident
                 {
-                    Incident incidentToAdd = new Incident
-                    {
-                        Customer = customer,
-                        Product = product,
-                        DateOpened = DateTime.Now,
-                        Title = title,
-                        Description = description
-                    };
-                    
+                    Customer = customer,
+                    Product = product,
+                    DateOpened = DateTime.Now,
+                    Title = title,
+                    Description = description
+                };
+
+                if (this.techSupportController.ProductIsRegisteredToCustomer(incidentToAdd))
+                {
                     this.techSupportController.AddOpenIncident(incidentToAdd);
 
-                    this.addIncidentStatusLabel.Text = "Incident successfully added\n by "
+                    this.UpdateIncidentStatusLabel("Incident successfully added\n by "
                     + this.customerComboBox.SelectedValue.ToString() + ". Incident ID is "
-                    + this.techSupportController.GetLastIncidentID();
+                    + this.techSupportController.GetLastIncidentID());
                 } else
                 {
-                    this.addIncidentStatusLabel.Text = product + " is not registered to " + customer + ".";
+                    this.UpdateIncidentStatusLabel(product + " is not registered to " + customer + ".");
                 }
             }
             catch (Exception)
             {
-                this.addIncidentStatusLabel.Text = "An incident must have a title and description.";
+                this.UpdateIncidentStatusLabel("An incident must have a title and description.");
             }
         }
 
@@ -122,7 +122,23 @@ namespace TechSupport.UserControls
         {
             if (this.addIncidentStatusLabel.Text != "")
             {
-                this.addIncidentStatusLabel.Text = "";
+                this.UpdateIncidentStatusLabel("");
+            }
+        }
+
+        /// <summary>
+        /// Updates message status label.
+        /// </summary>
+        /// <param name="message"></param>
+        private void UpdateIncidentStatusLabel(string message)
+        {
+            if (message != null)
+            {
+                this.addIncidentStatusLabel.Text = message;
+            }
+            else
+            {
+                throw new ArgumentException("Message cannot be null");
             }
         }
     }

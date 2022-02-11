@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TechSupport.DAL;
 using TechSupport.Model;
 
@@ -21,6 +22,8 @@ namespace TechSupport.Controller
             this.incidentDBSource = new IncidentDBDAL();
         }
 
+        //***INTERNAL INCIDENT FUNCTIONS***
+
         /// <summary>
         /// Returns the contents of the Incident Report list.
         /// </summary>
@@ -37,6 +40,10 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public List<Incident> GetInternalIncidentsByCustomerID(int customerID)
         {
+            if (customerID < 1)
+            {
+                throw new ArgumentException("CustomerID must be value greater than 0", "customerID");
+            }
             return this.incidentInternalSource.GetIncidentsByCustomerID(customerID);
         }
 
@@ -46,8 +53,14 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddInternalIncident(Incident incident)
         {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
             this.incidentInternalSource.Add(incident);
         }
+
+        //***TECHSUPPORT DB INCIDENT FUNCTIONS***
 
         /// <summary>
         /// Add an open incident to TechSupport db source.
@@ -55,13 +68,17 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
             this.incidentDBSource.AddOpenIncident(incident);
         }
 
         /// <summary>
         /// Gets the open incidents from TechSupport db source.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of open incidents</returns>
         public List<Incident> GetOpenIncidents()
         {
             return this.incidentDBSource.GetIncidents();
@@ -70,7 +87,7 @@ namespace TechSupport.Controller
         /// <summary>
         /// Gets all customers from TechSupport db source.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of customer names</returns>
         public List<string> GetCustomerNames()
         {
             return this.incidentDBSource.GetCustomerNames();
@@ -79,7 +96,7 @@ namespace TechSupport.Controller
         /// <summary>
         /// Gets all products from TechSupport db source.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of product names</returns>
         public List<string> GetProductNames()
         {
             return this.incidentDBSource.GetProductNames();
@@ -91,17 +108,29 @@ namespace TechSupport.Controller
         /// </summary>
         /// <param name="customerName"></param>
         /// <param name="productName"></param>
-        /// <returns></returns>
-        public bool ValidateExistingProductRegistration(string customerName, string productName)
+        /// <returns>True if registration exists</returns>
+        public bool ProductIsRegisteredToCustomer(Incident incident)
         {
-            return this.incidentDBSource.ProductIsRegisteredToCustomer(customerName, productName);
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
+            if (incident.Customer == null || incident.Customer == "")
+            {
+                throw new ArgumentException("Customer name cannot be null or empty");
+            }
+            if (incident.Product == null || incident.Product == "")
+            {
+                throw new ArgumentException("Product name cannot be null or empty");
+            }
+            return this.incidentDBSource.ProductIsRegisteredToCustomer(incident);
         }
 
         /// <summary>
         /// Gets most recent Incident ID from
         /// TechSupport db.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Latest incident ID</returns>
         public int GetLastIncidentID()
         {
             return this.incidentDBSource.GetLastIncidentID();

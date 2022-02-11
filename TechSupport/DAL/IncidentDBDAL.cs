@@ -13,7 +13,7 @@ namespace TechSupport.DAL
         /// <summary>
         /// Retrieves incidents from TechSupport db.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of all incident objects</returns>
         public List<Incident> GetIncidents()
         {
             List<Incident> openIncidents = new List<Incident>();
@@ -53,7 +53,7 @@ namespace TechSupport.DAL
         /// Gets the ID of last Incident added
         /// to the TechSupport db.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Latest incident ID</returns>
         public int GetLastIncidentID()
         {
             int lastIncidentID = 0;
@@ -85,21 +85,18 @@ namespace TechSupport.DAL
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Cannot add a null incident to the TechSupport database");
-            }
+            this.ValidateIncident(incident);
             if (InvalidNewIncidentFields(incident))
             {
                 throw new ArgumentException("Invalid incident. One or more values are either null or invalid");
             }
             if (incident.CustomerID == 0)
             {
-                incident.CustomerID = this.GetCustomerIDByName(incident.Customer);
+                incident.CustomerID = this.GetCustomerIDByName(incident);
             }
             if (incident.ProductCode == null || incident.ProductCode == "")
             {
-                incident.ProductCode = this.GetProductCodeByName(incident.Product);
+                incident.ProductCode = this.GetProductCodeByName(incident);
             }
 
             string selectStatement = "INSERT INTO Incidents (CustomerID, ProductCode, DateOpened, Title, \"Description\") " +
@@ -124,7 +121,7 @@ namespace TechSupport.DAL
         /// needed to be added to the TechSupport db.
         /// </summary>
         /// <param name="incident"></param>
-        /// <returns></returns>
+        /// <returns>True if incident object is valid to add</returns>
         private bool InvalidNewIncidentFields(Incident incident)
         {
             if (((incident.Customer == null || incident.Customer == "") && incident.CustomerID == 0) ||
@@ -144,11 +141,12 @@ namespace TechSupport.DAL
         /// Retrieves a customer's ID
         /// from TechSupport db via their name.
         /// </summary>
-        /// <param name="customerName"></param>
-        /// <returns></returns>
-        private int GetCustomerIDByName(string customerName)
+        /// <param name="incident"></param>
+        /// <returns>CustomerID</returns>
+        private int GetCustomerIDByName(Incident incident)
         {
-            if (customerName == null || customerName == "")
+            this.ValidateIncident(incident);
+            if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Cannot use null or empty customer name");
             }
@@ -161,7 +159,7 @@ namespace TechSupport.DAL
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
                 {
-                    selectCommand.Parameters.AddWithValue("name", customerName);
+                    selectCommand.Parameters.AddWithValue("name", incident.Customer);
                     customerID = Convert.ToInt32(selectCommand.ExecuteScalar());
                 }
             }
@@ -170,14 +168,15 @@ namespace TechSupport.DAL
         }
 
         /// <summary>
-        /// Retrieves a product's code
-        /// from TechSupport db via their name.
+        ///  Retrieves a product's code
+        ///  from TechSupport db via their name.
         /// </summary>
-        /// <param name="productName"></param>
-        /// <returns></returns>
-        private string GetProductCodeByName(string productName)
+        /// <param name="incident"></param>
+        /// <returns>ProductCode</returns>
+        private string GetProductCodeByName(Incident incident)
         {
-            if (productName == null || productName == "")
+            this.ValidateIncident(incident);
+            if (incident.Product == null || incident.Product == "")
             {
                 throw new ArgumentException("Cannot use null or empty product name");
             }
@@ -190,7 +189,7 @@ namespace TechSupport.DAL
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
                 {
-                    selectCommand.Parameters.AddWithValue("name", productName);
+                    selectCommand.Parameters.AddWithValue("name", incident.Product);
                     productCode = Convert.ToString(selectCommand.ExecuteScalar());
                 }
             }
@@ -202,7 +201,7 @@ namespace TechSupport.DAL
         /// <summary>
         /// Retrieves customer names from TechSupport db.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of customer names</returns>
         public List<string> GetCustomerNames()
         {
             List<string> techSupportCustomerNames = new List<string>();
@@ -229,7 +228,7 @@ namespace TechSupport.DAL
         /// <summary>
         /// Retrieves product names from TechSupport db.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of Product names</returns>
         public List<string> GetProductNames()
         {
             List<string> techSupportProductNames = new List<string>();
@@ -254,18 +253,18 @@ namespace TechSupport.DAL
         }
 
         /// <summary>
-        /// Checks if product is already registered to customer.
+        /// Checks if product is registered to a customer.
         /// </summary>
-        /// <param name="customerName"></param>
-        /// <param name="productName"></param>
+        /// <param name="incident"></param>
         /// <returns></returns>
-        public bool ProductIsRegisteredToCustomer(string customerName, string productName)
+        public bool ProductIsRegisteredToCustomer(Incident incident)
         {
-            if (customerName == null || customerName == "")
+            this.ValidateIncident(incident);
+            if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Customer name cannot be null or empty");
             }
-            if (productName == null || productName == "")
+            if (incident.Product == null || incident.Product == "")
             {
                 throw new ArgumentException("Product name cannot be null or empty");
             }
@@ -287,13 +286,25 @@ namespace TechSupport.DAL
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
                 {
-                    selectCommand.Parameters.AddWithValue("customer", customerName);
-                    selectCommand.Parameters.AddWithValue("product", productName);
+                    selectCommand.Parameters.AddWithValue("customer", incident.Customer);
+                    selectCommand.Parameters.AddWithValue("product", incident.Product);
                     registrationExists = Convert.ToBoolean(selectCommand.ExecuteScalar());
                 }
             }
 
             return registrationExists;
+        }
+
+        /// <summary>
+        /// Validates that an incident object is not null.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateIncident(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
         }
     }
 }
