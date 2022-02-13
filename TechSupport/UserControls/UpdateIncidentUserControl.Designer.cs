@@ -46,7 +46,7 @@ namespace TechSupport.UserControls
             this.closeButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.customerTextBox = new System.Windows.Forms.TextBox();
-            this.productTextBox = new System.Windows.Forms.TextBox();
+            this.productCodeTextBox = new System.Windows.Forms.TextBox();
             this.titleTextBox = new System.Windows.Forms.TextBox();
             this.dateOpenedTextBox = new System.Windows.Forms.TextBox();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
@@ -74,7 +74,7 @@ namespace TechSupport.UserControls
             this.updateIncidentTableLayoutPanel.Controls.Add(this.incidentIDTableLayoutPanel, 1, 1);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.updateIncidentButtonsTableLayoutPanel, 1, 9);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.customerTextBox, 1, 2);
-            this.updateIncidentTableLayoutPanel.Controls.Add(this.productTextBox, 1, 3);
+            this.updateIncidentTableLayoutPanel.Controls.Add(this.productCodeTextBox, 1, 3);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.titleTextBox, 1, 5);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.dateOpenedTextBox, 1, 6);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.descriptionTextBox, 1, 7);
@@ -221,6 +221,7 @@ namespace TechSupport.UserControls
             this.getIncidentButton.TabIndex = 1;
             this.getIncidentButton.Text = "Get";
             this.getIncidentButton.UseVisualStyleBackColor = true;
+            this.getIncidentButton.Click += new System.EventHandler(this.GetIncidentButtonClick);
             // 
             // updateIncidentButtonsTableLayoutPanel
             // 
@@ -284,15 +285,15 @@ namespace TechSupport.UserControls
             this.customerTextBox.Size = new System.Drawing.Size(360, 20);
             this.customerTextBox.TabIndex = 13;
             // 
-            // productTextBox
+            // productCodeTextBox
             // 
-            this.productTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.productTextBox.Location = new System.Drawing.Point(132, 146);
-            this.productTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
-            this.productTextBox.Name = "productTextBox";
-            this.productTextBox.ReadOnly = true;
-            this.productTextBox.Size = new System.Drawing.Size(360, 20);
-            this.productTextBox.TabIndex = 14;
+            this.productCodeTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.productCodeTextBox.Location = new System.Drawing.Point(132, 146);
+            this.productCodeTextBox.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
+            this.productCodeTextBox.Name = "productCodeTextBox";
+            this.productCodeTextBox.ReadOnly = true;
+            this.productCodeTextBox.Size = new System.Drawing.Size(360, 20);
+            this.productCodeTextBox.TabIndex = 14;
             // 
             // titleTextBox
             // 
@@ -385,7 +386,7 @@ namespace TechSupport.UserControls
         private System.Windows.Forms.TableLayoutPanel updateIncidentButtonsTableLayoutPanel;
         private System.Windows.Forms.TextBox incidentIDTextBox;
         private System.Windows.Forms.TextBox customerTextBox;
-        private System.Windows.Forms.TextBox productTextBox;
+        private System.Windows.Forms.TextBox productCodeTextBox;
         private System.Windows.Forms.TextBox titleTextBox;
         private System.Windows.Forms.TextBox dateOpenedTextBox;
         private System.Windows.Forms.TextBox descriptionTextBox;

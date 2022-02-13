@@ -240,8 +240,10 @@ namespace TechSupport.UserControls
             // 
             this.productComboBox.AllowDrop = true;
             this.productComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.productComboBox.DropDownHeight = 100;
             this.productComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productComboBox.FormattingEnabled = true;
+            this.productComboBox.IntegralHeight = false;
             this.productComboBox.Location = new System.Drawing.Point(123, 101);
             this.productComboBox.Margin = new System.Windows.Forms.Padding(2);
             this.productComboBox.Name = "productComboBox";

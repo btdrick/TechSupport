@@ -85,12 +85,41 @@ namespace TechSupport.Controller
         }
 
         /// <summary>
+        /// Retrieves Incident information based on
+        /// an incident object with an ID value.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns></returns>
+        public Incident GetIncidentByID(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
+            if (incident.IncidentID <= 0)
+            {
+                throw new ArgumentException("CustomerID cannot be less than 1");
+            }
+            return this.incidentDBSource.GetIncidentByID(incident);
+        }
+
+        /// <summary>
         /// Gets all customers from TechSupport db source.
         /// </summary>
         /// <returns>List of customer names</returns>
         public List<string> GetCustomerNames()
         {
             return this.incidentDBSource.GetCustomerNames();
+        }
+
+
+        /// <summary>
+        /// Gets all technician names from TechSupport db source.
+        /// </summary>
+        /// <returns>List of technician names</returns>
+        public List<string> GetTechnicianNames()
+        {
+            return this.incidentDBSource.GetTechnicianNames();
         }
 
         /// <summary>

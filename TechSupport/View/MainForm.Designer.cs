@@ -109,7 +109,7 @@ namespace TechSupport.View
             this.addIncidentTab.Margin = new System.Windows.Forms.Padding(2);
             this.addIncidentTab.Name = "addIncidentTab";
             this.addIncidentTab.Padding = new System.Windows.Forms.Padding(2);
-            this.addIncidentTab.Size = new System.Drawing.Size(518, 437);
+            this.addIncidentTab.Size = new System.Drawing.Size(518, 449);
             this.addIncidentTab.TabIndex = 0;
             this.addIncidentTab.Text = "Add";
             this.addIncidentTab.UseVisualStyleBackColor = true;
@@ -120,7 +120,7 @@ namespace TechSupport.View
             this.addIncidentUserControl.Location = new System.Drawing.Point(2, 2);
             this.addIncidentUserControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addIncidentUserControl.Name = "addIncidentUserControl";
-            this.addIncidentUserControl.Size = new System.Drawing.Size(514, 433);
+            this.addIncidentUserControl.Size = new System.Drawing.Size(514, 445);
             this.addIncidentUserControl.TabIndex = 0;
             // 
             // updateIncidentTab
@@ -129,7 +129,7 @@ namespace TechSupport.View
             this.updateIncidentTab.Location = new System.Drawing.Point(4, 25);
             this.updateIncidentTab.Name = "updateIncidentTab";
             this.updateIncidentTab.Padding = new System.Windows.Forms.Padding(3);
-            this.updateIncidentTab.Size = new System.Drawing.Size(518, 437);
+            this.updateIncidentTab.Size = new System.Drawing.Size(518, 449);
             this.updateIncidentTab.TabIndex = 4;
             this.updateIncidentTab.Text = "Update";
             this.updateIncidentTab.UseVisualStyleBackColor = true;
@@ -147,7 +147,7 @@ namespace TechSupport.View
             this.usernameLogoutPanel.Name = "usernameLogoutPanel";
             this.usernameLogoutPanel.RowCount = 1;
             this.usernameLogoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.usernameLogoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.usernameLogoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.usernameLogoutPanel.Size = new System.Drawing.Size(303, 21);
             this.usernameLogoutPanel.TabIndex = 3;
             // 
@@ -187,7 +187,7 @@ namespace TechSupport.View
             this.updateIncidentUserControl1.Location = new System.Drawing.Point(3, 3);
             this.updateIncidentUserControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.updateIncidentUserControl1.Name = "updateIncidentUserControl1";
-            this.updateIncidentUserControl1.Size = new System.Drawing.Size(512, 431);
+            this.updateIncidentUserControl1.Size = new System.Drawing.Size(512, 443);
             this.updateIncidentUserControl1.TabIndex = 0;
             // 
             // MainForm
