@@ -17,6 +17,7 @@ namespace TechSupport.UserControls
         {
             InitializeComponent();
             this.techSupportController = new TechSupportController();
+            this.RefreshOpenIncidents();
         }
 
         /// <summary>

@@ -31,25 +31,17 @@ namespace TechSupport.View
         {
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.techSupportDashboardTabControl = new System.Windows.Forms.TabControl();
-            this.addIncidentTab = new System.Windows.Forms.TabPage();
-            this.loadInternalIncidentsTab = new System.Windows.Forms.TabPage();
-            this.loadInternalIncidentsUserControl = new TechSupport.UserControls.LoadInternalIncidentsUserControl();
-            this.searchIncidentsTab = new System.Windows.Forms.TabPage();
-            this.searchIncidentUserControl = new TechSupport.UserControls.SearchIncidentUserControl();
             this.displayOpenIncidentsTab = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.displayOpenIncidentsUserControl = new TechSupport.UserControls.DisplayOpenIncidentsUserControl();
+            this.addIncidentTab = new System.Windows.Forms.TabPage();
+            this.addIncidentUserControl = new TechSupport.UserControls.AddIncidentUserControl();
             this.usernameLogoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.logoutLink = new System.Windows.Forms.LinkLabel();
             this.usernameLabel = new System.Windows.Forms.Label();
-            this.addIncidentUserControl = new TechSupport.UserControls.AddIncidentUserControl();
+            this.displayOpenIncidentsUserControl = new TechSupport.UserControls.DisplayOpenIncidentsUserControl();
             this.mainTableLayoutPanel.SuspendLayout();
             this.techSupportDashboardTabControl.SuspendLayout();
-            this.addIncidentTab.SuspendLayout();
-            this.loadInternalIncidentsTab.SuspendLayout();
-            this.searchIncidentsTab.SuspendLayout();
             this.displayOpenIncidentsTab.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
+            this.addIncidentTab.SuspendLayout();
             this.usernameLogoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,10 +65,8 @@ namespace TechSupport.View
             // techSupportDashboardTabControl
             // 
             this.mainTableLayoutPanel.SetColumnSpan(this.techSupportDashboardTabControl, 2);
-            this.techSupportDashboardTabControl.Controls.Add(this.addIncidentTab);
-            this.techSupportDashboardTabControl.Controls.Add(this.loadInternalIncidentsTab);
-            this.techSupportDashboardTabControl.Controls.Add(this.searchIncidentsTab);
             this.techSupportDashboardTabControl.Controls.Add(this.displayOpenIncidentsTab);
+            this.techSupportDashboardTabControl.Controls.Add(this.addIncidentTab);
             this.techSupportDashboardTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.techSupportDashboardTabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.techSupportDashboardTabControl.Location = new System.Drawing.Point(2, 32);
@@ -87,63 +77,9 @@ namespace TechSupport.View
             this.techSupportDashboardTabControl.TabIndex = 2;
             this.techSupportDashboardTabControl.SelectedIndexChanged += new System.EventHandler(this.TechSupportDashboardTabControlSelectedIndexChanged);
             // 
-            // addIncidentTab
-            // 
-            this.addIncidentTab.Controls.Add(this.addIncidentUserControl);
-            this.addIncidentTab.Location = new System.Drawing.Point(4, 25);
-            this.addIncidentTab.Margin = new System.Windows.Forms.Padding(2);
-            this.addIncidentTab.Name = "addIncidentTab";
-            this.addIncidentTab.Padding = new System.Windows.Forms.Padding(2);
-            this.addIncidentTab.Size = new System.Drawing.Size(518, 344);
-            this.addIncidentTab.TabIndex = 0;
-            this.addIncidentTab.Text = "Add";
-            this.addIncidentTab.UseVisualStyleBackColor = true;
-            // 
-            // loadInternalIncidentsTab
-            // 
-            this.loadInternalIncidentsTab.Controls.Add(this.loadInternalIncidentsUserControl);
-            this.loadInternalIncidentsTab.Location = new System.Drawing.Point(4, 25);
-            this.loadInternalIncidentsTab.Margin = new System.Windows.Forms.Padding(2);
-            this.loadInternalIncidentsTab.Name = "loadInternalIncidentsTab";
-            this.loadInternalIncidentsTab.Padding = new System.Windows.Forms.Padding(2);
-            this.loadInternalIncidentsTab.Size = new System.Drawing.Size(518, 344);
-            this.loadInternalIncidentsTab.TabIndex = 1;
-            this.loadInternalIncidentsTab.Text = "Load Internal Incidents";
-            this.loadInternalIncidentsTab.UseVisualStyleBackColor = true;
-            // 
-            // loadInternalIncidentsUserControl
-            // 
-            this.loadInternalIncidentsUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.loadInternalIncidentsUserControl.Location = new System.Drawing.Point(2, 2);
-            this.loadInternalIncidentsUserControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.loadInternalIncidentsUserControl.Name = "loadInternalIncidentsUserControl";
-            this.loadInternalIncidentsUserControl.Size = new System.Drawing.Size(514, 340);
-            this.loadInternalIncidentsUserControl.TabIndex = 0;
-            // 
-            // searchIncidentsTab
-            // 
-            this.searchIncidentsTab.Controls.Add(this.searchIncidentUserControl);
-            this.searchIncidentsTab.Location = new System.Drawing.Point(4, 25);
-            this.searchIncidentsTab.Margin = new System.Windows.Forms.Padding(2);
-            this.searchIncidentsTab.Name = "searchIncidentsTab";
-            this.searchIncidentsTab.Padding = new System.Windows.Forms.Padding(2);
-            this.searchIncidentsTab.Size = new System.Drawing.Size(518, 344);
-            this.searchIncidentsTab.TabIndex = 2;
-            this.searchIncidentsTab.Text = "Search";
-            this.searchIncidentsTab.UseVisualStyleBackColor = true;
-            // 
-            // searchIncidentUserControl
-            // 
-            this.searchIncidentUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchIncidentUserControl.Location = new System.Drawing.Point(2, 2);
-            this.searchIncidentUserControl.Margin = new System.Windows.Forms.Padding(2);
-            this.searchIncidentUserControl.Name = "searchIncidentUserControl";
-            this.searchIncidentUserControl.Size = new System.Drawing.Size(514, 340);
-            this.searchIncidentUserControl.TabIndex = 0;
-            // 
             // displayOpenIncidentsTab
             // 
-            this.displayOpenIncidentsTab.Controls.Add(this.tableLayoutPanel6);
+            this.displayOpenIncidentsTab.Controls.Add(this.displayOpenIncidentsUserControl);
             this.displayOpenIncidentsTab.Location = new System.Drawing.Point(4, 25);
             this.displayOpenIncidentsTab.Margin = new System.Windows.Forms.Padding(2);
             this.displayOpenIncidentsTab.Name = "displayOpenIncidentsTab";
@@ -153,27 +89,26 @@ namespace TechSupport.View
             this.displayOpenIncidentsTab.Text = "Display Open Incidents";
             this.displayOpenIncidentsTab.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel6
+            // addIncidentTab
             // 
-            this.tableLayoutPanel6.ColumnCount = 1;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Controls.Add(this.displayOpenIncidentsUserControl, 0, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(2, 2);
-            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(2);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(514, 340);
-            this.tableLayoutPanel6.TabIndex = 0;
+            this.addIncidentTab.Controls.Add(this.addIncidentUserControl);
+            this.addIncidentTab.Location = new System.Drawing.Point(4, 25);
+            this.addIncidentTab.Margin = new System.Windows.Forms.Padding(2);
+            this.addIncidentTab.Name = "addIncidentTab";
+            this.addIncidentTab.Padding = new System.Windows.Forms.Padding(2);
+            this.addIncidentTab.Size = new System.Drawing.Size(518, 344);
+            this.addIncidentTab.TabIndex = 0;
+            this.addIncidentTab.Text = "Add Incident";
+            this.addIncidentTab.UseVisualStyleBackColor = true;
             // 
-            // displayOpenIncidentsUserControl
+            // addIncidentUserControl
             // 
-            this.displayOpenIncidentsUserControl.Location = new System.Drawing.Point(4, 4);
-            this.displayOpenIncidentsUserControl.Margin = new System.Windows.Forms.Padding(4);
-            this.displayOpenIncidentsUserControl.Name = "displayOpenIncidentsUserControl";
-            this.displayOpenIncidentsUserControl.Size = new System.Drawing.Size(506, 332);
-            this.displayOpenIncidentsUserControl.TabIndex = 0;
+            this.addIncidentUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.addIncidentUserControl.Location = new System.Drawing.Point(2, 2);
+            this.addIncidentUserControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.addIncidentUserControl.Name = "addIncidentUserControl";
+            this.addIncidentUserControl.Size = new System.Drawing.Size(514, 340);
+            this.addIncidentUserControl.TabIndex = 0;
             // 
             // usernameLogoutPanel
             // 
@@ -222,14 +157,14 @@ namespace TechSupport.View
             this.usernameLabel.Text = "username";
             this.usernameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // addIncidentUserControl
+            // displayOpenIncidentsUserControl
             // 
-            this.addIncidentUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.addIncidentUserControl.Location = new System.Drawing.Point(2, 2);
-            this.addIncidentUserControl.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.addIncidentUserControl.Name = "addIncidentUserControl";
-            this.addIncidentUserControl.Size = new System.Drawing.Size(514, 340);
-            this.addIncidentUserControl.TabIndex = 0;
+            this.displayOpenIncidentsUserControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.displayOpenIncidentsUserControl.Location = new System.Drawing.Point(2, 2);
+            this.displayOpenIncidentsUserControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.displayOpenIncidentsUserControl.Name = "displayOpenIncidentsUserControl";
+            this.displayOpenIncidentsUserControl.Size = new System.Drawing.Size(514, 340);
+            this.displayOpenIncidentsUserControl.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -246,11 +181,8 @@ namespace TechSupport.View
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainFormClosedEventHandle);
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.techSupportDashboardTabControl.ResumeLayout(false);
-            this.addIncidentTab.ResumeLayout(false);
-            this.loadInternalIncidentsTab.ResumeLayout(false);
-            this.searchIncidentsTab.ResumeLayout(false);
             this.displayOpenIncidentsTab.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
+            this.addIncidentTab.ResumeLayout(false);
             this.usernameLogoutPanel.ResumeLayout(false);
             this.usernameLogoutPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -265,13 +197,8 @@ namespace TechSupport.View
         private System.Windows.Forms.Label usernameLabel;
         private System.Windows.Forms.TabControl techSupportDashboardTabControl;
         private System.Windows.Forms.TabPage addIncidentTab;
-        private System.Windows.Forms.TabPage loadInternalIncidentsTab;
-        private System.Windows.Forms.TabPage searchIncidentsTab;
-        private UserControls.SearchIncidentUserControl searchIncidentUserControl;
         private System.Windows.Forms.TabPage displayOpenIncidentsTab;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
-        private UserControls.DisplayOpenIncidentsUserControl displayOpenIncidentsUserControl;
-        private UserControls.LoadInternalIncidentsUserControl loadInternalIncidentsUserControl;
         private UserControls.AddIncidentUserControl addIncidentUserControl;
+        private UserControls.DisplayOpenIncidentsUserControl displayOpenIncidentsUserControl;
     }
 }

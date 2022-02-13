@@ -64,18 +64,6 @@
     <Compile Include="UserControls\DisplayOpenIncidentsUserControl.Designer.cs">
       <DependentUpon>DisplayOpenIncidentsUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\LoadInternalIncidentsUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\LoadInternalIncidentsUserControl.Designer.cs">
-      <DependentUpon>LoadInternalIncidentsUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\SearchIncidentUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\SearchIncidentUserControl.Designer.cs">
-      <DependentUpon>SearchIncidentUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,12 +92,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DisplayOpenIncidentsUserControl.resx">
       <DependentUpon>DisplayOpenIncidentsUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\LoadInternalIncidentsUserControl.resx">
-      <DependentUpon>LoadInternalIncidentsUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\SearchIncidentUserControl.resx">
-      <DependentUpon>SearchIncidentUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

@@ -49,15 +49,14 @@ namespace TechSupport.View
             switch (this.techSupportDashboardTabControl.SelectedIndex)
             {
                 case 0:
-                    this.addIncidentUserControl.RefreshComboBoxes();
+                    this.displayOpenIncidentsUserControl.RefreshOpenIncidents();
                     break;
                 case 1:
-                    this.loadInternalIncidentsUserControl.RefreshDataGrid();
+                    this.addIncidentUserControl.RefreshComboBoxes();
                     break;
                 case 2:
                     break;
                 case 3:
-                    this.displayOpenIncidentsUserControl.RefreshOpenIncidents();
                     break;
                 default:
                     break;
