@@ -9,6 +9,7 @@ namespace TechSupport.Model
     {
         public int IncidentID { get; set; }
         public DateTime DateOpened { get; set; }
+        public DateTime DateClosed { get; set; }
         public string Product { get; set; }
         public string ProductCode { get; set; }
         public string Title { get; set;  }

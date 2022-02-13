@@ -62,8 +62,8 @@ namespace TechSupport.DAL
             {
                 throw new ArgumentException("IncidentID cannot be less than 1");
             }
-            string selectStatement = "SELECT i.CustomerID, i.ProductCode, i.TechID, i.Title, i.DateOpened, i.\"Description\" " +
-                                     "FROM Incidents i WHERE i.IncidentID = @incidentid AND i.DateClosed IS NULL";
+            string selectStatement = "SELECT i.CustomerID, i.ProductCode, i.TechID, i.Title, i.DateOpened, i.DateClosed, i.\"Description\" " +
+                                     "FROM Incidents i WHERE i.IncidentID = @incidentid";
 
 
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
@@ -86,6 +86,10 @@ namespace TechSupport.DAL
                             }
                             incident.Title = reader["Title"].ToString();
                             incident.DateOpened = (DateTime)reader["DateOpened"];
+                            if(!reader.IsDBNull(5))
+                            {
+                                incident.DateClosed = (DateTime)reader["DateClosed"];
+                            }
                             incident.Description = reader["Description"].ToString();
                         }
                         else

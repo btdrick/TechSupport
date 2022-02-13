@@ -67,8 +67,7 @@ namespace TechSupport.UserControls
                 {
                     this.textToAddTextBox.Enabled = true;
                 }
-                this.updateIncidentButton.Enabled = true;
-                this.closeIncidentButton.Enabled = true;
+                this.ValidateClosedDate(incident);
             }
             catch (FormatException)
             {
@@ -135,6 +134,32 @@ namespace TechSupport.UserControls
         {
             this.technicianComboBox.DataSource = null;
             this.technicianComboBox.DataSource = this.techSupportController.GetTechnicianNames();
+        }
+
+        /// <summary>
+        /// Disables fields to update an incident
+        /// if it has already been closed
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateClosedDate(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null");
+            }
+
+            if (incident.DateClosed.ToShortDateString() == "1/1/0001")
+            {
+                this.updateIncidentButton.Enabled = true;
+                this.closeIncidentButton.Enabled = true;
+            }
+            else
+            {
+                this.technicianComboBox.Enabled = false;
+                this.textToAddTextBox.Enabled = false;
+                this.updateIncidentButton.Enabled = false;
+                this.closeIncidentButton.Enabled = false;
+            }
         }
     }
 }
