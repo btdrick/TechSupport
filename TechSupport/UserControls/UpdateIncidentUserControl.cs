@@ -24,8 +24,7 @@ namespace TechSupport.UserControls
         }
 
         /// <summary>
-        /// Handles the event of the "Get" button
-        /// being clicked.
+        /// Handles the event of "Get" button click
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -38,12 +37,16 @@ namespace TechSupport.UserControls
                 {
                     IncidentID = incidentID
                 };
-
                 incident = this.techSupportController.GetIncidentByID(incident);
-                this.RefreshTechnicianComboBox();
-
+               
                 this.customerTextBox.Text = incident.Customer;
                 this.productCodeTextBox.Text = incident.ProductCode;
+
+                if (!this.technicianComboBox.Enabled)
+                {
+                    this.technicianComboBox.Enabled = true;
+                }
+                this.RefreshTechnicianComboBox();
                 if (incident.Technician == "" || incident.Technician == null)
                 {
                     this.technicianComboBox.Text = "** Unassigned **";
@@ -55,6 +58,7 @@ namespace TechSupport.UserControls
                 this.titleTextBox.Text = incident.Title;
                 this.dateOpenedTextBox.Text = incident.DateOpened.ToShortDateString();
                 this.descriptionTextBox.Text = incident.Description;
+
                 if (descriptionTextBox.Text.Length == 200)
                 {
                     MessageBox.Show("Cannot add to incident description\n\nThe character count has reached its limit of 200");
@@ -64,7 +68,7 @@ namespace TechSupport.UserControls
                     this.textToAddTextBox.Enabled = true;
                 }
                 this.updateIncidentButton.Enabled = true;
-                this.closeButton.Enabled = true;
+                this.closeIncidentButton.Enabled = true;
             }
             catch (FormatException)
             {
@@ -76,6 +80,52 @@ namespace TechSupport.UserControls
                 MessageBox.Show("Invalid IncidentID\n\nAn open incident with that ID does not exist",
                     "Search Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Handles the event of "Clear" button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearButtonClick(object sender, EventArgs e)
+        {
+            this.ClearFields();
+            this.technicianComboBox.Enabled = false;
+            if (this.textToAddTextBox.Enabled)
+            {
+                this.textToAddTextBox.Enabled = false;
+            }
+            this.updateIncidentButton.Enabled = false;
+            this.closeIncidentButton.Enabled = false;
+        }
+
+        /// <summary>
+        /// Clears the data fields for the form.
+        /// </summary>
+        private void ClearFields()
+        {
+            void func(ControlCollection controls)
+            {
+                foreach (Control control in controls)
+                    if (control is TextBox)
+                    {
+                        (control as TextBox).Clear();
+                    }
+                    else if (control is ComboBox)
+                    {
+                        if ((control as ComboBox).Text != "")
+                        {
+                            (control as ComboBox).Text = "";
+                        }
+                        (control as ComboBox).DataSource = null;
+                    }
+                    else
+                    {
+                        func(control.Controls);
+                    }       
+            }
+
+            func(Controls);
         }
 
         /// <summary>

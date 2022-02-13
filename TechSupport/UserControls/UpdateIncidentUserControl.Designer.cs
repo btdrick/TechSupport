@@ -43,7 +43,7 @@ namespace TechSupport.UserControls
             this.getIncidentButton = new System.Windows.Forms.Button();
             this.updateIncidentButtonsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.updateIncidentButton = new System.Windows.Forms.Button();
-            this.closeButton = new System.Windows.Forms.Button();
+            this.closeIncidentButton = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.customerTextBox = new System.Windows.Forms.TextBox();
             this.productCodeTextBox = new System.Windows.Forms.TextBox();
@@ -230,7 +230,7 @@ namespace TechSupport.UserControls
             this.updateIncidentButtonsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 34F));
             this.updateIncidentButtonsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.updateIncidentButtonsTableLayoutPanel.Controls.Add(this.updateIncidentButton, 0, 0);
-            this.updateIncidentButtonsTableLayoutPanel.Controls.Add(this.closeButton, 1, 0);
+            this.updateIncidentButtonsTableLayoutPanel.Controls.Add(this.closeIncidentButton, 1, 0);
             this.updateIncidentButtonsTableLayoutPanel.Controls.Add(this.clearButton, 2, 0);
             this.updateIncidentButtonsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.updateIncidentButtonsTableLayoutPanel.Location = new System.Drawing.Point(132, 400);
@@ -252,17 +252,17 @@ namespace TechSupport.UserControls
             this.updateIncidentButton.Text = "Update";
             this.updateIncidentButton.UseVisualStyleBackColor = true;
             // 
-            // closeButton
+            // closeIncidentButton
             // 
-            this.closeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.closeButton.Enabled = false;
-            this.closeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.closeButton.Location = new System.Drawing.Point(153, 3);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(75, 35);
-            this.closeButton.TabIndex = 1;
-            this.closeButton.Text = "Close";
-            this.closeButton.UseVisualStyleBackColor = true;
+            this.closeIncidentButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.closeIncidentButton.Enabled = false;
+            this.closeIncidentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.closeIncidentButton.Location = new System.Drawing.Point(153, 3);
+            this.closeIncidentButton.Name = "closeIncidentButton";
+            this.closeIncidentButton.Size = new System.Drawing.Size(75, 35);
+            this.closeIncidentButton.TabIndex = 1;
+            this.closeIncidentButton.Text = "Close";
+            this.closeIncidentButton.UseVisualStyleBackColor = true;
             // 
             // clearButton
             // 
@@ -274,6 +274,7 @@ namespace TechSupport.UserControls
             this.clearButton.TabIndex = 2;
             this.clearButton.Text = "Clear";
             this.clearButton.UseVisualStyleBackColor = true;
+            this.clearButton.Click += new System.EventHandler(this.ClearButtonClick);
             // 
             // customerTextBox
             // 
@@ -337,6 +338,7 @@ namespace TechSupport.UserControls
             // technicianComboBox
             // 
             this.technicianComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.technicianComboBox.Enabled = false;
             this.technicianComboBox.FormattingEnabled = true;
             this.technicianComboBox.Location = new System.Drawing.Point(132, 177);
             this.technicianComboBox.Margin = new System.Windows.Forms.Padding(3, 3, 5, 3);
@@ -394,7 +396,7 @@ namespace TechSupport.UserControls
         private System.Windows.Forms.ComboBox technicianComboBox;
         private System.Windows.Forms.Button getIncidentButton;
         private System.Windows.Forms.Button updateIncidentButton;
-        private System.Windows.Forms.Button closeButton;
+        private System.Windows.Forms.Button closeIncidentButton;
         private System.Windows.Forms.Button clearButton;
     }
 }
