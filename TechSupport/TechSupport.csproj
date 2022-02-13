@@ -64,6 +64,12 @@
     <Compile Include="UserControls\DisplayOpenIncidentsUserControl.Designer.cs">
       <DependentUpon>DisplayOpenIncidentsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UpdateIncidentUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UpdateIncidentUserControl.Designer.cs">
+      <DependentUpon>UpdateIncidentUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +98,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\DisplayOpenIncidentsUserControl.resx">
       <DependentUpon>DisplayOpenIncidentsUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UpdateIncidentUserControl.resx">
+      <DependentUpon>UpdateIncidentUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
