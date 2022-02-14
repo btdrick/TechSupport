@@ -76,6 +76,32 @@ namespace TechSupport.Controller
         }
 
         /// <summary>
+        /// Returns true if incident has been closed.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns></returns>
+        public bool IsIncidentClosed(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
+            return this.incidentDBSource.IsIncidentClosed(incident);
+        }
+
+        /// <summary>
+        /// Closes an incident
+        /// </summary>
+        /// <param name="incident"></param>
+        public void CloseIncident(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
+        }
+
+        /// <summary>
         /// Gets the open incidents from TechSupport db source.
         /// </summary>
         /// <returns>List of open incidents</returns>

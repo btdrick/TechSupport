@@ -171,6 +171,26 @@ namespace TechSupport.DAL
         }
 
         /// <summary>
+        /// Returns true if an incident has been closed.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns>Incident closed?</returns>
+        public bool IsIncidentClosed(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            return incident.DateClosed.ToShortDateString() != "1/1/0001";
+        }
+
+        public void CloseOpenIncident(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            if (incident.IncidentID <= 0)
+            {
+                throw new ArgumentException("Incident must have an ID to be closed");
+            }
+        }
+
+        /// <summary>
         /// Validates whether an incident object has the fields 
         /// needed to be added to the TechSupport db.
         /// </summary>
