@@ -94,7 +94,7 @@ namespace TechSupport.DAL
                         }
                         else
                         {
-                            throw new ArgumentException("An open incident with that ID does not exist");
+                            throw new ArgumentException("An incident with that ID does not exist");
                         }
                     }
                 }

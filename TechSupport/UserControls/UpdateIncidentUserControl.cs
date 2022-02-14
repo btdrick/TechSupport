@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using TechSupport.Controller;
 using TechSupport.Model;
@@ -32,6 +33,7 @@ namespace TechSupport.UserControls
         {
             try
             {
+                this.messageLabel.Text = "";
                 var incidentID = Convert.ToInt32(this.incidentIDTextBox.Text);
                 Incident incident = new Incident
                 {
@@ -46,38 +48,34 @@ namespace TechSupport.UserControls
                 {
                     this.technicianComboBox.Enabled = true;
                 }
-                this.RefreshTechnicianComboBox();
-                if (incident.Technician == "" || incident.Technician == null)
-                {
-                    this.technicianComboBox.Text = "** Unassigned **";
-                }
-                else
-                {
-                    this.technicianComboBox.Text = incident.Technician;
-                }
+
                 this.titleTextBox.Text = incident.Title;
                 this.dateOpenedTextBox.Text = incident.DateOpened.ToShortDateString();
                 this.descriptionTextBox.Text = incident.Description;
 
                 if (descriptionTextBox.Text.Length == 200)
                 {
-                    MessageBox.Show("Cannot add to incident description\n\nThe character count has reached its limit of 200");
+                    this.messageLabel.Text = "Cannot add to incident description, character count has reached its limit of 200";
                 }
                 else
                 {
                     this.textToAddTextBox.Enabled = true;
                 }
+
                 this.ValidateClosedDate(incident);
+                if (incident.Technician == "" || incident.Technician == null)
+                {
+                    this.technicianComboBox.Items.Insert(0, "** Unassigned **");
+                    this.technicianComboBox.SelectedIndex = 0;
+                }
             }
             catch (FormatException)
             {
-                MessageBox.Show("Invalid IncidentID\n\nCheck that the entered ID is a positive integer",
-                    "IncidentID Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.messageLabel.Text = "Check that the entered ID is a positive integer";
             }
             catch (Exception)
             {
-                MessageBox.Show("Invalid IncidentID\n\nAn open incident with that ID does not exist",
-                    "Search Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.messageLabel.Text = "An incident with that ID does not exist";                
             }
         }
 
@@ -112,11 +110,7 @@ namespace TechSupport.UserControls
                     }
                     else if (control is ComboBox)
                     {
-                        if ((control as ComboBox).Text != "")
-                        {
-                            (control as ComboBox).Text = "";
-                        }
-                        (control as ComboBox).DataSource = null;
+                        (control as ComboBox).Items.Clear();
                     }
                     else
                     {
@@ -129,11 +123,16 @@ namespace TechSupport.UserControls
 
         /// <summary>
         /// Populates the Technician ComboBox
+        /// with names of technicians.
         /// </summary>
         private void RefreshTechnicianComboBox()
         {
-            this.technicianComboBox.DataSource = null;
-            this.technicianComboBox.DataSource = this.techSupportController.GetTechnicianNames();
+            this.technicianComboBox.Items.Clear();
+            List<string> technicians = this.techSupportController.GetTechnicianNames();
+            foreach (var technician in technicians)
+            { 
+                this.technicianComboBox.Items.Add(technician);
+            }
         }
 
         /// <summary>
@@ -152,13 +151,20 @@ namespace TechSupport.UserControls
             {
                 this.updateIncidentButton.Enabled = true;
                 this.closeIncidentButton.Enabled = true;
+                this.RefreshTechnicianComboBox();
+                this.technicianComboBox.SelectedItem = incident.Technician;
             }
             else
             {
-                this.technicianComboBox.Enabled = false;
                 this.textToAddTextBox.Enabled = false;
                 this.updateIncidentButton.Enabled = false;
                 this.closeIncidentButton.Enabled = false;
+                this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + 
+                    " was closed on " + incident.DateClosed.ToShortDateString();
+                this.technicianComboBox.Items.Clear();
+                this.technicianComboBox.Items.Insert(0, incident.Technician);
+                this.technicianComboBox.SelectedItem = incident.Technician;
+                this.technicianComboBox.Enabled = false;
             }
         }
     }
