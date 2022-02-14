@@ -57,11 +57,7 @@ namespace TechSupport.DAL
         /// <returns></returns>
         public Incident GetIncidentByID(Incident incident)
         {
-            this.ValidateIncident(incident);
-            if (incident.IncidentID <= 0)
-            {
-                throw new ArgumentException("IncidentID cannot be less than 1");
-            }
+            this.ValidateIncidentExists(incident);
             string selectStatement = "SELECT i.CustomerID, i.ProductCode, i.TechID, i.Title, i.DateOpened, i.DateClosed, i.\"Description\" " +
                                      "FROM Incidents i WHERE i.IncidentID = @incidentid";
 
@@ -74,7 +70,7 @@ namespace TechSupport.DAL
                     selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
                     using (SqlDataReader reader = selectCommand.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             incident.CustomerID = Convert.ToInt32(reader["CustomerID"]);
                             incident.Customer = GetCustomerByID(incident);
@@ -86,15 +82,11 @@ namespace TechSupport.DAL
                             }
                             incident.Title = reader["Title"].ToString();
                             incident.DateOpened = (DateTime)reader["DateOpened"];
-                            if(!reader.IsDBNull(5))
+                            if (!reader.IsDBNull(5))
                             {
                                 incident.DateClosed = (DateTime)reader["DateClosed"];
                             }
                             incident.Description = reader["Description"].ToString();
-                        }
-                        else
-                        {
-                            throw new ArgumentException("An incident with that ID does not exist");
                         }
                     }
                 }
@@ -409,7 +401,38 @@ namespace TechSupport.DAL
 
 
             return productCode;
-        }       
+        }
+        
+        /// <summary>
+        /// Returns true if IncidentID exists
+        /// within the TechSupport db.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns>Does incident exist</returns>
+        private void ValidateIncidentExists(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            string selectStatement = "SELECT CASE WHEN EXISTS " +
+                "(SELECT * " +
+                "FROM Incidents " +                
+                "WHERE IncidentID = @incidentid) " +
+                "THEN CAST(0 AS BIT) " +
+                "ELSE CAST(1 AS BIT) " +
+                "END";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
+                    if (Convert.ToBoolean(selectCommand.ExecuteScalar()))
+                    {
+                        throw new ArgumentException("An incident with that ID does not exist");
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Checks if product is registered to a customer.
