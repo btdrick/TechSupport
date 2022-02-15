@@ -186,7 +186,6 @@ namespace TechSupport.DAL
                     selectCommand.ExecuteScalar();
                 }
             }
-
         }
 
         /// <summary>
@@ -200,12 +199,26 @@ namespace TechSupport.DAL
             return incident.DateClosed.ToShortDateString() != "1/1/0001";
         }
 
+        /// <summary>
+        /// Closes an incident, sets
+        /// DateClosed to current date.
+        /// </summary>
+        /// <param name="incident"></param>
         public void CloseOpenIncident(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
-            if (incident.IncidentID <= 0)
+            this.ValidateIncidentExists(incident);
+            string updateStatement = "UPDATE Incidents " +
+                                     "SET DateClosed = @today " +
+                                     "WHERE IncidentID = @incidentid";
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
-                throw new ArgumentException("Incident must have an ID to be closed");
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(updateStatement, connection))
+                {                   
+                    selectCommand.Parameters.AddWithValue("today", incident.DateClosed);
+                    selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
+                    selectCommand.ExecuteScalar();
+                }
             }
         }
 
@@ -535,6 +548,11 @@ namespace TechSupport.DAL
             }
         }
 
+        /// <summary>
+        /// Checks if the Incident is
+        /// assigned to a valid technician by name.
+        /// </summary>
+        /// <param name="incident"></param>
         private void ValidateTechnicianNameExists(Incident incident)
         {
             this.ValidateIncidentNotNull(incident);

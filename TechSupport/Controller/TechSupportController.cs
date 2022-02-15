@@ -87,7 +87,7 @@ namespace TechSupport.Controller
         public void CloseIncident(Incident incident)
         {
             this.ValidateIncidentNotNull(incident);
-
+            this.incidentDBSource.CloseOpenIncident(incident);
         }
 
         /// <summary>

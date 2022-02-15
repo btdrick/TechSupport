@@ -61,7 +61,6 @@ namespace TechSupport.UserControls
             {
                 Incident incident = this.CreateIncidentWithIDField();
                 incident = this.techSupportController.GetIncidentByID(incident);
-                this.ValidateFieldsChanged(incident);
                 this.CheckIncidentAssignedTechnician(incident);
 
                 if (this.textToAddTextBox.Text != "")
@@ -84,8 +83,7 @@ namespace TechSupport.UserControls
                 }
                 if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
                 {
-                    this.techSupportController.UpdateIncident(incident);
-                    this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been updated.";
+                    this.FinalizeUpdateIncident(incident);                   
                 }
             }
             catch (ArgumentException)
@@ -105,8 +103,29 @@ namespace TechSupport.UserControls
         /// <param name="e"></param>
         private void CloseIncidentButtonClick(object sender, EventArgs e)
         {
-            Incident incident = this.CreateIncidentWithIDField();
-            this.techSupportController.CloseIncident(incident);
+            try
+            {
+                Incident incident = this.CreateIncidentWithIDField();
+                incident = this.techSupportController.GetIncidentByID(incident);
+                this.ValidateIncidentCanBeClosed(incident);
+                incident.DateClosed = DateTime.Now;
+                if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
+                {
+                    this.techSupportController.UpdateIncident(incident);
+                    this.techSupportController.CloseIncident(incident);
+                    incident = this.techSupportController.GetIncidentByID(incident);
+                    this.SetFields(incident);
+                    this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been closed.";
+                }
+            }
+            catch (ArgumentException)
+            {
+                this.messageLabel.Text = "An incident must have an assigned technician in order to be closed.";
+            }
+            catch (Exception)
+            {
+                this.messageLabel.Text = "An error has occurred while processing the close request.";
+            }
         }
 
         /// <summary>
@@ -318,11 +337,32 @@ namespace TechSupport.UserControls
         }
 
         /// <summary>
+        /// Processes the update to an incident.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void FinalizeUpdateIncident(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            this.techSupportController.UpdateIncident(incident);
+            incident = this.techSupportController.GetIncidentByID(incident);
+            this.SetFields(incident);
+            this.textToAddTextBox.Text = "";
+            if (FieldsChanged(incident))
+            {
+                this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been updated.";
+            }
+            else
+            {
+                this.messageLabel.Text = "No changes made.";
+            }
+        }
+
+        /// <summary>
         /// Checks that the fields to add 
         /// changes to an incidents have been updated.
         /// </summary>
         /// <param name="incident"></param>
-        private void ValidateFieldsChanged(Incident incident)
+        private bool FieldsChanged(Incident incident)
         {
             this.ValidateIncident(incident);
             var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
@@ -330,8 +370,9 @@ namespace TechSupport.UserControls
             if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician == selectedTechnician) 
                 && addedText == "")
             {
-                throw new ArgumentException("Cannot update incident with unchanged fields");
+                return false;
             }
+            return true;
         }
 
         /// <summary>
@@ -350,6 +391,20 @@ namespace TechSupport.UserControls
             else
             {
                 incident.Technician = selectedTechnician;
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if an incident
+        /// has no technician assigned.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateIncidentCanBeClosed(Incident incident)
+        {
+            this.CheckIncidentAssignedTechnician(incident);
+            if (incident.Technician == null)
+            {
+                throw new ArgumentException("Cannot close incident with unassigned technician");
             }
         }
     }
