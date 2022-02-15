@@ -75,7 +75,7 @@ namespace TechSupport.UserControls
                         case DialogResult.Cancel:
                             return;
                         case DialogResult.OK:
-                            incident.Description = incident.Description.Substring(0, 198) + "...";
+                            incident.Description = incident.Description.Substring(0, 196) + "...";
                             break;
                         default:
                             break;
@@ -170,6 +170,7 @@ namespace TechSupport.UserControls
             this.titleTextBox.Text = incident.Title;
             this.dateOpenedTextBox.Text = incident.DateOpened.ToShortDateString();
             this.descriptionTextBox.Text = incident.Description;
+            this.textToAddTextBox.Text = "";
             if (descriptionTextBox.Text.Length == 200)
             {
                 this.messageLabel.Text = "Cannot add to incident description, character count has reached its limit of 200";
@@ -345,8 +346,6 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
             this.techSupportController.UpdateIncident(incident);
             incident = this.techSupportController.GetIncidentByID(incident);
-            this.SetFields(incident);
-            this.textToAddTextBox.Text = "";
             if (FieldsChanged(incident))
             {
                 this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been updated.";
@@ -355,6 +354,7 @@ namespace TechSupport.UserControls
             {
                 this.messageLabel.Text = "No changes made.";
             }
+            this.SetFields(incident);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
             var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
             var addedText = this.textToAddTextBox.Text;
-            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician == selectedTechnician) 
+            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician != selectedTechnician) 
                 && addedText == "")
             {
                 return false;
