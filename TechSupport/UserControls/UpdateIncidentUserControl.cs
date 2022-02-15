@@ -34,10 +34,7 @@ namespace TechSupport.UserControls
             try
             {
                 this.messageLabel.Text = "";                
-                Incident incident = new Incident
-                {
-                    IncidentID = Convert.ToInt32(this.incidentIDTextBox.Text)
-                };
+                Incident incident = this.CreateIncidentWithIDField();
                 incident = this.techSupportController.GetIncidentByID(incident);
                 this.SetFields(incident);              
             }
@@ -60,7 +57,45 @@ namespace TechSupport.UserControls
         /// <param name="e"></param>
         private void UpdateIncidentButtonClick(object sender, EventArgs e)
         {
+            try
+            {
+                Incident incident = this.CreateIncidentWithIDField();
+                incident = this.techSupportController.GetIncidentByID(incident);
+                this.ValidateFieldsChanged(incident);
+                this.CheckIncidentAssignedTechnician(incident);
 
+                if (this.textToAddTextBox.Text != "")
+                {
+                    incident.Description += "\n<" + DateTime.Now.ToShortDateString() + "> " +
+                    this.textToAddTextBox.Text;
+                }
+                if (incident.Description.Length > 200)
+                {
+                    switch (this.ConfirmDescriptionTruncation())
+                    {
+                        case DialogResult.Cancel:
+                            return;
+                        case DialogResult.OK:
+                            incident.Description = incident.Description.Substring(0, 198) + "...";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
+                {
+                    this.techSupportController.UpdateIncident(incident);
+                    this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been updated.";
+                }
+            }
+            catch (ArgumentException)
+            {
+                this.messageLabel.Text = "Cannot update the incident. Must have either new technician or description";
+            }
+            catch (Exception)
+            {
+                this.messageLabel.Text = "An error has occurred with processing the update";
+            }
         }
 
         /// <summary>
@@ -70,10 +105,7 @@ namespace TechSupport.UserControls
         /// <param name="e"></param>
         private void CloseIncidentButtonClick(object sender, EventArgs e)
         {
-            Incident incident = new Incident
-            {
-                IncidentID = Convert.ToInt32(this.incidentIDTextBox.Text)
-            };
+            Incident incident = this.CreateIncidentWithIDField();
             this.techSupportController.CloseIncident(incident);
         }
 
@@ -88,7 +120,22 @@ namespace TechSupport.UserControls
             this.DisableFields();
         }
 
-        ///*** HELPER FUNCTIONS ***
+        //*** HELPER FUNCTIONS ***
+
+        
+        /// <summary>
+        /// Creates an Incident object
+        /// using the IncidentID TextField.
+        /// </summary>
+        /// <returns>Incident object</returns>
+        private Incident CreateIncidentWithIDField()
+        {
+            Incident incident = new Incident
+            {
+                IncidentID = Convert.ToInt32(this.incidentIDTextBox.Text)
+            };
+            return incident;
+        }
 
         /// <summary>
         /// Sets the fields after getting an existing incident.
@@ -152,7 +199,7 @@ namespace TechSupport.UserControls
                 this.messageLabel.Text = "Incident with ID of " + incident.IncidentID +
                 " was closed on " + incident.DateClosed.ToShortDateString();
             }
-            else if (incident.Technician == "" || incident.Technician == null)
+            else if (incident.Technician == null)
             {
                 this.SetTechnicianComboBoxForOpenUnassignedIncident(incident);
                 this.EnableFieldsForOpenIncident();
@@ -230,6 +277,35 @@ namespace TechSupport.UserControls
         }
 
         /// <summary>
+        /// Prompts the user to confirm
+        /// that they want to update the incident.
+        /// </summary>
+        /// <param name="incident"></param>
+        private DialogResult ConfirmUpdateIncident(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            DialogResult result = MessageBox.Show("Are you sure you want to update Incident " + incident.IncidentID +
+                " with title: " + incident.Title + "?\n\nThis cannot be undone", 
+                "Confirm Incident Update", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            return result;
+        }
+
+        /// <summary>
+        /// Prompts a warning to the user
+        /// a confirmation to truncate an incident's
+        /// description with the added text.
+        /// </summary>
+        /// <returns>True to truncate description</returns>
+        private DialogResult ConfirmDescriptionTruncation()
+        {
+            DialogResult result = MessageBox.Show("Added text currently exceeds the 200 character limit.\n" +
+                "Would you like to truncate the description to fit the 200 character limit?\n\n" +
+                "This cannot be undone.",
+                "Update Description Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            return result;
+        }
+
+        /// <summary>
         /// Validates that an Incident object is not null.
         /// </summary>
         /// <param name="incident"></param>
@@ -238,6 +314,42 @@ namespace TechSupport.UserControls
             if (incident == null)
             {
                 throw new ArgumentException("Incident cannot be null");
+            }
+        }
+
+        /// <summary>
+        /// Checks that the fields to add 
+        /// changes to an incidents have been updated.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateFieldsChanged(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
+            var addedText = this.textToAddTextBox.Text;
+            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician == selectedTechnician) 
+                && addedText == "")
+            {
+                throw new ArgumentException("Cannot update incident with unchanged fields");
+            }
+        }
+
+        /// <summary>
+        /// Assigns Technician value to NULL
+        /// if Technician remains unassigned.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void CheckIncidentAssignedTechnician(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
+            if (selectedTechnician == "** Unassigned **")
+            {
+                incident.Technician = null;
+            }
+            else
+            {
+                incident.Technician = selectedTechnician;
             }
         }
     }

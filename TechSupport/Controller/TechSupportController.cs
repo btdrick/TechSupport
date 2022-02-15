@@ -53,10 +53,7 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddInternalIncident(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
+            this.ValidateIncidentNotNull(incident);
             this.incidentInternalSource.Add(incident);
         }
 
@@ -68,10 +65,7 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
+            this.ValidateIncidentNotNull(incident);
             this.incidentDBSource.AddOpenIncident(incident);
         }
 
@@ -82,10 +76,7 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public bool IsIncidentClosed(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
+            this.ValidateIncidentNotNull(incident);
             return this.incidentDBSource.IsIncidentClosed(incident);
         }
 
@@ -95,10 +86,19 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void CloseIncident(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
+            this.ValidateIncidentNotNull(incident);
+
+        }
+
+        /// <summary>
+        /// Updates a row from 
+        /// TechSupport db Incidents table.
+        /// </summary>
+        /// <param name="incident"></param>
+        public void UpdateIncident(Incident incident)
+        {
+            this.ValidateIncidentNotNull(incident);
+            this.incidentDBSource.UpdateIncident(incident);
         }
 
         /// <summary>
@@ -118,14 +118,7 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public Incident GetIncidentByID(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
-            if (incident.IncidentID <= 0)
-            {
-                throw new ArgumentException("CustomerID cannot be less than 1");
-            }
+            this.ValidateIncidentNotNull(incident);
             return this.incidentDBSource.GetIncidentByID(incident);
         }
 
@@ -137,7 +130,6 @@ namespace TechSupport.Controller
         {
             return this.incidentDBSource.GetCustomerNames();
         }
-
 
         /// <summary>
         /// Gets all technician names from TechSupport db source.
@@ -166,10 +158,7 @@ namespace TechSupport.Controller
         /// <returns>True if registration exists</returns>
         public bool ProductIsRegisteredToCustomer(Incident incident)
         {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
+            this.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Customer name cannot be null or empty");
@@ -189,6 +178,18 @@ namespace TechSupport.Controller
         public int GetLastIncidentID()
         {
             return this.incidentDBSource.GetLastIncidentID();
+        }
+
+        /// <summary>
+        /// Validates that an Incident object is not null.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateIncidentNotNull(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null", "incident");
+            }
         }
     }
 }

@@ -355,7 +355,7 @@ namespace TechSupport.UserControls
             this.technicianComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.technicianComboBox.Enabled = false;
             this.technicianComboBox.FormattingEnabled = true;
-            this.technicianComboBox.Location = new System.Drawing.Point(176, 190);
+            this.technicianComboBox.Location = new System.Drawing.Point(176, 191);
             this.technicianComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 7, 4);
             this.technicianComboBox.Name = "technicianComboBox";
             this.technicianComboBox.Size = new System.Drawing.Size(479, 24);
@@ -381,6 +381,7 @@ namespace TechSupport.UserControls
             this.messageLabel.Name = "messageLabel";
             this.messageLabel.Size = new System.Drawing.Size(0, 17);
             this.messageLabel.TabIndex = 20;
+            this.messageLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // UpdateIncidentUserControl
             // 
