@@ -65,6 +65,7 @@ namespace TechSupport.UserControls
             this.addIncidentTableLayoutPanel.Controls.Add(this.productComboBox, 1, 2);
             this.addIncidentTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.addIncidentTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.addIncidentTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addIncidentTableLayoutPanel.Name = "addIncidentTableLayoutPanel";
             this.addIncidentTableLayoutPanel.RowCount = 7;
             this.addIncidentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.02899F));
@@ -74,8 +75,8 @@ namespace TechSupport.UserControls
             this.addIncidentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.01639F));
             this.addIncidentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.78689F));
             this.addIncidentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.39344F));
-            this.addIncidentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.addIncidentTableLayoutPanel.Size = new System.Drawing.Size(380, 305);
+            this.addIncidentTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.addIncidentTableLayoutPanel.Size = new System.Drawing.Size(507, 375);
             this.addIncidentTableLayoutPanel.TabIndex = 1;
             // 
             // submitButtonLayoutPane
@@ -87,21 +88,21 @@ namespace TechSupport.UserControls
             this.submitButtonLayoutPane.Controls.Add(this.addIncidentButton, 0, 0);
             this.submitButtonLayoutPane.Controls.Add(this.addIncidentCancelButton, 1, 0);
             this.submitButtonLayoutPane.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.submitButtonLayoutPane.Location = new System.Drawing.Point(2, 256);
-            this.submitButtonLayoutPane.Margin = new System.Windows.Forms.Padding(2);
+            this.submitButtonLayoutPane.Location = new System.Drawing.Point(3, 314);
+            this.submitButtonLayoutPane.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.submitButtonLayoutPane.Name = "submitButtonLayoutPane";
             this.submitButtonLayoutPane.RowCount = 1;
             this.submitButtonLayoutPane.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.submitButtonLayoutPane.Size = new System.Drawing.Size(376, 47);
+            this.submitButtonLayoutPane.Size = new System.Drawing.Size(501, 59);
             this.submitButtonLayoutPane.TabIndex = 13;
             // 
             // addIncidentButton
             // 
             this.addIncidentButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.addIncidentButton.Location = new System.Drawing.Point(47, 9);
-            this.addIncidentButton.Margin = new System.Windows.Forms.Padding(2);
+            this.addIncidentButton.Location = new System.Drawing.Point(62, 11);
+            this.addIncidentButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addIncidentButton.Name = "addIncidentButton";
-            this.addIncidentButton.Size = new System.Drawing.Size(94, 29);
+            this.addIncidentButton.Size = new System.Drawing.Size(125, 36);
             this.addIncidentButton.TabIndex = 4;
             this.addIncidentButton.Text = "Add";
             this.addIncidentButton.UseVisualStyleBackColor = true;
@@ -110,10 +111,10 @@ namespace TechSupport.UserControls
             // addIncidentCancelButton
             // 
             this.addIncidentCancelButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.addIncidentCancelButton.Location = new System.Drawing.Point(235, 9);
-            this.addIncidentCancelButton.Margin = new System.Windows.Forms.Padding(2);
+            this.addIncidentCancelButton.Location = new System.Drawing.Point(313, 11);
+            this.addIncidentCancelButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addIncidentCancelButton.Name = "addIncidentCancelButton";
-            this.addIncidentCancelButton.Size = new System.Drawing.Size(94, 29);
+            this.addIncidentCancelButton.Size = new System.Drawing.Size(125, 36);
             this.addIncidentCancelButton.TabIndex = 5;
             this.addIncidentCancelButton.Text = "Clear";
             this.addIncidentCancelButton.UseVisualStyleBackColor = true;
@@ -125,11 +126,11 @@ namespace TechSupport.UserControls
             this.addIncidentStatusLabel.AutoSize = true;
             this.addIncidentTableLayoutPanel.SetColumnSpan(this.addIncidentStatusLabel, 2);
             this.addIncidentStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addIncidentStatusLabel.Location = new System.Drawing.Point(190, 225);
-            this.addIncidentStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.addIncidentStatusLabel.ForeColor = System.Drawing.Color.Black;
+            this.addIncidentStatusLabel.Location = new System.Drawing.Point(253, 276);
             this.addIncidentStatusLabel.Name = "addIncidentStatusLabel";
             this.addIncidentStatusLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.addIncidentStatusLabel.Size = new System.Drawing.Size(0, 20);
+            this.addIncidentStatusLabel.Size = new System.Drawing.Size(0, 25);
             this.addIncidentStatusLabel.TabIndex = 12;
             this.addIncidentStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -137,12 +138,12 @@ namespace TechSupport.UserControls
             // 
             this.descriptionTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.descriptionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriptionTextBox.Location = new System.Drawing.Point(123, 161);
-            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.descriptionTextBox.Location = new System.Drawing.Point(165, 197);
+            this.descriptionTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.descriptionTextBox.MaxLength = 2000;
             this.descriptionTextBox.Multiline = true;
             this.descriptionTextBox.Name = "descriptionTextBox";
-            this.descriptionTextBox.Size = new System.Drawing.Size(243, 53);
+            this.descriptionTextBox.Size = new System.Drawing.Size(323, 64);
             this.descriptionTextBox.TabIndex = 3;
             this.descriptionTextBox.TextChanged += new System.EventHandler(this.AddIncidentFieldsChanged);
             // 
@@ -151,10 +152,10 @@ namespace TechSupport.UserControls
             this.descriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.descriptionLabel.AutoSize = true;
             this.descriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.descriptionLabel.Location = new System.Drawing.Point(25, 165);
-            this.descriptionLabel.Margin = new System.Windows.Forms.Padding(2, 6, 2, 0);
+            this.descriptionLabel.Location = new System.Drawing.Point(43, 202);
+            this.descriptionLabel.Margin = new System.Windows.Forms.Padding(3, 7, 3, 0);
             this.descriptionLabel.Name = "descriptionLabel";
-            this.descriptionLabel.Size = new System.Drawing.Size(83, 17);
+            this.descriptionLabel.Size = new System.Drawing.Size(100, 20);
             this.descriptionLabel.TabIndex = 8;
             this.descriptionLabel.Text = "Description:";
             // 
@@ -162,11 +163,11 @@ namespace TechSupport.UserControls
             // 
             this.titleTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.titleTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleTextBox.Location = new System.Drawing.Point(123, 131);
-            this.titleTextBox.Margin = new System.Windows.Forms.Padding(2);
+            this.titleTextBox.Location = new System.Drawing.Point(165, 162);
+            this.titleTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.titleTextBox.MaxLength = 50;
             this.titleTextBox.Name = "titleTextBox";
-            this.titleTextBox.Size = new System.Drawing.Size(243, 23);
+            this.titleTextBox.Size = new System.Drawing.Size(323, 26);
             this.titleTextBox.TabIndex = 2;
             this.titleTextBox.TextChanged += new System.EventHandler(this.AddIncidentFieldsChanged);
             // 
@@ -175,10 +176,9 @@ namespace TechSupport.UserControls
             this.titleLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.titleLabel.AutoSize = true;
             this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleLabel.Location = new System.Drawing.Point(69, 134);
-            this.titleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.titleLabel.Location = new System.Drawing.Point(97, 165);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(39, 17);
+            this.titleLabel.Size = new System.Drawing.Size(46, 20);
             this.titleLabel.TabIndex = 6;
             this.titleLabel.Text = "Title:";
             // 
@@ -189,10 +189,9 @@ namespace TechSupport.UserControls
             this.addIncidentLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.addIncidentTableLayoutPanel.SetColumnSpan(this.addIncidentLabel, 2);
             this.addIncidentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addIncidentLabel.Location = new System.Drawing.Point(52, 16);
-            this.addIncidentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.addIncidentLabel.Location = new System.Drawing.Point(84, 20);
             this.addIncidentLabel.Name = "addIncidentLabel";
-            this.addIncidentLabel.Size = new System.Drawing.Size(275, 33);
+            this.addIncidentLabel.Size = new System.Drawing.Size(339, 41);
             this.addIncidentLabel.TabIndex = 1;
             this.addIncidentLabel.Text = "Add Incident Report";
             // 
@@ -201,10 +200,9 @@ namespace TechSupport.UserControls
             this.productLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.productLabel.AutoSize = true;
             this.productLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.productLabel.Location = new System.Drawing.Point(47, 103);
-            this.productLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.productLabel.Location = new System.Drawing.Point(71, 127);
             this.productLabel.Name = "productLabel";
-            this.productLabel.Size = new System.Drawing.Size(61, 17);
+            this.productLabel.Size = new System.Drawing.Size(72, 20);
             this.productLabel.TabIndex = 14;
             this.productLabel.Text = "Product:";
             // 
@@ -213,10 +211,9 @@ namespace TechSupport.UserControls
             this.customerLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.customerLabel.AutoSize = true;
             this.customerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customerLabel.Location = new System.Drawing.Point(36, 73);
-            this.customerLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.customerLabel.Location = new System.Drawing.Point(56, 90);
             this.customerLabel.Name = "customerLabel";
-            this.customerLabel.Size = new System.Drawing.Size(72, 17);
+            this.customerLabel.Size = new System.Drawing.Size(87, 20);
             this.customerLabel.TabIndex = 15;
             this.customerLabel.Text = "Customer:";
             // 
@@ -228,11 +225,11 @@ namespace TechSupport.UserControls
             this.customerComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.customerComboBox.FormattingEnabled = true;
             this.customerComboBox.IntegralHeight = false;
-            this.customerComboBox.Location = new System.Drawing.Point(123, 71);
-            this.customerComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.customerComboBox.Location = new System.Drawing.Point(165, 88);
+            this.customerComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.customerComboBox.MaxDropDownItems = 5;
             this.customerComboBox.Name = "customerComboBox";
-            this.customerComboBox.Size = new System.Drawing.Size(243, 21);
+            this.customerComboBox.Size = new System.Drawing.Size(323, 24);
             this.customerComboBox.TabIndex = 0;
             this.customerComboBox.SelectedValueChanged += new System.EventHandler(this.AddIncidentFieldsChanged);
             // 
@@ -244,21 +241,21 @@ namespace TechSupport.UserControls
             this.productComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.productComboBox.FormattingEnabled = true;
             this.productComboBox.IntegralHeight = false;
-            this.productComboBox.Location = new System.Drawing.Point(123, 101);
-            this.productComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.productComboBox.Location = new System.Drawing.Point(165, 125);
+            this.productComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.productComboBox.Name = "productComboBox";
-            this.productComboBox.Size = new System.Drawing.Size(243, 21);
+            this.productComboBox.Size = new System.Drawing.Size(323, 24);
             this.productComboBox.TabIndex = 1;
             this.productComboBox.SelectedValueChanged += new System.EventHandler(this.AddIncidentFieldsChanged);
             // 
             // AddIncidentUserControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.addIncidentTableLayoutPanel);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "AddIncidentUserControl";
-            this.Size = new System.Drawing.Size(380, 305);
+            this.Size = new System.Drawing.Size(507, 375);
             this.addIncidentTableLayoutPanel.ResumeLayout(false);
             this.addIncidentTableLayoutPanel.PerformLayout();
             this.submitButtonLayoutPane.ResumeLayout(false);

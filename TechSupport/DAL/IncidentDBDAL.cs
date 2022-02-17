@@ -480,16 +480,12 @@ namespace TechSupport.DAL
             }
 
             bool registrationExists = false;
-            string selectStatement = "SELECT CASE WHEN EXISTS " +
-                "(SELECT r.CustomerID, r.ProductCode " +
+            string selectStatement = "SELECT COUNT(*) " +
                 "FROM Registrations r " +
                 "JOIN Customers c ON c.Name = @customer " +
                 "JOIN Products p ON p.Name = @product " +
                 "WHERE r.CustomerID = c.CustomerID " +
-                "AND r.ProductCode = p.ProductCode) " +
-                "THEN CAST(1 AS BIT) " +
-                "ELSE CAST(0 AS BIT) " +
-                "END";
+                "AND r.ProductCode = p.ProductCode";
 
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
@@ -526,13 +522,9 @@ namespace TechSupport.DAL
         private void ValidateIncidentExists(Incident incident)
         {
             this.ValidateIncidentNotNull(incident);
-            string selectStatement = "SELECT CASE WHEN EXISTS " +
-                "(SELECT * " +
-                "FROM Incidents " +
-                "WHERE IncidentID = @incidentid) " +
-                "THEN CAST(0 AS BIT) " +
-                "ELSE CAST(1 AS BIT) " +
-                "END";
+            string selectStatement =  "SELECT COUNT(*) " +
+                                      "FROM Incidents " +
+                                      "WHERE IncidentID = @incidentid";
 
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
@@ -556,13 +548,9 @@ namespace TechSupport.DAL
         private void ValidateTechnicianNameExists(Incident incident)
         {
             this.ValidateIncidentNotNull(incident);
-            string selectStatement = "SELECT CASE WHEN EXISTS " +
-                "(SELECT * " +
-                "FROM Technicians " +
-                "WHERE Name = @technician) " +
-                "THEN CAST(0 AS BIT) " +
-                "ELSE CAST(1 AS BIT) " +
-                "END";
+            string selectStatement = "SELECT COUNT(*) " +
+                                     "FROM Technicians " +
+                                     "WHERE Name = @technician";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();

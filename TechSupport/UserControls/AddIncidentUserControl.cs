@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using TechSupport.Controller;
 using TechSupport.Model;
@@ -82,15 +83,15 @@ namespace TechSupport.UserControls
 
                     this.UpdateIncidentStatusLabel("Incident successfully added\n by "
                     + this.customerComboBox.SelectedValue.ToString() + ". Incident ID is "
-                    + this.techSupportController.GetLastIncidentID());
+                    + this.techSupportController.GetLastIncidentID(), false);
                 } else
                 {
-                    this.UpdateIncidentStatusLabel(product + " is not registered to " + customer + ".");
+                    this.UpdateIncidentStatusLabel(product + " is not registered to " + customer + ".", true);
                 }
             }
             catch (Exception)
             {
-                this.UpdateIncidentStatusLabel("An incident must have a title and description.");
+                this.UpdateIncidentStatusLabel("An incident must have a title and description.", true);
             }
         }
 
@@ -109,7 +110,7 @@ namespace TechSupport.UserControls
                 this.titleTextBox.Text = "";
                 this.descriptionTextBox.Text = "";
                 
-                this.addIncidentStatusLabel.Text = "Fields cleared";
+                this.UpdateIncidentStatusLabel("Fields cleared", false);
             }
         }
 
@@ -122,7 +123,7 @@ namespace TechSupport.UserControls
         {
             if (this.addIncidentStatusLabel.Text != "")
             {
-                this.UpdateIncidentStatusLabel("");
+                this.UpdateIncidentStatusLabel("", false);
             }
         }
 
@@ -130,11 +131,20 @@ namespace TechSupport.UserControls
         /// Updates message status label.
         /// </summary>
         /// <param name="message"></param>
-        private void UpdateIncidentStatusLabel(string message)
+        private void UpdateIncidentStatusLabel(string message, bool isErrorMessage)
         {
             if (message != null)
             {
-                this.addIncidentStatusLabel.Text = message;
+                if (isErrorMessage)
+                {
+                    this.addIncidentStatusLabel.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.addIncidentStatusLabel.ForeColor = Color.Black;
+                }
+                
+                this.addIncidentStatusLabel.Text = message;               
             }
             else
             {

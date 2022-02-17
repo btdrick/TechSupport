@@ -53,7 +53,7 @@ namespace TechSupport.UserControls
             this.textToAddTextBox = new System.Windows.Forms.TextBox();
             this.technicianComboBox = new System.Windows.Forms.ComboBox();
             this.descriptionLabel = new System.Windows.Forms.Label();
-            this.messageLabel = new System.Windows.Forms.Label();
+            this.updateIncidentStatusLabel = new System.Windows.Forms.Label();
             this.updateIncidentTableLayoutPanel.SuspendLayout();
             this.incidentIDTableLayoutPanel.SuspendLayout();
             this.updateIncidentButtonsTableLayoutPanel.SuspendLayout();
@@ -82,7 +82,7 @@ namespace TechSupport.UserControls
             this.updateIncidentTableLayoutPanel.Controls.Add(this.textToAddTextBox, 1, 8);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.technicianComboBox, 1, 4);
             this.updateIncidentTableLayoutPanel.Controls.Add(this.descriptionLabel, 0, 7);
-            this.updateIncidentTableLayoutPanel.Controls.Add(this.messageLabel, 0, 9);
+            this.updateIncidentTableLayoutPanel.Controls.Add(this.updateIncidentStatusLabel, 0, 9);
             this.updateIncidentTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.updateIncidentTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.updateIncidentTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
@@ -356,7 +356,7 @@ namespace TechSupport.UserControls
             this.technicianComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.technicianComboBox.Enabled = false;
             this.technicianComboBox.FormattingEnabled = true;
-            this.technicianComboBox.Location = new System.Drawing.Point(176, 191);
+            this.technicianComboBox.Location = new System.Drawing.Point(176, 190);
             this.technicianComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 7, 4);
             this.technicianComboBox.Name = "technicianComboBox";
             this.technicianComboBox.Size = new System.Drawing.Size(479, 24);
@@ -372,17 +372,18 @@ namespace TechSupport.UserControls
             this.descriptionLabel.TabIndex = 9;
             this.descriptionLabel.Text = "Description:";
             // 
-            // messageLabel
+            // updateIncidentStatusLabel
             // 
-            this.messageLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.messageLabel.AutoSize = true;
-            this.updateIncidentTableLayoutPanel.SetColumnSpan(this.messageLabel, 2);
-            this.messageLabel.Location = new System.Drawing.Point(345, 467);
-            this.messageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.messageLabel.Name = "messageLabel";
-            this.messageLabel.Size = new System.Drawing.Size(0, 17);
-            this.messageLabel.TabIndex = 20;
-            this.messageLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.updateIncidentStatusLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.updateIncidentStatusLabel.AutoSize = true;
+            this.updateIncidentTableLayoutPanel.SetColumnSpan(this.updateIncidentStatusLabel, 2);
+            this.updateIncidentStatusLabel.ForeColor = System.Drawing.Color.Black;
+            this.updateIncidentStatusLabel.Location = new System.Drawing.Point(345, 467);
+            this.updateIncidentStatusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.updateIncidentStatusLabel.Name = "updateIncidentStatusLabel";
+            this.updateIncidentStatusLabel.Size = new System.Drawing.Size(0, 17);
+            this.updateIncidentStatusLabel.TabIndex = 20;
+            this.updateIncidentStatusLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // UpdateIncidentUserControl
             // 
@@ -427,6 +428,6 @@ namespace TechSupport.UserControls
         private System.Windows.Forms.Button updateIncidentButton;
         private System.Windows.Forms.Button closeIncidentButton;
         private System.Windows.Forms.Button clearButton;
-        private System.Windows.Forms.Label messageLabel;
+        private System.Windows.Forms.Label updateIncidentStatusLabel;
     }
 }

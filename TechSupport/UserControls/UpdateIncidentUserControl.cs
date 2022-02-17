@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using TechSupport.Controller;
 using TechSupport.Model;
@@ -33,19 +34,18 @@ namespace TechSupport.UserControls
         {
             try
             {
-                this.messageLabel.Text = "";                
-                Incident incident = this.CreateIncidentWithIDField();
-                incident = this.techSupportController.GetIncidentByID(incident);
+                this.updateIncidentStatusLabel.Text = "";                
+                Incident incident = this.GetIncidentWithIDField();
                 this.SetFields(incident);              
             }
             catch (FormatException)
             {
-                this.messageLabel.Text = "Check that the entered ID is a positive integer";
+                this.UpdateIncidentStatusLabel("Check that the entered ID is a positive integer", true);
                 this.ClearFields();
             }
             catch (Exception)
             {
-                this.messageLabel.Text = "An incident with that ID does not exist";
+                this.UpdateIncidentStatusLabel("An incident with that ID does not exist", true);
                 this.ClearFields();
             }
         }
@@ -59,28 +59,29 @@ namespace TechSupport.UserControls
         {
             try
             {
-                Incident incident = this.CreateIncidentWithIDField();
-                incident = this.techSupportController.GetIncidentByID(incident);
-                this.CheckIncidentAssignedTechnician(incident);
+                Incident incident = this.GetIncidentWithIDField();
+                this.UpdateTechnicianWIthTechnicianComboBox(incident);
 
                 if (this.textToAddTextBox.Text != "")
                 {
                     incident.Description += "\n<" + DateTime.Now.ToShortDateString() + "> " +
                     this.textToAddTextBox.Text;
-                }
-                if (incident.Description.Length > 200)
-                {
-                    switch (this.ConfirmDescriptionTruncation())
+
+                    if (incident.Description.Length > 200)
                     {
-                        case DialogResult.Cancel:
-                            return;
-                        case DialogResult.OK:
-                            incident.Description = incident.Description.Substring(0, 196) + "...";
-                            break;
-                        default:
-                            break;
+                        switch (this.ConfirmDescriptionTruncation())
+                        {
+                            case DialogResult.Cancel:
+                                return;
+                            case DialogResult.OK:
+                                incident.Description = incident.Description.Substring(0, 196) + "...";
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                }
+                }          
+                
                 if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
                 {
                     this.FinalizeUpdateIncident(incident);                   
@@ -88,11 +89,11 @@ namespace TechSupport.UserControls
             }
             catch (ArgumentException)
             {
-                this.messageLabel.Text = "Cannot update the incident. Must have either new technician or description";
+                this.UpdateIncidentStatusLabel("Cannot update the incident. Must have either new technician or description", true);
             }
             catch (Exception)
             {
-                this.messageLabel.Text = "An error has occurred with processing the update";
+                this.UpdateIncidentStatusLabel("An error has occurred with processing the update", true);
             }
         }
 
@@ -105,8 +106,7 @@ namespace TechSupport.UserControls
         {
             try
             {
-                Incident incident = this.CreateIncidentWithIDField();
-                incident = this.techSupportController.GetIncidentByID(incident);
+                Incident incident = this.GetIncidentWithIDField();
                 this.ValidateIncidentCanBeClosed(incident);
                 incident.DateClosed = DateTime.Now;
                 if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
@@ -115,16 +115,16 @@ namespace TechSupport.UserControls
                     this.techSupportController.CloseIncident(incident);
                     incident = this.techSupportController.GetIncidentByID(incident);
                     this.SetFields(incident);
-                    this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been closed.";
+                    this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been closed.", false);
                 }
             }
             catch (ArgumentException)
             {
-                this.messageLabel.Text = "An incident must have an assigned technician in order to be closed.";
+                this.UpdateIncidentStatusLabel("An incident must have an assigned technician in order to be closed.", true);
             }
             catch (Exception)
             {
-                this.messageLabel.Text = "An error has occurred while processing the close request.";
+                this.UpdateIncidentStatusLabel("An error has occurred while processing the close request.", true);
             }
         }
 
@@ -139,6 +139,7 @@ namespace TechSupport.UserControls
             this.DisableFields();
         }
 
+
         //*** HELPER FUNCTIONS ***
 
         
@@ -147,12 +148,13 @@ namespace TechSupport.UserControls
         /// using the IncidentID TextField.
         /// </summary>
         /// <returns>Incident object</returns>
-        private Incident CreateIncidentWithIDField()
+        private Incident GetIncidentWithIDField()
         {
             Incident incident = new Incident
             {
                 IncidentID = Convert.ToInt32(this.incidentIDTextBox.Text)
             };
+            incident = this.techSupportController.GetIncidentByID(incident);
             return incident;
         }
 
@@ -173,7 +175,7 @@ namespace TechSupport.UserControls
             this.textToAddTextBox.Text = "";
             if (descriptionTextBox.Text.Length == 200)
             {
-                this.messageLabel.Text = "Cannot add to incident description, character count has reached its limit of 200";
+                this.UpdateIncidentStatusLabel("Incident description cannot be added to, the max character count is 200", false);
                 this.textToAddTextBox.Enabled = false;
             }
         }
@@ -216,8 +218,8 @@ namespace TechSupport.UserControls
             {
                 this.SetTechnicianComboBoxForClosedIncident(incident);
                 this.DisableFields();
-                this.messageLabel.Text = "Incident with ID of " + incident.IncidentID +
-                " was closed on " + incident.DateClosed.ToShortDateString();
+                this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID +
+                " was closed on " + incident.DateClosed.ToShortDateString(), false);
             }
             else if (incident.Technician == null)
             {
@@ -284,7 +286,7 @@ namespace TechSupport.UserControls
 
         /// <summary>
         /// Disables fields so user cannot
-        /// alter a closed incident.
+        /// alter a closed incident or an empty form.
         /// </summary>
         /// <param name="incident"></param>
         private void DisableFields()
@@ -326,18 +328,6 @@ namespace TechSupport.UserControls
         }
 
         /// <summary>
-        /// Validates that an Incident object is not null.
-        /// </summary>
-        /// <param name="incident"></param>
-        private void ValidateIncident(Incident incident)
-        {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null");
-            }
-        }
-
-        /// <summary>
         /// Processes the update to an incident.
         /// </summary>
         /// <param name="incident"></param>
@@ -346,33 +336,15 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
             this.techSupportController.UpdateIncident(incident);
             incident = this.techSupportController.GetIncidentByID(incident);
-            if (FieldsChanged(incident))
+            if (this.ValidateUserInput(incident))
             {
-                this.messageLabel.Text = "Incident with ID of " + incident.IncidentID + " has been updated.";
+                this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);
             }
             else
             {
-                this.messageLabel.Text = "No changes made.";
+                this.UpdateIncidentStatusLabel("No changes made.", false);
             }
             this.SetFields(incident);
-        }
-
-        /// <summary>
-        /// Checks that the fields to add 
-        /// changes to an incidents have been updated.
-        /// </summary>
-        /// <param name="incident"></param>
-        private bool FieldsChanged(Incident incident)
-        {
-            this.ValidateIncident(incident);
-            var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
-            var addedText = this.textToAddTextBox.Text;
-            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician != selectedTechnician) 
-                && addedText == "")
-            {
-                return false;
-            }
-            return true;
         }
 
         /// <summary>
@@ -380,7 +352,7 @@ namespace TechSupport.UserControls
         /// if Technician remains unassigned.
         /// </summary>
         /// <param name="incident"></param>
-        private void CheckIncidentAssignedTechnician(Incident incident)
+        private void UpdateTechnicianWIthTechnicianComboBox(Incident incident)
         {
             this.ValidateIncident(incident);
             var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
@@ -394,6 +366,22 @@ namespace TechSupport.UserControls
             }
         }
 
+
+        //*** VALIDATION FUNCTIONS ***
+
+
+        /// <summary>
+        /// Validates that an Incident object is not null.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateIncident(Incident incident)
+        {
+            if (incident == null)
+            {
+                throw new ArgumentException("Incident cannot be null");
+            }
+        }
+
         /// <summary>
         /// Throws an exception if an incident
         /// has no technician assigned.
@@ -401,10 +389,57 @@ namespace TechSupport.UserControls
         /// <param name="incident"></param>
         private void ValidateIncidentCanBeClosed(Incident incident)
         {
-            this.CheckIncidentAssignedTechnician(incident);
+            this.UpdateTechnicianWIthTechnicianComboBox(incident);
             if (incident.Technician == null)
             {
                 throw new ArgumentException("Cannot close incident with unassigned technician");
+            }
+        }
+
+        /// <summary>
+        /// Checks that the fields to add 
+        /// changes to an incidents have been updated.
+        /// </summary>
+        /// <param name="incident"></param>
+        private bool ValidateUserInput(Incident incident)
+        {
+            this.ValidateIncident(incident);
+            var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
+            var addedText = this.textToAddTextBox.Text;
+            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician != selectedTechnician)
+                && addedText == "")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Updates the status label.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="isError"></param>
+        private void UpdateIncidentStatusLabel(string message, bool isError)
+        {
+            if (message != null)
+            {
+                if (isError)
+                {
+                    this.updateIncidentStatusLabel.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.updateIncidentStatusLabel.ForeColor = Color.Black;
+                }
+
+                this.updateIncidentStatusLabel.Text = message;
+            }
+            else
+            {
+                throw new ArgumentException("Message cannot be null");
             }
         }
     }
