@@ -503,7 +503,8 @@ namespace TechSupport.DAL
                 using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
                 {
                     selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
-                    if (Convert.ToBoolean(selectCommand.ExecuteScalar()))
+                    
+                    if (!Convert.ToBoolean(selectCommand.ExecuteScalar()))
                     {
                         throw new ArgumentException("An incident with that ID does not exist");
                     }
@@ -528,7 +529,7 @@ namespace TechSupport.DAL
                 using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
                 {
                     selectCommand.Parameters.AddWithValue("technician", incident.Technician);
-                    if (Convert.ToBoolean(selectCommand.ExecuteScalar()))
+                    if (!Convert.ToBoolean(selectCommand.ExecuteScalar()))
                     {
                         throw new ArgumentException("A technician with that name does not exist");
                     }

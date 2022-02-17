@@ -60,8 +60,9 @@ namespace TechSupport.UserControls
             try
             {
                 Incident incident = this.GetIncidentWithIDField();
-                this.UpdateTechnicianWIthTechnicianComboBox(incident);
-
+                this.UpdateTechnicianWithTechnicianComboBox(incident);
+                this.ValidateChangedFields(incident);                                  
+               
                 if (this.textToAddTextBox.Text != "")
                 {
                     incident.Description += "\n<" + DateTime.Now.ToShortDateString() + "> " +
@@ -336,14 +337,7 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
             this.techSupportController.UpdateIncident(incident);
             incident = this.techSupportController.GetIncidentByID(incident);
-            if (this.ValidateUserInput(incident))
-            {
-                this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);
-            }
-            else
-            {
-                this.UpdateIncidentStatusLabel("No changes made.", false);
-            }
+            this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);
             this.SetFields(incident);
         }
 
@@ -352,7 +346,7 @@ namespace TechSupport.UserControls
         /// if Technician remains unassigned.
         /// </summary>
         /// <param name="incident"></param>
-        private void UpdateTechnicianWIthTechnicianComboBox(Incident incident)
+        private void UpdateTechnicianWithTechnicianComboBox(Incident incident)
         {
             this.ValidateIncident(incident);
             var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
@@ -389,7 +383,7 @@ namespace TechSupport.UserControls
         /// <param name="incident"></param>
         private void ValidateIncidentCanBeClosed(Incident incident)
         {
-            this.UpdateTechnicianWIthTechnicianComboBox(incident);
+            this.UpdateTechnicianWithTechnicianComboBox(incident);
             if (incident.Technician == null)
             {
                 throw new ArgumentException("Cannot close incident with unassigned technician");
@@ -401,7 +395,7 @@ namespace TechSupport.UserControls
         /// changes to an incidents have been updated.
         /// </summary>
         /// <param name="incident"></param>
-        private bool ValidateUserInput(Incident incident)
+        private void ValidateChangedFields(Incident incident)
         {
             this.ValidateIncident(incident);
             var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
@@ -409,11 +403,7 @@ namespace TechSupport.UserControls
             if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician != selectedTechnician)
                 && addedText == "")
             {
-                return false;
-            }
-            else
-            {
-                return true;
+                throw new ArgumentException("Cannot update an incident with no changes made");
             }
         }
 
