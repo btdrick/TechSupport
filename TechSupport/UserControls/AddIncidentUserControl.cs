@@ -83,7 +83,7 @@ namespace TechSupport.UserControls
 
                     this.UpdateIncidentStatusLabel("Incident successfully added\n by "
                     + this.customerComboBox.SelectedValue.ToString() + ". Incident ID is "
-                    + this.techSupportController.GetLastIncidentID(), false);
+                    + incidentToAdd.IncidentID, false);
                 } else
                 {
                     this.UpdateIncidentStatusLabel(product + " is not registered to " + customer + ".", true);

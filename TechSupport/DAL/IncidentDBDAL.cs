@@ -96,36 +96,6 @@ namespace TechSupport.DAL
         }
 
         /// <summary>
-        /// Gets the ID of last Incident added
-        /// to the TechSupport db.
-        /// </summary>
-        /// <returns>Latest incident ID</returns>
-        public int GetLastIncidentID()
-        {
-            int lastIncidentID = 0;
-            string selectStatement = "SELECT TOP 1 IncidentID " +
-                                     "FROM Incidents " +
-                                     "ORDER BY IncidentID DESC";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    using (SqlDataReader reader = selectCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            lastIncidentID = Convert.ToInt32(reader["IncidentID"]);
-                        }
-                    }
-                }
-            }
-
-            return lastIncidentID;
-        }
-
-        /// <summary>
         /// Adds a new open incident to the TechSupport db.
         /// </summary>
         /// <param name="incident"></param>
@@ -146,7 +116,8 @@ namespace TechSupport.DAL
             }
 
             string insertStatement = "INSERT INTO Incidents (CustomerID, ProductCode, DateOpened, Title, \"Description\") " +
-                                     "VALUES(@customerid, @productcode, @dateopened, @title, @description)";
+                                     "VALUES(@customerid, @productcode, @dateopened, @title, @description) " +
+                                     "SELECT SCOPE_IDENTITY()";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();
@@ -157,7 +128,7 @@ namespace TechSupport.DAL
                     selectCommand.Parameters.AddWithValue("dateopened", incident.DateOpened);
                     selectCommand.Parameters.AddWithValue("title", incident.Title);
                     selectCommand.Parameters.AddWithValue("description", incident.Description);
-                    selectCommand.ExecuteScalar();
+                    incident.IncidentID = Convert.ToInt32(selectCommand.ExecuteScalar());
                 }
             }
         }

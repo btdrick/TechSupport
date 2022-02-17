@@ -171,16 +171,6 @@ namespace TechSupport.Controller
         }
 
         /// <summary>
-        /// Gets most recent Incident ID from
-        /// TechSupport db.
-        /// </summary>
-        /// <returns>Latest incident ID</returns>
-        public int GetLastIncidentID()
-        {
-            return this.incidentDBSource.GetLastIncidentID();
-        }
-
-        /// <summary>
         /// Validates that an Incident object is not null.
         /// </summary>
         /// <param name="incident"></param>
