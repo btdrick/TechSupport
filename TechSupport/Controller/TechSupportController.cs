@@ -10,7 +10,6 @@ namespace TechSupport.Controller
     /// </summary>
     public class TechSupportController
     {
-        private readonly IncidentDAL incidentInternalSource;
         private readonly IncidentDBDAL incidentDBSource;
 
         /// <summary>
@@ -18,44 +17,8 @@ namespace TechSupport.Controller
         /// </summary>
         public TechSupportController()
         {
-            this.incidentInternalSource = new IncidentDAL();
             this.incidentDBSource = new IncidentDBDAL();
-        }
-
-        //***INTERNAL INCIDENT FUNCTIONS***
-
-        /// <summary>
-        /// Returns the contents of the Incident Report list.
-        /// </summary>
-        /// <returns>List of Incident objects</returns>
-        public List<Incident> GetInternalIncidents()
-        {
-            return this.incidentInternalSource.GetIncidents();
-        }
-
-        /// <summary>
-        /// Get internal incidents assigned to a customerID.
-        /// </summary>
-        /// <param name="customerID"></param>
-        /// <returns></returns>
-        public List<Incident> GetInternalIncidentsByCustomerID(int customerID)
-        {
-            if (customerID < 1)
-            {
-                throw new ArgumentException("CustomerID must be value greater than 0", "customerID");
-            }
-            return this.incidentInternalSource.GetIncidentsByCustomerID(customerID);
-        }
-
-        /// <summary>
-        /// Adds an incident report to the list.
-        /// </summary>
-        /// <param name="incident"></param>
-        public void AddInternalIncident(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            this.incidentInternalSource.Add(incident);
-        }
+        }        
 
         //***TECHSUPPORT DB INCIDENT FUNCTIONS***
 
