@@ -154,6 +154,7 @@ namespace TechSupport.DAL
                     }
                     selectCommand.Parameters.AddWithValue("description", incident.Description);
                     selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
+                    this.ValidateIncidentNotChangedInDatabase(incident);
                     selectCommand.ExecuteScalar();
                 }
             }
@@ -188,6 +189,7 @@ namespace TechSupport.DAL
                 {                   
                     selectCommand.Parameters.AddWithValue("today", incident.DateClosed);
                     selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
+                    this.ValidateIncidentNotChangedInDatabase(incident);
                     selectCommand.ExecuteScalar();
                 }
             }
@@ -534,6 +536,21 @@ namespace TechSupport.DAL
                         throw new ArgumentException("A technician with that name does not exist");
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validates that an incident row in the TechSupport DB 
+        /// has not been updated since param object was created.
+        /// </summary>
+        /// <param name="incident"></param>
+        private void ValidateIncidentNotChangedInDatabase(Incident incident)
+        {
+            this.ValidateIncidentNotNull(incident);
+            Incident twincident = this.GetIncidentByID(incident);
+            if (incident.Description != twincident.Description || incident.DateClosed != twincident.DateClosed)
+            {
+                throw new Exception("Incident with ID " + incident.IncidentID + " has been updated since object retrieval");
             }
         }
     }

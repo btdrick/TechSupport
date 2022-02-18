@@ -94,7 +94,7 @@ namespace TechSupport.UserControls
             }
             catch (Exception)
             {
-                this.UpdateIncidentStatusLabel("An error has occurred with processing the update", true);
+                this.UpdateIncidentStatusLabel("Incident has been updated before form submission by another user", true);
             }
         }
 
@@ -116,16 +116,16 @@ namespace TechSupport.UserControls
                     this.techSupportController.CloseIncident(incident);
                     incident = this.techSupportController.GetIncidentByID(incident);
                     this.SetFields(incident);
-                    this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been closed.", false);
+                    this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been closed", false);
                 }
             }
             catch (ArgumentException)
             {
-                this.UpdateIncidentStatusLabel("An incident must have an assigned technician in order to be closed.", true);
+                this.UpdateIncidentStatusLabel("An incident must have an assigned technician in order to be closed", true);
             }
             catch (Exception)
             {
-                this.UpdateIncidentStatusLabel("An error has occurred while processing the close request.", true);
+                this.UpdateIncidentStatusLabel("Incident has been updated before form submission by another user", true);
             }
         }
 
@@ -337,8 +337,9 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
             this.techSupportController.UpdateIncident(incident);
             incident = this.techSupportController.GetIncidentByID(incident);
-            this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);
             this.SetFields(incident);
+            this.textToAddTextBox.Enabled = false;
+            this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);          
         }
 
         /// <summary>
@@ -357,6 +358,32 @@ namespace TechSupport.UserControls
             else
             {
                 incident.Technician = selectedTechnician;
+            }
+        }
+
+        /// <summary>
+        /// Updates the status label.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="isError"></param>
+        private void UpdateIncidentStatusLabel(string message, bool isError)
+        {
+            if (message != null)
+            {
+                if (isError)
+                {
+                    this.updateIncidentStatusLabel.ForeColor = Color.Red;
+                }
+                else
+                {
+                    this.updateIncidentStatusLabel.ForeColor = Color.Black;
+                }
+
+                this.updateIncidentStatusLabel.Text = message;
+            }
+            else
+            {
+                throw new ArgumentException("Message cannot be null");
             }
         }
 
@@ -404,32 +431,6 @@ namespace TechSupport.UserControls
                 && addedText == "")
             {
                 throw new ArgumentException("Cannot update an incident with no changes made");
-            }
-        }
-
-        /// <summary>
-        /// Updates the status label.
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="isError"></param>
-        private void UpdateIncidentStatusLabel(string message, bool isError)
-        {
-            if (message != null)
-            {
-                if (isError)
-                {
-                    this.updateIncidentStatusLabel.ForeColor = Color.Red;
-                }
-                else
-                {
-                    this.updateIncidentStatusLabel.ForeColor = Color.Black;
-                }
-
-                this.updateIncidentStatusLabel.Text = message;
-            }
-            else
-            {
-                throw new ArgumentException("Message cannot be null");
             }
         }
     }
