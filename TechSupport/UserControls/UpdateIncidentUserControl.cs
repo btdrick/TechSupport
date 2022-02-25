@@ -338,7 +338,6 @@ namespace TechSupport.UserControls
             this.techSupportController.UpdateIncident(incident);
             incident = this.techSupportController.GetIncidentByID(incident);
             this.SetFields(incident);
-            this.textToAddTextBox.Enabled = false;
             this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);          
         }
 
