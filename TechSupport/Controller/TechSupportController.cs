@@ -11,6 +11,10 @@ namespace TechSupport.Controller
     public class TechSupportController
     {
         private readonly IncidentDBDAL incidentDBSource;
+        private readonly CustomerDBDAL customerDBSource;
+        private readonly TechnicianDBDAL technicianDBSource;
+        private readonly ProductDBDAL productDBSource;
+        private readonly RegistrationsDBDAL registrationDBSource;
 
         /// <summary>
         /// 0-param constructor.
@@ -18,6 +22,10 @@ namespace TechSupport.Controller
         public TechSupportController()
         {
             this.incidentDBSource = new IncidentDBDAL();
+            this.customerDBSource = new CustomerDBDAL();
+            this.technicianDBSource = new TechnicianDBDAL();
+            this.productDBSource = new ProductDBDAL();
+            this.registrationDBSource = new RegistrationsDBDAL();
         }        
 
         //***TECHSUPPORT DB INCIDENT FUNCTIONS***
@@ -28,7 +36,7 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
+            DBDALValidator.ValidateIncidentNotNull(incident);
             this.incidentDBSource.AddOpenIncident(incident);
         }
 
@@ -39,7 +47,7 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public bool IsIncidentClosed(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
+            DBDALValidator.ValidateIncidentNotNull(incident);
             return this.incidentDBSource.IsIncidentClosed(incident);
         }
 
@@ -47,10 +55,11 @@ namespace TechSupport.Controller
         /// Closes an incident
         /// </summary>
         /// <param name="incident"></param>
-        public void CloseIncident(Incident incident)
+        public void CloseIncident(Incident oldIncident, Incident newIncident)
         {
-            this.ValidateIncidentNotNull(incident);
-            this.incidentDBSource.CloseOpenIncident(incident);
+            DBDALValidator.ValidateIncidentExists(oldIncident);
+            DBDALValidator.ValidateIncidentExists(newIncident);
+            this.incidentDBSource.CloseOpenIncident(oldIncident, newIncident);
         }
 
         /// <summary>
@@ -58,10 +67,11 @@ namespace TechSupport.Controller
         /// TechSupport db Incidents table.
         /// </summary>
         /// <param name="incident"></param>
-        public void UpdateIncident(Incident incident)
+        public void UpdateIncident(Incident oldIncident, Incident newIncident)
         {
-            this.ValidateIncidentNotNull(incident);
-            this.incidentDBSource.UpdateIncident(incident);
+            DBDALValidator.ValidateIncidentExists(oldIncident);
+            DBDALValidator.ValidateIncidentExists(newIncident);
+            this.incidentDBSource.UpdateIncident(oldIncident, newIncident);
         }
 
         /// <summary>
@@ -81,9 +91,11 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public Incident GetIncidentByID(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
+            DBDALValidator.ValidateIncidentNotNull(incident);
             return this.incidentDBSource.GetIncidentByID(incident);
         }
+
+        //***TECHSUPPORT DB CUSTOMER FUNCTIONS***
 
         /// <summary>
         /// Gets all customers from TechSupport db source.
@@ -91,8 +103,10 @@ namespace TechSupport.Controller
         /// <returns>List of customer names</returns>
         public List<string> GetCustomerNames()
         {
-            return this.incidentDBSource.GetCustomerNames();
+            return this.customerDBSource.GetCustomerNames();
         }
+
+        //***TECHSUPPORT DB TECHNICIAN FUNCTIONS***
 
         /// <summary>
         /// Gets all technician names from TechSupport db source.
@@ -100,8 +114,10 @@ namespace TechSupport.Controller
         /// <returns>List of technician names</returns>
         public List<string> GetTechnicianNames()
         {
-            return this.incidentDBSource.GetTechnicianNames();
+            return this.technicianDBSource.GetTechnicianNames();
         }
+
+        //***TECHSUPPORT DB PRODUCT FUNCTIONS***
 
         /// <summary>
         /// Gets all products from TechSupport db source.
@@ -109,8 +125,10 @@ namespace TechSupport.Controller
         /// <returns>List of product names</returns>
         public List<string> GetProductNames()
         {
-            return this.incidentDBSource.GetProductNames();
+            return this.productDBSource.GetProductNames();
         }
+
+        //***TECHSUPPORT DB REGISTRATION FUNCTIONS***
 
         /// <summary>
         /// Validates whether a customer has registered a product
@@ -121,7 +139,7 @@ namespace TechSupport.Controller
         /// <returns>True if registration exists</returns>
         public bool ProductIsRegisteredToCustomer(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
+            DBDALValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Customer name cannot be null or empty");
@@ -130,19 +148,7 @@ namespace TechSupport.Controller
             {
                 throw new ArgumentException("Product name cannot be null or empty");
             }
-            return this.incidentDBSource.ProductIsRegisteredToCustomer(incident);
-        }
-
-        /// <summary>
-        /// Validates that an Incident object is not null.
-        /// </summary>
-        /// <param name="incident"></param>
-        private void ValidateIncidentNotNull(Incident incident)
-        {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
+            return this.registrationDBSource.ProductIsRegisteredToCustomer(incident);
         }
     }
 }

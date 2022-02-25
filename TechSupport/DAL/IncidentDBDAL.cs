@@ -6,7 +6,8 @@ using TechSupport.Model;
 namespace TechSupport.DAL
 {
     /// <summary>
-    /// Data Access Layer (DAL) for TechSupport database.
+    /// This class serves as the Data Access Layer
+    /// for the TechSupport DB Incidents table.
     /// </summary>
     public class IncidentDBDAL
     {
@@ -57,7 +58,7 @@ namespace TechSupport.DAL
         /// <returns>Incident object assigned to ID</returns>
         public Incident GetIncidentByID(Incident incident)
         {
-            this.ValidateIncidentExists(incident);
+            DBDALValidator.ValidateIncidentExists(incident);
             string selectStatement = "SELECT i.CustomerID, i.ProductCode, i.TechID, i.Title, i.DateOpened, i.DateClosed, i.\"Description\" " +
                                      "FROM Incidents i WHERE i.IncidentID = @incidentid";
 
@@ -73,12 +74,12 @@ namespace TechSupport.DAL
                         while (reader.Read())
                         {
                             incident.CustomerID = Convert.ToInt32(reader["CustomerID"]);
-                            incident.Customer = GetCustomerByID(incident);
+                            incident.Customer = CustomerDBDAL.GetCustomerByID(incident);
                             incident.ProductCode = reader["ProductCode"].ToString();
                             if (!reader.IsDBNull(2))
                             {
                                 incident.TechID = Convert.ToInt32(reader["TechID"].ToString());
-                                incident.Technician = GetTechnicianByID(incident);
+                                incident.Technician = TechnicianDBDAL.GetTechnicianByID(incident);
                             }
                             incident.Title = reader["Title"].ToString();
                             incident.DateOpened = (DateTime)reader["DateOpened"];
@@ -101,18 +102,18 @@ namespace TechSupport.DAL
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
+            DBDALValidator.ValidateIncidentNotNull(incident);
             if (InvalidNewIncidentFields(incident))
             {
                 throw new ArgumentException("Invalid incident. One or more values are either null or invalid");
             }
             if (incident.CustomerID == 0)
             {
-                incident.CustomerID = this.GetCustomerIDByName(incident);
+                incident.CustomerID = CustomerDBDAL.GetCustomerIDByName(incident);
             }
             if (incident.ProductCode == null || incident.ProductCode == "")
             {
-                incident.ProductCode = this.GetProductCodeByName(incident);
+                incident.ProductCode = ProductDBDAL.GetProductCodeByName(incident);
             }
 
             string insertStatement = "INSERT INTO Incidents (CustomerID, ProductCode, DateOpened, Title, \"Description\") " +
@@ -133,28 +134,37 @@ namespace TechSupport.DAL
             }
         }
 
-        public void UpdateIncident(Incident incident)
+        /// <summary>
+        /// Updates row in Incidents table
+        /// matching incidentID.
+        /// </summary>
+        /// <param name="oldIncident"></param>
+        /// <param name="newIncident"></param>
+        public void UpdateIncident(Incident oldIncident, Incident newIncident)
         {
-            this.ValidateIncidentExists(incident);           
+            DBDALValidator.ValidateIncidentExists(oldIncident);
+            DBDALValidator.ValidateIncidentExists(newIncident);
             string updateStatement = "UPDATE Incidents " +
-                                     "SET TechID = @techid, \"Description\" = replace(@description, '\n', char(13)+char(10)) " +
-                                     "WHERE IncidentID = @incidentid";
+                                     "SET TechID = @techid, \"Description\" = replace(@newDescription, '\n', char(13)+char(10)) " +
+                                     "WHERE IncidentID = @oldIncidentid " + 
+                                     "AND DateClosed IS NULL " +
+                                     "AND \"Description\" = @oldDescription";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(updateStatement, connection))
                 {
-                    if (incident.Technician == null)
+                    if (newIncident.Technician == null)
                     {
                         selectCommand.Parameters.AddWithValue("techid", DBNull.Value);
                     }
                     else
                     {
-                        selectCommand.Parameters.AddWithValue("techid", this.GetTechnicianIDByTechnicianName(incident));
+                        selectCommand.Parameters.AddWithValue("techid", TechnicianDBDAL.GetTechnicianIDByTechnicianName(newIncident));
                     }
-                    selectCommand.Parameters.AddWithValue("description", incident.Description);
-                    selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
-                    this.ValidateIncidentNotChangedInDatabase(incident);
+                    selectCommand.Parameters.AddWithValue("newDescription", newIncident.Description);
+                    selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID); 
+                    selectCommand.Parameters.AddWithValue("oldDescription", oldIncident.Description);
                     selectCommand.ExecuteScalar();
                 }
             }
@@ -167,7 +177,7 @@ namespace TechSupport.DAL
         /// <returns>Incident closed?</returns>
         public bool IsIncidentClosed(Incident incident)
         {
-            this.ValidateIncidentNotNull(incident);
+            DBDALValidator.ValidateIncidentNotNull(incident);
             return incident.DateClosed.ToShortDateString() != "1/1/0001";
         }
 
@@ -176,20 +186,23 @@ namespace TechSupport.DAL
         /// DateClosed to current date.
         /// </summary>
         /// <param name="incident"></param>
-        public void CloseOpenIncident(Incident incident)
+        public void CloseOpenIncident(Incident oldIncident, Incident newIncident)
         {
-            this.ValidateIncidentExists(incident);
+            DBDALValidator.ValidateIncidentExists(oldIncident);
+            DBDALValidator.ValidateIncidentExists(newIncident);
             string updateStatement = "UPDATE Incidents " +
                                      "SET DateClosed = @today " +
-                                     "WHERE IncidentID = @incidentid";
+                                     "WHERE IncidentID = @oldIncidentid " +
+                                     "AND DateClosed IS NULL " +
+                                     "AND \"Description\" = @oldDescription";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(updateStatement, connection))
                 {                   
-                    selectCommand.Parameters.AddWithValue("today", incident.DateClosed);
-                    selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
-                    this.ValidateIncidentNotChangedInDatabase(incident);
+                    selectCommand.Parameters.AddWithValue("today", newIncident.DateClosed);
+                    selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID);
+                    selectCommand.Parameters.AddWithValue("oldDescription", oldIncident.Description);
                     selectCommand.ExecuteScalar();
                 }
             }
@@ -214,344 +227,6 @@ namespace TechSupport.DAL
             
             return false;
             
-        }
-
-        /// <summary>
-        /// Retrieves Technician names from TechSupport db.
-        /// </summary>
-        /// <returns>List of technician names</returns>
-        public List<string> GetTechnicianNames()
-        {
-            List<string> techSupportTechnicianNames = new List<string>();
-            string selectStatement = "SELECT Name FROM Technicians";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    using (SqlDataReader reader = selectCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            techSupportTechnicianNames.Add(reader["Name"].ToString());
-                        }
-                    }
-                }
-            }
-
-            return techSupportTechnicianNames;
-        }
-
-        /// <summary>
-        /// Retrieves the name of a Technician
-        /// using their assigned ID.
-        /// </summary>
-        /// <param name="incident"></param>
-        /// <returns>Technician name assigned to ID</returns>
-        private string GetTechnicianByID(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            if (incident.TechID < 1)
-            {
-                throw new ArgumentException("TechnicianID cannot be less than 1");
-            }
-            string technicianName = "";
-            string selectStatement = "SELECT Name FROM Technicians WHERE TechID = @technicianid";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("technicianid", incident.TechID);
-                    technicianName = Convert.ToString(selectCommand.ExecuteScalar());
-                }
-            }
-
-            return technicianName;
-        }
-
-        private int GetTechnicianIDByTechnicianName(Incident incident)
-        {
-            this.ValidateTechnicianNameExists(incident);
-            int techID = 0;
-            string selectStatement = "SELECT TechID FROM Technicians WHERE Name = @technician";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("technician", incident.Technician);
-                    techID = Convert.ToInt32(selectCommand.ExecuteScalar());
-                }
-            }
-
-            return techID;
-        }
-
-        /// <summary>
-        /// Retrieves customer names from TechSupport db.
-        /// </summary>
-        /// <returns>List of customer names</returns>
-        public List<string> GetCustomerNames()
-        {
-            List<string> techSupportCustomerNames = new List<string>();
-            string selectStatement = "SELECT Name FROM Customers";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    using (SqlDataReader reader = selectCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            techSupportCustomerNames.Add(reader["Name"].ToString());
-                        }
-                    }
-                }
-            }
-
-            return techSupportCustomerNames;
-        }
-
-        /// <summary>
-        /// Retrieves the name of a Customer
-        /// using their assigned ID.
-        /// </summary>
-        /// <param name="incident"></param>
-        /// <returns>Customer name assigned to ID</returns>
-        private string GetCustomerByID(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            if (incident.CustomerID < 1)
-            {
-                throw new ArgumentException("CustomerID cannot be less than 1");
-            }
-            string customerName = "";
-            string selectStatement = "SELECT Name FROM Customers WHERE CustomerID = @customerid";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("customerid", incident.CustomerID);
-                    customerName = Convert.ToString(selectCommand.ExecuteScalar());
-                }
-            }
-
-            return customerName;
-        }
-
-        /// <summary>
-        /// Retrieves a customer's ID
-        /// from TechSupport db via their name.
-        /// </summary>
-        /// <param name="incident"></param>
-        /// <returns>CustomerID</returns>
-        private int GetCustomerIDByName(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            if (incident.Customer == null || incident.Customer == "")
-            {
-                throw new ArgumentException("Cannot use null or empty customer name");
-            }
-            int customerID = 0;
-            string selectStatement = "SELECT CustomerID " +
-                                     "FROM Customers " +
-                                     "WHERE Name = @name";
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("name", incident.Customer);
-                    customerID = Convert.ToInt32(selectCommand.ExecuteScalar());
-                }
-            }
-
-            return customerID;
-        }
-
-        /// <summary>
-        /// Retrieves product names from TechSupport db.
-        /// </summary>
-        /// <returns>List of Product names</returns>
-        public List<string> GetProductNames()
-        {
-            List<string> techSupportProductNames = new List<string>();
-            string selectStatement = "SELECT Name FROM Products";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    using (SqlDataReader reader = selectCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            techSupportProductNames.Add(reader["Name"].ToString());
-                        }
-                    }
-                }
-            }
-
-            return techSupportProductNames;
-        }
-
-        /// <summary>
-        ///  Retrieves a product's code
-        ///  from TechSupport db via their name.
-        /// </summary>
-        /// <param name="incident"></param>
-        /// <returns>ProductCode</returns>
-        private string GetProductCodeByName(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            if (incident.Product == null || incident.Product == "")
-            {
-                throw new ArgumentException("Cannot use null or empty product name");
-            }
-            string productCode = "";
-            string selectStatement = "SELECT ProductCode " +
-                                     "FROM Products " +
-                                     "WHERE Name = @name";
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("name", incident.Product);
-                    productCode = Convert.ToString(selectCommand.ExecuteScalar());
-                }
-            }
-
-
-            return productCode;
-        }       
-
-        /// <summary>
-        /// Checks if product is registered to a customer.
-        /// </summary>
-        /// <param name="incident"></param>
-        /// <returns></returns>
-        public bool ProductIsRegisteredToCustomer(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            if (incident.Customer == null || incident.Customer == "")
-            {
-                throw new ArgumentException("Customer name cannot be null or empty");
-            }
-            if (incident.Product == null || incident.Product == "")
-            {
-                throw new ArgumentException("Product name cannot be null or empty");
-            }
-
-            bool registrationExists = false;
-            string selectStatement = "SELECT COUNT(*) " +
-                "FROM Registrations r " +
-                "JOIN Customers c ON c.Name = @customer " +
-                "JOIN Products p ON p.Name = @product " +
-                "WHERE r.CustomerID = c.CustomerID " +
-                "AND r.ProductCode = p.ProductCode";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("customer", incident.Customer);
-                    selectCommand.Parameters.AddWithValue("product", incident.Product);
-                    registrationExists = Convert.ToBoolean(selectCommand.ExecuteScalar());
-                }
-            }
-
-            return registrationExists;
-        }
-
-        /// <summary>
-        /// Validates that an incident object is not null.
-        /// </summary>
-        /// <param name="incident"></param>
-        private void ValidateIncidentNotNull(Incident incident)
-        {
-            if (incident == null)
-            {
-                throw new ArgumentException("Incident cannot be null", "incident");
-            }
-        }
-
-        /// <summary>
-        /// Validates a row exists within
-        /// TechSupport db Incidents table
-        /// by Incident ID.
-        /// </summary>
-        /// <param name="incident"></param>
-        private void ValidateIncidentExists(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            string selectStatement =  "SELECT COUNT(*) " +
-                                      "FROM Incidents " +
-                                      "WHERE IncidentID = @incidentid";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("incidentid", incident.IncidentID);
-                    
-                    if (!Convert.ToBoolean(selectCommand.ExecuteScalar()))
-                    {
-                        throw new ArgumentException("An incident with that ID does not exist");
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Checks if the Incident is
-        /// assigned to a valid technician by name.
-        /// </summary>
-        /// <param name="incident"></param>
-        private void ValidateTechnicianNameExists(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            string selectStatement = "SELECT COUNT(*) " +
-                                     "FROM Technicians " +
-                                     "WHERE Name = @technician";
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("technician", incident.Technician);
-                    if (!Convert.ToBoolean(selectCommand.ExecuteScalar()))
-                    {
-                        throw new ArgumentException("A technician with that name does not exist");
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Validates that an incident row in the TechSupport DB 
-        /// has not been updated since param object was created.
-        /// </summary>
-        /// <param name="incident"></param>
-        private void ValidateIncidentNotChangedInDatabase(Incident incident)
-        {
-            this.ValidateIncidentNotNull(incident);
-            Incident twincident = this.GetIncidentByID(incident);
-            if (incident.Description != twincident.Description || incident.DateClosed != twincident.DateClosed)
-            {
-                throw new Exception("Incident with ID " + incident.IncidentID + " has been updated since object retrieval");
-            }
         }
     }
 }

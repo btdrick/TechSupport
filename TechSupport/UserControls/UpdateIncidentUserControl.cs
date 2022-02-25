@@ -59,23 +59,24 @@ namespace TechSupport.UserControls
         {
             try
             {
-                Incident incident = this.GetIncidentWithIDField();
-                this.UpdateTechnicianWithTechnicianComboBox(incident);
-                this.ValidateChangedFields(incident);                                  
+                Incident oldIncident = this.GetIncidentWithIDField();
+                Incident newIncident = this.GetIncidentWithIDField();
+                this.UpdateTechnicianWithTechnicianComboBox(newIncident);
+                this.ValidateChangedFields(newIncident);                                  
                
                 if (this.textToAddTextBox.Text != "")
                 {
-                    incident.Description += "\n<" + DateTime.Now.ToShortDateString() + "> " +
+                    newIncident.Description += "\n<" + DateTime.Now.ToShortDateString() + "> " +
                     this.textToAddTextBox.Text;
 
-                    if (incident.Description.Length > 200)
+                    if (newIncident.Description.Length > 200)
                     {
                         switch (this.ConfirmDescriptionTruncation())
                         {
                             case DialogResult.Cancel:
                                 return;
                             case DialogResult.OK:
-                                incident.Description = incident.Description.Substring(0, 196) + "...";
+                                newIncident.Description = newIncident.Description.Substring(0, 196) + "...";
                                 break;
                             default:
                                 break;
@@ -83,9 +84,9 @@ namespace TechSupport.UserControls
                     }
                 }          
                 
-                if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
+                if (this.ConfirmUpdateIncident(newIncident) == DialogResult.OK)
                 {
-                    this.FinalizeUpdateIncident(incident);                   
+                    this.FinalizeUpdateIncident(oldIncident, newIncident);                   
                 }
             }
             catch (ArgumentException)
@@ -107,16 +108,17 @@ namespace TechSupport.UserControls
         {
             try
             {
-                Incident incident = this.GetIncidentWithIDField();
-                this.ValidateIncidentCanBeClosed(incident);
-                incident.DateClosed = DateTime.Now;
-                if (this.ConfirmUpdateIncident(incident) == DialogResult.OK)
+                Incident oldIncident = this.GetIncidentWithIDField();
+                Incident newIncident = this.GetIncidentWithIDField();
+                this.ValidateIncidentCanBeClosed(newIncident);
+                newIncident.DateClosed = DateTime.Now;
+                if (this.ConfirmUpdateIncident(newIncident) == DialogResult.OK)
                 {
-                    this.techSupportController.UpdateIncident(incident);
-                    this.techSupportController.CloseIncident(incident);
-                    incident = this.techSupportController.GetIncidentByID(incident);
-                    this.SetFields(incident);
-                    this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been closed", false);
+                    this.techSupportController.UpdateIncident(oldIncident, newIncident);
+                    this.techSupportController.CloseIncident(oldIncident, newIncident);
+                    newIncident = this.techSupportController.GetIncidentByID(newIncident);
+                    this.SetFields(newIncident);
+                    this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been closed", false);
                 }
             }
             catch (ArgumentException)
@@ -332,13 +334,14 @@ namespace TechSupport.UserControls
         /// Processes the update to an incident.
         /// </summary>
         /// <param name="incident"></param>
-        private void FinalizeUpdateIncident(Incident incident)
+        private void FinalizeUpdateIncident(Incident oldIncident, Incident newIncident)
         {
-            this.ValidateIncident(incident);
-            this.techSupportController.UpdateIncident(incident);
-            incident = this.techSupportController.GetIncidentByID(incident);
-            this.SetFields(incident);
-            this.UpdateIncidentStatusLabel("Incident with ID of " + incident.IncidentID + " has been updated.", false);          
+            this.ValidateIncident(oldIncident);
+            this.ValidateIncident(newIncident);
+            this.techSupportController.UpdateIncident(oldIncident, newIncident);
+            newIncident = this.techSupportController.GetIncidentByID(newIncident);
+            this.SetFields(newIncident);
+            this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been updated.", false);          
         }
 
         /// <summary>
