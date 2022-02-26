@@ -44,7 +44,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>ProductCode</returns>
-        public static string GetProductCodeByName(Incident incident)
+        public string GetProductCodeByName(Incident incident)
         {
             DBDALValidator.ValidateIncidentNotNull(incident);
             if (incident.Product == null || incident.Product == "")

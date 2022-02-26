@@ -74,12 +74,14 @@ namespace TechSupport.DAL
                         while (reader.Read())
                         {
                             incident.CustomerID = Convert.ToInt32(reader["CustomerID"]);
-                            incident.Customer = CustomerDBDAL.GetCustomerByID(incident);
+                            CustomerDBDAL customerDAL = new CustomerDBDAL();
+                            incident.Customer = customerDAL.GetCustomerByID(incident);
                             incident.ProductCode = reader["ProductCode"].ToString();
                             if (!reader.IsDBNull(2))
                             {
                                 incident.TechID = Convert.ToInt32(reader["TechID"].ToString());
-                                incident.Technician = TechnicianDBDAL.GetTechnicianByID(incident);
+                                TechnicianDBDAL technicianDAL = new TechnicianDBDAL();
+                                incident.Technician = technicianDAL.GetTechnicianByID(incident);
                             }
                             incident.Title = reader["Title"].ToString();
                             incident.DateOpened = (DateTime)reader["DateOpened"];
@@ -109,11 +111,13 @@ namespace TechSupport.DAL
             }
             if (incident.CustomerID == 0)
             {
-                incident.CustomerID = CustomerDBDAL.GetCustomerIDByName(incident);
+                CustomerDBDAL customerDAL = new CustomerDBDAL();
+                incident.CustomerID = customerDAL.GetCustomerIDByName(incident);
             }
             if (incident.ProductCode == null || incident.ProductCode == "")
             {
-                incident.ProductCode = ProductDBDAL.GetProductCodeByName(incident);
+                ProductDBDAL productDAL = new ProductDBDAL();
+                incident.ProductCode = productDAL.GetProductCodeByName(incident);
             }
 
             string insertStatement = "INSERT INTO Incidents (CustomerID, ProductCode, DateOpened, Title, \"Description\") " +
@@ -160,7 +164,8 @@ namespace TechSupport.DAL
                     }
                     else
                     {
-                        selectCommand.Parameters.AddWithValue("techid", TechnicianDBDAL.GetTechnicianIDByTechnicianName(newIncident));
+                        TechnicianDBDAL technicianDAL = new TechnicianDBDAL();
+                        selectCommand.Parameters.AddWithValue("techid", technicianDAL.GetTechnicianIDByTechnicianName(newIncident));
                     }
                     selectCommand.Parameters.AddWithValue("newDescription", newIncident.Description);
                     selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID); 

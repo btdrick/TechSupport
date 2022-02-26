@@ -44,7 +44,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>Customer name assigned to ID</returns>
-        public static string GetCustomerByID(Incident incident)
+        public string GetCustomerByID(Incident incident)
         {
             DBDALValidator.ValidateIncidentNotNull(incident);
             if (incident.CustomerID < 1)
@@ -73,7 +73,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>CustomerID</returns>
-        public static int GetCustomerIDByName(Incident incident)
+        public int GetCustomerIDByName(Incident incident)
         {
             DBDALValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")

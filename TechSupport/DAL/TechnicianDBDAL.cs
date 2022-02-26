@@ -44,7 +44,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>Technician name assigned to ID</returns>
-        public static string GetTechnicianByID(Incident incident)
+        public string GetTechnicianByID(Incident incident)
         {
             DBDALValidator.ValidateIncidentNotNull(incident);
             if (incident.TechID < 1)
@@ -67,7 +67,7 @@ namespace TechSupport.DAL
             return technicianName;
         }
 
-        public static int GetTechnicianIDByTechnicianName(Incident incident)
+        public int GetTechnicianIDByTechnicianName(Incident incident)
         {
             DBDALValidator.ValidateTechnicianNameExists(incident);
             int techID = 0;
