@@ -49,6 +49,12 @@
     <Compile Include="Controller\FormProvider.cs" />
     <Compile Include="Controller\TechSupportController.cs" />
     <Compile Include="DAL\CustomerDBDAL.cs" />
+    <Compile Include="UserControls\ViewIncidentsByTechnicianUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ViewIncidentsByTechnicianUserControl.Designer.cs">
+      <DependentUpon>ViewIncidentsByTechnicianUserControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Validators\DBDALValidator.cs" />
     <Compile Include="DAL\IncidentDBDAL.cs" />
     <Compile Include="DAL\ProductDBDAL.cs" />
@@ -105,6 +111,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UpdateIncidentUserControl.resx">
       <DependentUpon>UpdateIncidentUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ViewIncidentsByTechnicianUserControl.resx">
+      <DependentUpon>ViewIncidentsByTechnicianUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
