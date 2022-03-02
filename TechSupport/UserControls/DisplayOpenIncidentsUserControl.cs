@@ -6,12 +6,16 @@ using TechSupport.Model;
 
 namespace TechSupport.UserControls
 {
+    /// <summary>
+    /// This class models a user control
+    /// which displays all open incidents.
+    /// </summary>
     public partial class DisplayOpenIncidentsUserControl : UserControl
     {
         private readonly TechSupportController techSupportController;
 
         /// <summary>
-        /// 0-param constructor
+        /// Initialize the control.
         /// </summary>
         public DisplayOpenIncidentsUserControl()
         {

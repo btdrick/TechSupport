@@ -17,7 +17,7 @@ namespace TechSupport.UserControls
         private readonly TechSupportController techSupportController;
 
         /// <summary>
-        /// Initialize the form.
+        /// Initialize the control.
         /// </summary>
         public UpdateIncidentUserControl()
         {
