@@ -14,7 +14,7 @@ namespace TechSupport.UserControls
     /// </summary>
     public partial class UpdateIncidentUserControl : UserControl
     {
-        private readonly TechSupportController techSupportController;
+        private readonly IncidentController incidentController;
         private readonly TechnicianController technicianController;
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace TechSupport.UserControls
         public UpdateIncidentUserControl()
         {
             InitializeComponent();
-            this.techSupportController = new TechSupportController();
+            this.incidentController = new IncidentController();
             this.technicianController = new TechnicianController();
         }
 
@@ -116,9 +116,9 @@ namespace TechSupport.UserControls
                 newIncident.DateClosed = DateTime.Now;
                 if (this.ConfirmUpdateIncident(newIncident) == DialogResult.OK)
                 {
-                    this.techSupportController.UpdateIncident(oldIncident, newIncident);
-                    this.techSupportController.CloseIncident(oldIncident, newIncident);
-                    newIncident = this.techSupportController.GetIncidentByID(newIncident);
+                    this.incidentController.UpdateIncident(oldIncident, newIncident);
+                    this.incidentController.CloseIncident(oldIncident, newIncident);
+                    newIncident = this.incidentController.GetIncidentByID(newIncident);
                     this.SetFields(newIncident);
                     this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been closed", false);
                 }
@@ -159,7 +159,7 @@ namespace TechSupport.UserControls
             {
                 IncidentID = Convert.ToInt32(this.incidentIDTextBox.Text)
             };
-            incident = this.techSupportController.GetIncidentByID(incident);
+            incident = this.incidentController.GetIncidentByID(incident);
             return incident;
         }
 
@@ -219,7 +219,7 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
 
             this.technicianComboBox.DataSource = null;
-            if (this.techSupportController.IsIncidentClosed(incident))
+            if (this.incidentController.IsIncidentClosed(incident))
             {
                 this.SetTechnicianComboBoxForClosedIncident(incident);
                 this.DisableFields();
@@ -340,8 +340,8 @@ namespace TechSupport.UserControls
         {
             this.ValidateIncident(oldIncident);
             this.ValidateIncident(newIncident);
-            this.techSupportController.UpdateIncident(oldIncident, newIncident);
-            newIncident = this.techSupportController.GetIncidentByID(newIncident);
+            this.incidentController.UpdateIncident(oldIncident, newIncident);
+            newIncident = this.incidentController.GetIncidentByID(newIncident);
             this.SetFields(newIncident);
             this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been updated.", false);          
         }

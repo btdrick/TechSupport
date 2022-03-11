@@ -15,7 +15,7 @@ namespace TechSupport.DAL
         /// Retrieves customer names from TechSupport db.
         /// </summary>
         /// <returns>List of customer names</returns>
-        public List<string> GetCustomerNames()
+        public static List<string> GetCustomerNames()
         {
             List<string> techSupportCustomerNames = new List<string>();
             string selectStatement = "SELECT Name FROM Customers";
@@ -44,7 +44,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>Customer name assigned to ID</returns>
-        public string GetCustomerByID(Incident incident)
+        public static string GetCustomerByID(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.CustomerID < 1)
@@ -73,7 +73,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>CustomerID</returns>
-        public int GetCustomerIDByName(Incident incident)
+        public static int GetCustomerIDByName(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")

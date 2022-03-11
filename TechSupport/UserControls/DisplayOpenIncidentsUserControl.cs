@@ -12,7 +12,7 @@ namespace TechSupport.UserControls
     /// </summary>
     public partial class DisplayOpenIncidentsUserControl : UserControl
     {
-        private readonly TechSupportController techSupportController;
+        private readonly IncidentController incidentController;
 
         /// <summary>
         /// Initialize the control.
@@ -20,7 +20,7 @@ namespace TechSupport.UserControls
         public DisplayOpenIncidentsUserControl()
         {
             InitializeComponent();
-            this.techSupportController = new TechSupportController();
+            this.incidentController = new IncidentController();
             this.RefreshOpenIncidents();
         }
 
@@ -32,7 +32,7 @@ namespace TechSupport.UserControls
             this.openIncidentsListView.Items.Clear();
             try
             {
-                List<Incident> openIncidents = this.techSupportController.GetOpenIncidents();
+                List<Incident> openIncidents = this.incidentController.GetOpenIncidents();
 
                 if (openIncidents.Count > 0)
                 {

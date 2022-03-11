@@ -15,7 +15,7 @@ namespace TechSupport.DAL
         /// Retrieves incidents from TechSupport db.
         /// </summary>
         /// <returns>List of all incident objects</returns>
-        public List<Incident> GetIncidents()
+        public static List<Incident> GetIncidents()
         {
             List<Incident> openIncidents = new List<Incident>();
             string selectStatement = "SELECT i.ProductCode, i.DateOpened, c.Name AS 'Customer', t.Name AS 'Technician', i.Title " +
@@ -56,7 +56,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>Incident object assigned to ID</returns>
-        public Incident GetIncidentByID(Incident incident)
+        public static Incident GetIncidentByID(Incident incident)
         {
             IncidentValidator.ValidateIncidentExists(incident);
             string selectStatement = "SELECT i.CustomerID, i.ProductCode, i.TechID, i.Title, i.DateOpened, i.DateClosed, i.\"Description\" " +
@@ -74,13 +74,12 @@ namespace TechSupport.DAL
                         while (reader.Read())
                         {
                             incident.CustomerID = Convert.ToInt32(reader["CustomerID"]);
-                            CustomerDAL customerDAL = new CustomerDAL();
-                            incident.Customer = customerDAL.GetCustomerByID(incident);
+                            incident.Customer = CustomerDAL.GetCustomerByID(incident);
                             incident.ProductCode = reader["ProductCode"].ToString();
                             if (!reader.IsDBNull(2))
                             {
                                 incident.TechID = Convert.ToInt32(reader["TechID"].ToString());
-                                incident.Technician = this.GetTechnicianByID(incident);
+                                incident.Technician = GetTechnicianByID(incident);
                             }
                             incident.Title = reader["Title"].ToString();
                             incident.DateOpened = (DateTime)reader["DateOpened"];
@@ -110,13 +109,11 @@ namespace TechSupport.DAL
             }
             if (incident.CustomerID == 0)
             {
-                CustomerDAL customerDAL = new CustomerDAL();
-                incident.CustomerID = customerDAL.GetCustomerIDByName(incident);
+                incident.CustomerID = CustomerDAL.GetCustomerIDByName(incident);
             }
             if (incident.ProductCode == null || incident.ProductCode == "")
             {
-                ProductDAL productDAL = new ProductDAL();
-                incident.ProductCode = productDAL.GetProductCodeByName(incident);
+                incident.ProductCode = ProductDAL.GetProductCodeByName(incident);
             }
 
             string insertStatement = "INSERT INTO Incidents (CustomerID, ProductCode, DateOpened, Title, \"Description\") " +
@@ -163,7 +160,7 @@ namespace TechSupport.DAL
                     }
                     else
                     {
-                        selectCommand.Parameters.AddWithValue("techid", this.GetTechnicianIDByTechnicianName(newIncident));
+                        selectCommand.Parameters.AddWithValue("techid", GetTechnicianIDByTechnicianName(newIncident));
                     }
                     selectCommand.Parameters.AddWithValue("newDescription", newIncident.Description);
                     selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID); 
@@ -178,7 +175,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>Incident closed?</returns>
-        public bool IsIncidentClosed(Incident incident)
+        public static bool IsIncidentClosed(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
             return incident.DateClosed.ToShortDateString() != "1/1/0001";
@@ -217,7 +214,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>Technician name assigned to ID</returns>
-        public string GetTechnicianByID(Incident incident)
+        public static string GetTechnicianByID(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.TechID < 1)
@@ -246,7 +243,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns></returns>
-        public int GetTechnicianIDByTechnicianName(Incident incident)
+        public static int GetTechnicianIDByTechnicianName(Incident incident)
         {
             IncidentValidator.ValidateTechnicianNameExists(incident);
             int techID = 0;

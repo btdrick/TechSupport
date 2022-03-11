@@ -15,7 +15,7 @@ namespace TechSupport.DAL
         /// Retrieves product names from TechSupport db.
         /// </summary>
         /// <returns>List of Product names</returns>
-        public List<string> GetProductNames()
+        public static List<string> GetProductNames()
         {
             List<string> techSupportProductNames = new List<string>();
             string selectStatement = "SELECT Name FROM Products";
@@ -44,7 +44,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns>ProductCode</returns>
-        public string GetProductCodeByName(Incident incident)
+        public static string GetProductCodeByName(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Product == null || incident.Product == "")
@@ -64,7 +64,6 @@ namespace TechSupport.DAL
                     productCode = Convert.ToString(selectCommand.ExecuteScalar());
                 }
             }
-
 
             return productCode;
         }

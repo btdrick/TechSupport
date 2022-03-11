@@ -8,22 +8,16 @@ namespace TechSupport.Controller
     /// <summary>
     /// This class serves as the controller, mediator of the application.
     /// </summary>
-    public class TechSupportController
+    public class IncidentController
     {
         private readonly IncidentDAL incidentDBSource;
-        private readonly CustomerDAL customerDBSource;        
-        private readonly ProductDAL productDBSource;
-        private readonly RegistrationsDAL registrationDBSource;
 
         /// <summary>
         /// 0-param constructor.
         /// </summary>
-        public TechSupportController()
+        public IncidentController()
         {
             this.incidentDBSource = new IncidentDAL();
-            this.customerDBSource = new CustomerDAL();
-            this.productDBSource = new ProductDAL();
-            this.registrationDBSource = new RegistrationsDAL();
         }        
 
         //***TECHSUPPORT DB INCIDENT FUNCTIONS***
@@ -46,7 +40,7 @@ namespace TechSupport.Controller
         public bool IsIncidentClosed(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
-            return this.incidentDBSource.IsIncidentClosed(incident);
+            return IncidentDAL.IsIncidentClosed(incident);
         }
 
         /// <summary>
@@ -78,7 +72,7 @@ namespace TechSupport.Controller
         /// <returns>List of open incidents</returns>
         public List<Incident> GetOpenIncidents()
         {
-            return this.incidentDBSource.GetIncidents();
+            return IncidentDAL.GetIncidents();
         }
 
         /// <summary>
@@ -90,7 +84,7 @@ namespace TechSupport.Controller
         public Incident GetIncidentByID(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
-            return this.incidentDBSource.GetIncidentByID(incident);
+            return IncidentDAL.GetIncidentByID(incident);
         }
 
         //***TECHSUPPORT DB CUSTOMER FUNCTIONS***
@@ -101,7 +95,7 @@ namespace TechSupport.Controller
         /// <returns>List of customer names</returns>
         public List<string> GetCustomerNames()
         {
-            return this.customerDBSource.GetCustomerNames();
+            return CustomerDAL.GetCustomerNames();
         }
 
         //***TECHSUPPORT DB PRODUCT FUNCTIONS***
@@ -112,7 +106,7 @@ namespace TechSupport.Controller
         /// <returns>List of product names</returns>
         public List<string> GetProductNames()
         {
-            return this.productDBSource.GetProductNames();
+            return ProductDAL.GetProductNames();
         }
 
         //***TECHSUPPORT DB REGISTRATION FUNCTIONS***
@@ -135,7 +129,7 @@ namespace TechSupport.Controller
             {
                 throw new ArgumentException("Product name cannot be null or empty");
             }
-            return this.registrationDBSource.ProductIsRegisteredToCustomer(incident);
+            return RegistrationsDAL.ProductIsRegisteredToCustomer(incident);
         }
     }
 }

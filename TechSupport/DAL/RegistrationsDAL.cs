@@ -15,7 +15,7 @@ namespace TechSupport.DAL
         /// </summary>
         /// <param name="incident"></param>
         /// <returns></returns>
-        public bool ProductIsRegisteredToCustomer(Incident incident)
+        public static bool ProductIsRegisteredToCustomer(Incident incident)
         {
             IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")

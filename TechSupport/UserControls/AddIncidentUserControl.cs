@@ -13,7 +13,7 @@ namespace TechSupport.UserControls
     /// </summary>
     public partial class AddIncidentUserControl : UserControl
     {
-        private readonly TechSupportController techSupportController;
+        private readonly IncidentController incidentController;
 
         /// <summary>
         /// Initialize the control.
@@ -21,7 +21,7 @@ namespace TechSupport.UserControls
         public AddIncidentUserControl()
         {
             InitializeComponent();
-            this.techSupportController = new TechSupportController();
+            this.incidentController = new IncidentController();
             this.RefreshComboBoxes();
         }
 
@@ -32,7 +32,7 @@ namespace TechSupport.UserControls
         private void RefreshCustomerComboBox()
         {
             this.customerComboBox.DataSource = null;
-            this.customerComboBox.DataSource = this.techSupportController.GetCustomerNames();
+            this.customerComboBox.DataSource = this.incidentController.GetCustomerNames();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace TechSupport.UserControls
         private void RefreshProductComboBox()
         {
             this.productComboBox.DataSource = null;
-            this.productComboBox.DataSource = this.techSupportController.GetProductNames();
+            this.productComboBox.DataSource = this.incidentController.GetProductNames();
         }
 
         /// <summary>
@@ -77,9 +77,9 @@ namespace TechSupport.UserControls
                     Description = description
                 };
 
-                if (this.techSupportController.ProductIsRegisteredToCustomer(incidentToAdd))
+                if (this.incidentController.ProductIsRegisteredToCustomer(incidentToAdd))
                 {
-                    this.techSupportController.AddOpenIncident(incidentToAdd);
+                    this.incidentController.AddOpenIncident(incidentToAdd);
 
                     this.UpdateIncidentStatusLabel("Incident successfully added\n by "
                     + this.customerComboBox.SelectedValue.ToString() + ". Incident ID is "
