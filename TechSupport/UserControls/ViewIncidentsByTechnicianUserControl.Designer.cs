@@ -145,11 +145,13 @@ namespace TechSupport.UserControls
             this.nameComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.technicianBindingSource, "Name", true));
             this.nameComboBox.DataSource = this.technicianBindingSource;
             this.nameComboBox.DisplayMember = "Name";
+            this.nameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.nameComboBox.FormattingEnabled = true;
             this.nameComboBox.Location = new System.Drawing.Point(118, 11);
             this.nameComboBox.Name = "nameComboBox";
             this.nameComboBox.Size = new System.Drawing.Size(395, 24);
             this.nameComboBox.TabIndex = 6;
+            this.nameComboBox.SelectedIndexChanged += new System.EventHandler(this.NameComboBoxSelectedIndexChanged);
             // 
             // technicianBindingSource
             // 
@@ -207,10 +209,10 @@ namespace TechSupport.UserControls
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
         private System.Windows.Forms.Label technicianOpenIncidentsLabel;
         private System.Windows.Forms.TableLayoutPanel technicianFieldsTableLayoutPanel;
-        private System.Windows.Forms.ListView technicianOpenIncidentsListView;
         private System.Windows.Forms.TextBox emailTextBox;
         private System.Windows.Forms.BindingSource technicianBindingSource;
         private System.Windows.Forms.TextBox phoneTextBox;
         private System.Windows.Forms.ComboBox nameComboBox;
+        private System.Windows.Forms.ListView technicianOpenIncidentsListView;
     }
 }
