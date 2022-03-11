@@ -30,7 +30,7 @@ namespace TechSupport.UserControls
         private void InitializeComponent()
         {
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.technicianIncidentsLabel = new System.Windows.Forms.Label();
+            this.technicianOpenIncidentsLabel = new System.Windows.Forms.Label();
             this.technicianFieldsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.technicianPhoneLabel = new System.Windows.Forms.Label();
             this.technicianEmailLabel = new System.Windows.Forms.Label();
@@ -38,7 +38,7 @@ namespace TechSupport.UserControls
             this.technicianPhoneTextBox = new System.Windows.Forms.TextBox();
             this.technicianEmailTextBox = new System.Windows.Forms.TextBox();
             this.techncianNameLabel = new System.Windows.Forms.Label();
-            this.technicianIncidentsListView = new System.Windows.Forms.ListView();
+            this.technicianOpenIncidentsListView = new System.Windows.Forms.ListView();
             this.mainTableLayoutPanel.SuspendLayout();
             this.technicianFieldsTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
@@ -50,9 +50,9 @@ namespace TechSupport.UserControls
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45F));
             this.mainTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.mainTableLayoutPanel.Controls.Add(this.technicianIncidentsLabel, 1, 0);
+            this.mainTableLayoutPanel.Controls.Add(this.technicianOpenIncidentsLabel, 1, 0);
             this.mainTableLayoutPanel.Controls.Add(this.technicianFieldsTableLayoutPanel, 1, 1);
-            this.mainTableLayoutPanel.Controls.Add(this.technicianIncidentsListView, 1, 4);
+            this.mainTableLayoutPanel.Controls.Add(this.technicianOpenIncidentsListView, 1, 4);
             this.mainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.mainTableLayoutPanel.Name = "mainTableLayoutPanel";
@@ -65,18 +65,18 @@ namespace TechSupport.UserControls
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(650, 500);
             this.mainTableLayoutPanel.TabIndex = 0;
             // 
-            // technicianIncidentsLabel
+            // technicianOpenIncidentsLabel
             // 
-            this.technicianIncidentsLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.technicianIncidentsLabel.AutoSize = true;
-            this.technicianIncidentsLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.mainTableLayoutPanel.SetColumnSpan(this.technicianIncidentsLabel, 2);
-            this.technicianIncidentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.technicianIncidentsLabel.Location = new System.Drawing.Point(148, 17);
-            this.technicianIncidentsLabel.Name = "technicianIncidentsLabel";
-            this.technicianIncidentsLabel.Size = new System.Drawing.Size(351, 41);
-            this.technicianIncidentsLabel.TabIndex = 3;
-            this.technicianIncidentsLabel.Text = "Technician Incidents";
+            this.technicianOpenIncidentsLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.technicianOpenIncidentsLabel.AutoSize = true;
+            this.technicianOpenIncidentsLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.mainTableLayoutPanel.SetColumnSpan(this.technicianOpenIncidentsLabel, 2);
+            this.technicianOpenIncidentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.technicianOpenIncidentsLabel.Location = new System.Drawing.Point(100, 17);
+            this.technicianOpenIncidentsLabel.Name = "technicianOpenIncidentsLabel";
+            this.technicianOpenIncidentsLabel.Size = new System.Drawing.Size(448, 41);
+            this.technicianOpenIncidentsLabel.TabIndex = 3;
+            this.technicianOpenIncidentsLabel.Text = "Technician Open Incidents";
             // 
             // technicianFieldsTableLayoutPanel
             // 
@@ -168,16 +168,16 @@ namespace TechSupport.UserControls
             this.techncianNameLabel.Text = "Name:";
             this.techncianNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // technicianIncidentsListView
+            // technicianOpenIncidentsListView
             // 
-            this.technicianIncidentsListView.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.mainTableLayoutPanel.SetColumnSpan(this.technicianIncidentsListView, 2);
-            this.technicianIncidentsListView.HideSelection = false;
-            this.technicianIncidentsListView.Location = new System.Drawing.Point(35, 228);
-            this.technicianIncidentsListView.Name = "technicianIncidentsListView";
-            this.technicianIncidentsListView.Size = new System.Drawing.Size(578, 269);
-            this.technicianIncidentsListView.TabIndex = 5;
-            this.technicianIncidentsListView.UseCompatibleStateImageBehavior = false;
+            this.technicianOpenIncidentsListView.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.mainTableLayoutPanel.SetColumnSpan(this.technicianOpenIncidentsListView, 2);
+            this.technicianOpenIncidentsListView.HideSelection = false;
+            this.technicianOpenIncidentsListView.Location = new System.Drawing.Point(35, 228);
+            this.technicianOpenIncidentsListView.Name = "technicianOpenIncidentsListView";
+            this.technicianOpenIncidentsListView.Size = new System.Drawing.Size(578, 269);
+            this.technicianOpenIncidentsListView.TabIndex = 5;
+            this.technicianOpenIncidentsListView.UseCompatibleStateImageBehavior = false;
             // 
             // ViewIncidentsByTechnicianUserControl
             // 
@@ -196,9 +196,9 @@ namespace TechSupport.UserControls
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel mainTableLayoutPanel;
-        private System.Windows.Forms.Label technicianIncidentsLabel;
+        private System.Windows.Forms.Label technicianOpenIncidentsLabel;
         private System.Windows.Forms.TableLayoutPanel technicianFieldsTableLayoutPanel;
-        private System.Windows.Forms.ListView technicianIncidentsListView;
+        private System.Windows.Forms.ListView technicianOpenIncidentsListView;
         private System.Windows.Forms.TextBox technicianPhoneTextBox;
         private System.Windows.Forms.TextBox technicianEmailTextBox;
         private System.Windows.Forms.ComboBox technicianNameComboBox;
