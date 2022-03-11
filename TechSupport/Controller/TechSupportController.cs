@@ -11,8 +11,7 @@ namespace TechSupport.Controller
     public class TechSupportController
     {
         private readonly IncidentDBDAL incidentDBSource;
-        private readonly CustomerDBDAL customerDBSource;
-        private readonly TechnicianDBDAL technicianDBSource;
+        private readonly CustomerDBDAL customerDBSource;        
         private readonly ProductDBDAL productDBSource;
         private readonly RegistrationsDBDAL registrationDBSource;
 
@@ -23,7 +22,6 @@ namespace TechSupport.Controller
         {
             this.incidentDBSource = new IncidentDBDAL();
             this.customerDBSource = new CustomerDBDAL();
-            this.technicianDBSource = new TechnicianDBDAL();
             this.productDBSource = new ProductDBDAL();
             this.registrationDBSource = new RegistrationsDBDAL();
         }        
@@ -104,17 +102,6 @@ namespace TechSupport.Controller
         public List<string> GetCustomerNames()
         {
             return this.customerDBSource.GetCustomerNames();
-        }
-
-        //***TECHSUPPORT DB TECHNICIAN FUNCTIONS***
-
-        /// <summary>
-        /// Gets all technician names from TechSupport db source.
-        /// </summary>
-        /// <returns>List of technician names</returns>
-        public List<string> GetTechnicianNames()
-        {
-            return this.technicianDBSource.GetTechnicianNames();
         }
 
         //***TECHSUPPORT DB PRODUCT FUNCTIONS***

@@ -29,19 +29,55 @@ namespace TechSupport.UserControls
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label nameLabel;
+            System.Windows.Forms.Label phoneLabel;
+            System.Windows.Forms.Label emailLabel;
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.technicianOpenIncidentsLabel = new System.Windows.Forms.Label();
             this.technicianFieldsTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.technicianPhoneLabel = new System.Windows.Forms.Label();
-            this.technicianEmailLabel = new System.Windows.Forms.Label();
-            this.technicianNameComboBox = new System.Windows.Forms.ComboBox();
-            this.technicianPhoneTextBox = new System.Windows.Forms.TextBox();
-            this.technicianEmailTextBox = new System.Windows.Forms.TextBox();
-            this.techncianNameLabel = new System.Windows.Forms.Label();
+            this.nameComboBox = new System.Windows.Forms.ComboBox();
+            this.technicianBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.phoneTextBox = new System.Windows.Forms.TextBox();
+            this.emailTextBox = new System.Windows.Forms.TextBox();
             this.technicianOpenIncidentsListView = new System.Windows.Forms.ListView();
+            nameLabel = new System.Windows.Forms.Label();
+            phoneLabel = new System.Windows.Forms.Label();
+            emailLabel = new System.Windows.Forms.Label();
             this.mainTableLayoutPanel.SuspendLayout();
             this.technicianFieldsTableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.technicianBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // nameLabel
+            // 
+            nameLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new System.Drawing.Point(63, 15);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new System.Drawing.Size(49, 17);
+            nameLabel.TabIndex = 2;
+            nameLabel.Text = "Name:";
+            // 
+            // phoneLabel
+            // 
+            phoneLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            phoneLabel.AutoSize = true;
+            phoneLabel.Location = new System.Drawing.Point(59, 111);
+            phoneLabel.Name = "phoneLabel";
+            phoneLabel.Size = new System.Drawing.Size(53, 17);
+            phoneLabel.TabIndex = 4;
+            phoneLabel.Text = "Phone:";
+            // 
+            // emailLabel
+            // 
+            emailLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            emailLabel.AutoSize = true;
+            emailLabel.Location = new System.Drawing.Point(66, 62);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new System.Drawing.Size(46, 17);
+            emailLabel.TabIndex = 7;
+            emailLabel.Text = "Email:";
             // 
             // mainTableLayoutPanel
             // 
@@ -80,16 +116,17 @@ namespace TechSupport.UserControls
             // 
             // technicianFieldsTableLayoutPanel
             // 
+            this.technicianFieldsTableLayoutPanel.AutoScroll = true;
             this.technicianFieldsTableLayoutPanel.ColumnCount = 2;
             this.mainTableLayoutPanel.SetColumnSpan(this.technicianFieldsTableLayoutPanel, 2);
             this.technicianFieldsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.technicianFieldsTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.technicianFieldsTableLayoutPanel.Controls.Add(this.technicianPhoneLabel, 0, 2);
-            this.technicianFieldsTableLayoutPanel.Controls.Add(this.technicianEmailLabel, 0, 1);
-            this.technicianFieldsTableLayoutPanel.Controls.Add(this.technicianNameComboBox, 1, 0);
-            this.technicianFieldsTableLayoutPanel.Controls.Add(this.technicianPhoneTextBox, 1, 2);
-            this.technicianFieldsTableLayoutPanel.Controls.Add(this.technicianEmailTextBox, 1, 1);
-            this.technicianFieldsTableLayoutPanel.Controls.Add(this.techncianNameLabel, 0, 0);
+            this.technicianFieldsTableLayoutPanel.Controls.Add(emailLabel, 0, 1);
+            this.technicianFieldsTableLayoutPanel.Controls.Add(this.nameComboBox, 1, 0);
+            this.technicianFieldsTableLayoutPanel.Controls.Add(phoneLabel, 0, 2);
+            this.technicianFieldsTableLayoutPanel.Controls.Add(this.phoneTextBox, 1, 2);
+            this.technicianFieldsTableLayoutPanel.Controls.Add(this.emailTextBox, 1, 1);
+            this.technicianFieldsTableLayoutPanel.Controls.Add(nameLabel, 0, 0);
             this.technicianFieldsTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.technicianFieldsTableLayoutPanel.Location = new System.Drawing.Point(35, 78);
             this.technicianFieldsTableLayoutPanel.Name = "technicianFieldsTableLayoutPanel";
@@ -98,75 +135,45 @@ namespace TechSupport.UserControls
             this.technicianFieldsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
             this.technicianFieldsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34F));
             this.technicianFieldsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            this.technicianFieldsTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.technicianFieldsTableLayoutPanel.Size = new System.Drawing.Size(578, 144);
             this.technicianFieldsTableLayoutPanel.TabIndex = 4;
             // 
-            // technicianPhoneLabel
+            // nameComboBox
             // 
-            this.technicianPhoneLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.technicianPhoneLabel.AutoSize = true;
-            this.technicianPhoneLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.technicianPhoneLabel.Location = new System.Drawing.Point(51, 109);
-            this.technicianPhoneLabel.Name = "technicianPhoneLabel";
-            this.technicianPhoneLabel.Size = new System.Drawing.Size(61, 20);
-            this.technicianPhoneLabel.TabIndex = 23;
-            this.technicianPhoneLabel.Text = "Phone:";
-            this.technicianPhoneLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.nameComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nameComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.technicianBindingSource, "Name", true));
+            this.nameComboBox.DataSource = this.technicianBindingSource;
+            this.nameComboBox.DisplayMember = "Name";
+            this.nameComboBox.FormattingEnabled = true;
+            this.nameComboBox.Location = new System.Drawing.Point(118, 11);
+            this.nameComboBox.Name = "nameComboBox";
+            this.nameComboBox.Size = new System.Drawing.Size(395, 24);
+            this.nameComboBox.TabIndex = 6;
             // 
-            // technicianEmailLabel
+            // technicianBindingSource
             // 
-            this.technicianEmailLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.technicianEmailLabel.AutoSize = true;
-            this.technicianEmailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.technicianEmailLabel.Location = new System.Drawing.Point(56, 61);
-            this.technicianEmailLabel.Name = "technicianEmailLabel";
-            this.technicianEmailLabel.Size = new System.Drawing.Size(56, 20);
-            this.technicianEmailLabel.TabIndex = 22;
-            this.technicianEmailLabel.Text = "Email:";
-            this.technicianEmailLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.technicianBindingSource.DataSource = typeof(TechSupport.Model.Technician);
             // 
-            // technicianNameComboBox
+            // phoneTextBox
             // 
-            this.technicianNameComboBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.technicianNameComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.technicianNameComboBox.FormattingEnabled = true;
-            this.technicianNameComboBox.Location = new System.Drawing.Point(119, 11);
-            this.technicianNameComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 7, 4);
-            this.technicianNameComboBox.Name = "technicianNameComboBox";
-            this.technicianNameComboBox.Size = new System.Drawing.Size(389, 24);
-            this.technicianNameComboBox.TabIndex = 20;
+            this.phoneTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.phoneTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.technicianBindingSource, "Phone", true));
+            this.phoneTextBox.Location = new System.Drawing.Point(118, 108);
+            this.phoneTextBox.Name = "phoneTextBox";
+            this.phoneTextBox.ReadOnly = true;
+            this.phoneTextBox.Size = new System.Drawing.Size(395, 22);
+            this.phoneTextBox.TabIndex = 5;
             // 
-            // technicianPhoneTextBox
+            // emailTextBox
             // 
-            this.technicianPhoneTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.technicianPhoneTextBox.Location = new System.Drawing.Point(119, 108);
-            this.technicianPhoneTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 7, 4);
-            this.technicianPhoneTextBox.Name = "technicianPhoneTextBox";
-            this.technicianPhoneTextBox.ReadOnly = true;
-            this.technicianPhoneTextBox.Size = new System.Drawing.Size(389, 22);
-            this.technicianPhoneTextBox.TabIndex = 15;
-            // 
-            // technicianEmailTextBox
-            // 
-            this.technicianEmailTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.technicianEmailTextBox.Location = new System.Drawing.Point(119, 60);
-            this.technicianEmailTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 7, 4);
-            this.technicianEmailTextBox.Name = "technicianEmailTextBox";
-            this.technicianEmailTextBox.ReadOnly = true;
-            this.technicianEmailTextBox.Size = new System.Drawing.Size(389, 22);
-            this.technicianEmailTextBox.TabIndex = 14;
-            // 
-            // techncianNameLabel
-            // 
-            this.techncianNameLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.techncianNameLabel.AutoSize = true;
-            this.techncianNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.techncianNameLabel.Location = new System.Drawing.Point(54, 13);
-            this.techncianNameLabel.Name = "techncianNameLabel";
-            this.techncianNameLabel.Size = new System.Drawing.Size(58, 20);
-            this.techncianNameLabel.TabIndex = 21;
-            this.techncianNameLabel.Text = "Name:";
-            this.techncianNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.emailTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.emailTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.technicianBindingSource, "Email", true));
+            this.emailTextBox.Location = new System.Drawing.Point(118, 60);
+            this.emailTextBox.Name = "emailTextBox";
+            this.emailTextBox.ReadOnly = true;
+            this.emailTextBox.Size = new System.Drawing.Size(395, 22);
+            this.emailTextBox.TabIndex = 1;
             // 
             // technicianOpenIncidentsListView
             // 
@@ -176,7 +183,7 @@ namespace TechSupport.UserControls
             this.technicianOpenIncidentsListView.Location = new System.Drawing.Point(35, 228);
             this.technicianOpenIncidentsListView.Name = "technicianOpenIncidentsListView";
             this.technicianOpenIncidentsListView.Size = new System.Drawing.Size(578, 269);
-            this.technicianOpenIncidentsListView.TabIndex = 5;
+            this.technicianOpenIncidentsListView.TabIndex = 4;
             this.technicianOpenIncidentsListView.UseCompatibleStateImageBehavior = false;
             // 
             // ViewIncidentsByTechnicianUserControl
@@ -185,10 +192,12 @@ namespace TechSupport.UserControls
             this.Controls.Add(this.mainTableLayoutPanel);
             this.Name = "ViewIncidentsByTechnicianUserControl";
             this.Size = new System.Drawing.Size(650, 500);
+            this.Load += new System.EventHandler(this.ViewIncidentsByTechnicianUserControlLoad);
             this.mainTableLayoutPanel.ResumeLayout(false);
             this.mainTableLayoutPanel.PerformLayout();
             this.technicianFieldsTableLayoutPanel.ResumeLayout(false);
             this.technicianFieldsTableLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.technicianBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -199,11 +208,9 @@ namespace TechSupport.UserControls
         private System.Windows.Forms.Label technicianOpenIncidentsLabel;
         private System.Windows.Forms.TableLayoutPanel technicianFieldsTableLayoutPanel;
         private System.Windows.Forms.ListView technicianOpenIncidentsListView;
-        private System.Windows.Forms.TextBox technicianPhoneTextBox;
-        private System.Windows.Forms.TextBox technicianEmailTextBox;
-        private System.Windows.Forms.ComboBox technicianNameComboBox;
-        private System.Windows.Forms.Label techncianNameLabel;
-        private System.Windows.Forms.Label technicianPhoneLabel;
-        private System.Windows.Forms.Label technicianEmailLabel;
+        private System.Windows.Forms.TextBox emailTextBox;
+        private System.Windows.Forms.BindingSource technicianBindingSource;
+        private System.Windows.Forms.TextBox phoneTextBox;
+        private System.Windows.Forms.ComboBox nameComboBox;
     }
 }

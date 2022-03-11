@@ -15,6 +15,7 @@ namespace TechSupport.UserControls
     public partial class UpdateIncidentUserControl : UserControl
     {
         private readonly TechSupportController techSupportController;
+        private readonly TechnicianController technicianController;
 
         /// <summary>
         /// Initialize the control.
@@ -23,6 +24,7 @@ namespace TechSupport.UserControls
         {
             InitializeComponent();
             this.techSupportController = new TechSupportController();
+            this.technicianController = new TechnicianController();
         }
 
         /// <summary>
@@ -257,7 +259,7 @@ namespace TechSupport.UserControls
         {
             this.ValidateIncident(incident);
             List<string> techniciansWithUnassignedIncident = new List<string> { "** Unassigned **" };
-            techniciansWithUnassignedIncident.AddRange(this.techSupportController.GetTechnicianNames());
+            techniciansWithUnassignedIncident.AddRange(this.technicianController.GetTechnicianNames());
             this.technicianComboBox.DataSource = techniciansWithUnassignedIncident;
             this.technicianComboBox.SelectedItem = "** Unassigned **";
         }
@@ -270,7 +272,7 @@ namespace TechSupport.UserControls
         private void SetTechnicianComboBoxForOpenIncident(Incident incident)
         {
             this.ValidateIncident(incident);
-            this.technicianComboBox.DataSource = this.techSupportController.GetTechnicianNames();
+            this.technicianComboBox.DataSource = this.technicianController.GetTechnicianNames();
             this.technicianComboBox.SelectedItem = incident.Technician;
         }
 

@@ -1,4 +1,7 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
+using TechSupport.Controller;
+using TechSupport.Model;
 
 namespace TechSupport.UserControls
 {   
@@ -11,13 +14,20 @@ namespace TechSupport.UserControls
     /// </summary>
     public partial class ViewIncidentsByTechnicianUserControl : UserControl
     {
+        private readonly TechnicianController technicianController;
         /// <summary>
         /// Initialize the control.
         /// </summary>
         public ViewIncidentsByTechnicianUserControl()
         {
             InitializeComponent();
+            this.technicianController = new TechnicianController();
         }
 
+        private void ViewIncidentsByTechnicianUserControlLoad(object sender, System.EventArgs e)
+        {
+            List<Technician> technicians = technicianController.GetAllTechnicians();
+            this.nameComboBox.DataSource = technicians;
+        }
     }
 }

@@ -11,6 +11,42 @@ namespace TechSupport.DAL
     /// </summary>
     public class TechnicianDBDAL
     {
+
+        /// <summary>
+        /// Returns list of Technician objects 
+        /// from Technicians table.
+        /// </summary>
+        /// <returns></returns>
+        public static List<Technician> GetAllTechnicians()
+        {
+            List<Technician> technicians = new List<Technician>();
+            string selectStatement = "SELECT Name, Email, Phone " +
+                                        "FROM Technicians";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Technician technician = new Technician
+                            {
+                                Name = reader["Name"].ToString(),
+                                Email = reader["Email"].ToString(),
+                                Phone = reader["Phone"].ToString(),
+                            };
+                            technicians.Add(technician);
+                        }
+                    }
+                }
+            }
+
+            return technicians;
+        }
+
         /// <summary>
         /// Retrieves Technician names from TechSupport db.
         /// </summary>
