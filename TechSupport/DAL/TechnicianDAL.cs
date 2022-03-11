@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using TechSupport.Model;
+using TechSupport.Validators;
 
 namespace TechSupport.DAL
 {
@@ -9,7 +10,7 @@ namespace TechSupport.DAL
     /// This class serves as the Data Access Layer
     /// for the TechSupport DB Technicians table.
     /// </summary>
-    public class TechnicianDBDAL
+    public class TechnicianDAL
     {
 
         /// <summary>
@@ -20,7 +21,7 @@ namespace TechSupport.DAL
         public static List<Technician> GetAllTechnicians()
         {
             List<Technician> technicians = new List<Technician>();
-            string selectStatement = "SELECT Name, Email, Phone " +
+            string selectStatement = "SELECT TechID, Name, Email, Phone " +
                                         "FROM Technicians";
 
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
@@ -34,6 +35,7 @@ namespace TechSupport.DAL
                         {
                             Technician technician = new Technician
                             {
+                                TechnicianID = Convert.ToInt32(reader["TechID"]),
                                 Name = reader["Name"].ToString(),
                                 Email = reader["Email"].ToString(),
                                 Phone = reader["Phone"].ToString(),
@@ -51,7 +53,7 @@ namespace TechSupport.DAL
         /// Retrieves Technician names from TechSupport db.
         /// </summary>
         /// <returns>List of technician names</returns>
-        public List<string> GetTechnicianNames()
+        public static List<string> GetTechnicianNames()
         {
             List<string> techSupportTechnicianNames = new List<string>();
             string selectStatement = "SELECT Name FROM Technicians";
@@ -75,53 +77,46 @@ namespace TechSupport.DAL
         }
 
         /// <summary>
-        /// Retrieves the name of a Technician
-        /// using their assigned ID.
+        /// Returns a list of open incidents
+        /// that are assigned to a Technician
         /// </summary>
-        /// <param name="incident"></param>
-        /// <returns>Technician name assigned to ID</returns>
-        public string GetTechnicianByID(Incident incident)
+        /// <param name="technician"></param>
+        /// <returns></returns>
+        public static List<Incident> GetOpenIncidentsAssignedToTechnician(Technician technician)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
-            if (incident.TechID < 1)
-            {
-                throw new ArgumentException("TechnicianID cannot be less than 1");
-            }
-            string technicianName = "";
-            string selectStatement = "SELECT Name FROM Technicians WHERE TechID = @technicianid";
+            TechnicianValidator.ValidateTechnicianNotNull(technician);
+            List<Incident> incidents = new List<Incident>();
+            string selectStatement = "SELECT p.Name AS 'Product', i.DateOpened, c.Name AS 'Customer', i.Title " +
+                                     "FROM Incidents i " +
+                                     "LEFT JOIN Customers c ON i.CustomerID = c.CustomerID " +
+                                     "LEFT JOIN Products p ON i.ProductCode = p.ProductCode " +
+                                     "WHERE i.DateClosed IS NULL " +
+                                     "AND i.TechID = @techID";
 
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
                 {
-                    selectCommand.Parameters.AddWithValue("technicianid", incident.TechID);
-                    technicianName = Convert.ToString(selectCommand.ExecuteScalar());
+                    selectCommand.Parameters.AddWithValue("techID", technician.TechnicianID);
+                    using (SqlDataReader reader = selectCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Incident incident = new Incident
+                            {
+                                Product = reader["Product"].ToString(),
+                                DateOpened = (DateTime)reader["DateOpened"],
+                                Customer = reader["Customer"].ToString(),
+                                Title = reader["Title"].ToString()
+                            };                           
+                            incidents.Add(incident);
+                        }
+                    }
                 }
             }
 
-            return technicianName;
+            return incidents;
         }
-
-        public int GetTechnicianIDByTechnicianName(Incident incident)
-        {
-            DBDALValidator.ValidateTechnicianNameExists(incident);
-            int techID = 0;
-            string selectStatement = "SELECT TechID FROM Technicians WHERE Name = @technician";
-
-            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
-            {
-                connection.Open();
-                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
-                {
-                    selectCommand.Parameters.AddWithValue("technician", incident.Technician);
-                    techID = Convert.ToInt32(selectCommand.ExecuteScalar());
-                }
-            }
-
-            return techID;
-        }
-
-        
     }
 }

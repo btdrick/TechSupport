@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TechSupport.DAL;
 using TechSupport.Model;
+using TechSupport.Validators;
 
 namespace TechSupport.Controller
 {
@@ -10,11 +11,8 @@ namespace TechSupport.Controller
     /// </summary>
     public class TechnicianController
     {
-        private readonly TechnicianDBDAL technicianDBSource;
-
         public TechnicianController()
         {
-            this.technicianDBSource = new TechnicianDBDAL();
         }
 
         /// <summary>
@@ -23,7 +21,7 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public List<Technician> GetAllTechnicians()
         {
-            return TechnicianDBDAL.GetAllTechnicians();
+            return TechnicianDAL.GetAllTechnicians();
         }
 
         /// <summary>
@@ -32,7 +30,18 @@ namespace TechSupport.Controller
         /// <returns>List of technician names</returns>
         public List<string> GetTechnicianNames()
         {
-            return this.technicianDBSource.GetTechnicianNames();
+            return TechnicianDAL.GetTechnicianNames();
+        }
+
+        /// <summary>
+        /// Gets all open incidents assigned to a Technician.
+        /// </summary>
+        /// <param name="technician"></param>
+        /// <returns></returns>
+        public List<Incident> GetOpenIncidentsAssignedToTechnician(Technician technician)
+        {
+            TechnicianValidator.ValidateTechnicianNotNull(technician);
+            return TechnicianDAL.GetOpenIncidentsAssignedToTechnician(technician);
         }
     }
 }

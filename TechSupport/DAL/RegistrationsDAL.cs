@@ -8,7 +8,7 @@ namespace TechSupport.DAL
     /// This class serves as the Data Access Layer
     /// for the TechSupport DB Registrations table.
     /// </summary>
-    public class RegistrationsDBDAL
+    public class RegistrationsDAL
     {
         /// <summary>
         /// Checks if product is registered to a customer.
@@ -17,7 +17,7 @@ namespace TechSupport.DAL
         /// <returns></returns>
         public bool ProductIsRegisteredToCustomer(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Customer name cannot be null or empty");

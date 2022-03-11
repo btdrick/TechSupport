@@ -9,7 +9,7 @@ namespace TechSupport.DAL
     /// This class serves as the Data Access Layer
     /// for the TechSupport DB Products table.
     /// </summary>
-    public class ProductDBDAL
+    public class ProductDAL
     {
         /// <summary>
         /// Retrieves product names from TechSupport db.
@@ -46,7 +46,7 @@ namespace TechSupport.DAL
         /// <returns>ProductCode</returns>
         public string GetProductCodeByName(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Product == null || incident.Product == "")
             {
                 throw new ArgumentException("Cannot use null or empty product name");

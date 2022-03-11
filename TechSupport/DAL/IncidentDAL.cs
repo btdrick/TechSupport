@@ -9,7 +9,7 @@ namespace TechSupport.DAL
     /// This class serves as the Data Access Layer
     /// for the TechSupport DB Incidents table.
     /// </summary>
-    public class IncidentDBDAL
+    public class IncidentDAL
     {
         /// <summary>
         /// Retrieves incidents from TechSupport db.
@@ -58,7 +58,7 @@ namespace TechSupport.DAL
         /// <returns>Incident object assigned to ID</returns>
         public Incident GetIncidentByID(Incident incident)
         {
-            DBDALValidator.ValidateIncidentExists(incident);
+            IncidentValidator.ValidateIncidentExists(incident);
             string selectStatement = "SELECT i.CustomerID, i.ProductCode, i.TechID, i.Title, i.DateOpened, i.DateClosed, i.\"Description\" " +
                                      "FROM Incidents i WHERE i.IncidentID = @incidentid";
 
@@ -74,14 +74,13 @@ namespace TechSupport.DAL
                         while (reader.Read())
                         {
                             incident.CustomerID = Convert.ToInt32(reader["CustomerID"]);
-                            CustomerDBDAL customerDAL = new CustomerDBDAL();
+                            CustomerDAL customerDAL = new CustomerDAL();
                             incident.Customer = customerDAL.GetCustomerByID(incident);
                             incident.ProductCode = reader["ProductCode"].ToString();
                             if (!reader.IsDBNull(2))
                             {
                                 incident.TechID = Convert.ToInt32(reader["TechID"].ToString());
-                                TechnicianDBDAL technicianDAL = new TechnicianDBDAL();
-                                incident.Technician = technicianDAL.GetTechnicianByID(incident);
+                                incident.Technician = this.GetTechnicianByID(incident);
                             }
                             incident.Title = reader["Title"].ToString();
                             incident.DateOpened = (DateTime)reader["DateOpened"];
@@ -104,19 +103,19 @@ namespace TechSupport.DAL
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             if (InvalidNewIncidentFields(incident))
             {
                 throw new ArgumentException("Invalid incident. One or more values are either null or invalid");
             }
             if (incident.CustomerID == 0)
             {
-                CustomerDBDAL customerDAL = new CustomerDBDAL();
+                CustomerDAL customerDAL = new CustomerDAL();
                 incident.CustomerID = customerDAL.GetCustomerIDByName(incident);
             }
             if (incident.ProductCode == null || incident.ProductCode == "")
             {
-                ProductDBDAL productDAL = new ProductDBDAL();
+                ProductDAL productDAL = new ProductDAL();
                 incident.ProductCode = productDAL.GetProductCodeByName(incident);
             }
 
@@ -146,8 +145,8 @@ namespace TechSupport.DAL
         /// <param name="newIncident"></param>
         public void UpdateIncident(Incident oldIncident, Incident newIncident)
         {
-            DBDALValidator.ValidateIncidentExists(oldIncident);
-            DBDALValidator.ValidateIncidentExists(newIncident);
+            IncidentValidator.ValidateIncidentExists(oldIncident);
+            IncidentValidator.ValidateIncidentExists(newIncident);
             string updateStatement = "UPDATE Incidents " +
                                      "SET TechID = @techid, \"Description\" = replace(@newDescription, '\n', char(13)+char(10)) " +
                                      "WHERE IncidentID = @oldIncidentid " + 
@@ -164,8 +163,7 @@ namespace TechSupport.DAL
                     }
                     else
                     {
-                        TechnicianDBDAL technicianDAL = new TechnicianDBDAL();
-                        selectCommand.Parameters.AddWithValue("techid", technicianDAL.GetTechnicianIDByTechnicianName(newIncident));
+                        selectCommand.Parameters.AddWithValue("techid", this.GetTechnicianIDByTechnicianName(newIncident));
                     }
                     selectCommand.Parameters.AddWithValue("newDescription", newIncident.Description);
                     selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID); 
@@ -182,7 +180,7 @@ namespace TechSupport.DAL
         /// <returns>Incident closed?</returns>
         public bool IsIncidentClosed(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             return incident.DateClosed.ToShortDateString() != "1/1/0001";
         }
 
@@ -193,8 +191,8 @@ namespace TechSupport.DAL
         /// <param name="incident"></param>
         public void CloseOpenIncident(Incident oldIncident, Incident newIncident)
         {
-            DBDALValidator.ValidateIncidentExists(oldIncident);
-            DBDALValidator.ValidateIncidentExists(newIncident);
+            IncidentValidator.ValidateIncidentExists(oldIncident);
+            IncidentValidator.ValidateIncidentExists(newIncident);
             string updateStatement = "UPDATE Incidents " +
                                      "SET DateClosed = @today " +
                                      "WHERE IncidentID = @oldIncidentid " +
@@ -211,6 +209,60 @@ namespace TechSupport.DAL
                     selectCommand.ExecuteScalar();
                 }
             }
+        }
+
+        /// <summary>
+        /// Retrieves the name of a Technician
+        /// using their assigned ID.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns>Technician name assigned to ID</returns>
+        public string GetTechnicianByID(Incident incident)
+        {
+            IncidentValidator.ValidateIncidentNotNull(incident);
+            if (incident.TechID < 1)
+            {
+                throw new ArgumentException("TechnicianID cannot be less than 1");
+            }
+            string technicianName = "";
+            string selectStatement = "SELECT Name FROM Technicians WHERE TechID = @technicianid";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("technicianid", incident.TechID);
+                    technicianName = Convert.ToString(selectCommand.ExecuteScalar());
+                }
+            }
+
+            return technicianName;
+        }
+
+        /// <summary>
+        /// Retrieves the TechID for the technician
+        /// assigned to an Incident.
+        /// </summary>
+        /// <param name="incident"></param>
+        /// <returns></returns>
+        public int GetTechnicianIDByTechnicianName(Incident incident)
+        {
+            IncidentValidator.ValidateTechnicianNameExists(incident);
+            int techID = 0;
+            string selectStatement = "SELECT TechID FROM Technicians WHERE Name = @technician";
+
+            using (SqlConnection connection = TechSupportDBConnection.GetConnection())
+            {
+                connection.Open();
+                using (SqlCommand selectCommand = new SqlCommand(selectStatement, connection))
+                {
+                    selectCommand.Parameters.AddWithValue("technician", incident.Technician);
+                    techID = Convert.ToInt32(selectCommand.ExecuteScalar());
+                }
+            }
+
+            return techID;
         }
 
         /// <summary>

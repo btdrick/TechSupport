@@ -8,7 +8,7 @@ namespace TechSupport.DAL
     /// This class serves as a precondition
     /// validator for TechSupport DB actions.
     /// </summary>
-    class DBDALValidator
+    public class IncidentValidator
     {
         /// <summary>
         /// Validates that an incident object is not null.
@@ -57,7 +57,7 @@ namespace TechSupport.DAL
         /// <param name="incident"></param>
         public static void ValidateTechnicianNameExists(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            ValidateIncidentNotNull(incident);
             string selectStatement = "SELECT COUNT(*) " +
                                      "FROM Technicians " +
                                      "WHERE Name = @technician";

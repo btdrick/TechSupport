@@ -49,7 +49,7 @@
     <Compile Include="Controller\FormProvider.cs" />
     <Compile Include="Controller\TechnicianController.cs" />
     <Compile Include="Controller\TechSupportController.cs" />
-    <Compile Include="DAL\CustomerDBDAL.cs" />
+    <Compile Include="DAL\CustomerDAL.cs" />
     <Compile Include="Model\Technician.cs" />
     <Compile Include="TechSupportDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -62,11 +62,11 @@
     <Compile Include="UserControls\ViewIncidentsByTechnicianUserControl.Designer.cs">
       <DependentUpon>ViewIncidentsByTechnicianUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Validators\DBDALValidator.cs" />
-    <Compile Include="DAL\IncidentDBDAL.cs" />
-    <Compile Include="DAL\ProductDBDAL.cs" />
-    <Compile Include="DAL\RegistrationsDBDAL.cs" />
-    <Compile Include="DAL\TechnicianDBDAL.cs" />
+    <Compile Include="Validators\IncidentValidator.cs" />
+    <Compile Include="DAL\IncidentDAL.cs" />
+    <Compile Include="DAL\ProductDAL.cs" />
+    <Compile Include="DAL\RegistrationsDAL.cs" />
+    <Compile Include="DAL\TechnicianDAL.cs" />
     <Compile Include="DAL\TechSupportDBConnection.cs" />
     <Compile Include="Model\Incident.cs" />
     <Compile Include="UserControls\AddIncidentUserControl.cs">
@@ -87,6 +87,7 @@
     <Compile Include="UserControls\UpdateIncidentUserControl.Designer.cs">
       <DependentUpon>UpdateIncidentUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Validators\TechnicianValidator.cs" />
     <Compile Include="View\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +129,7 @@
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\TechSupport.Model.Incident.datasource" />
     <None Include="Properties\DataSources\TechSupport.Model.Technician.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

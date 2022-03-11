@@ -9,7 +9,7 @@ namespace TechSupport.DAL
     /// This class serves as the Data Access Layer
     /// for the TechSupport DB Customers table.
     /// </summary>
-    public class CustomerDBDAL
+    public class CustomerDAL
     {
         /// <summary>
         /// Retrieves customer names from TechSupport db.
@@ -46,7 +46,7 @@ namespace TechSupport.DAL
         /// <returns>Customer name assigned to ID</returns>
         public string GetCustomerByID(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.CustomerID < 1)
             {
                 throw new ArgumentException("CustomerID cannot be less than 1");
@@ -75,7 +75,7 @@ namespace TechSupport.DAL
         /// <returns>CustomerID</returns>
         public int GetCustomerIDByName(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Cannot use null or empty customer name");

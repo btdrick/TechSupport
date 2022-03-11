@@ -51,6 +51,8 @@ namespace TechSupport.UserControls
             Technician technician = this.technicians[this.nameComboBox.SelectedIndex];
             technicianBindingSource.Clear();
             technicianBindingSource.Add(technician);
+            incidentBindingSource.Clear();
+            incidentBindingSource.DataSource = this.technicianController.GetOpenIncidentsAssignedToTechnician(technician);
         }
     }
 }

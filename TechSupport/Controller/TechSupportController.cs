@@ -10,20 +10,20 @@ namespace TechSupport.Controller
     /// </summary>
     public class TechSupportController
     {
-        private readonly IncidentDBDAL incidentDBSource;
-        private readonly CustomerDBDAL customerDBSource;        
-        private readonly ProductDBDAL productDBSource;
-        private readonly RegistrationsDBDAL registrationDBSource;
+        private readonly IncidentDAL incidentDBSource;
+        private readonly CustomerDAL customerDBSource;        
+        private readonly ProductDAL productDBSource;
+        private readonly RegistrationsDAL registrationDBSource;
 
         /// <summary>
         /// 0-param constructor.
         /// </summary>
         public TechSupportController()
         {
-            this.incidentDBSource = new IncidentDBDAL();
-            this.customerDBSource = new CustomerDBDAL();
-            this.productDBSource = new ProductDBDAL();
-            this.registrationDBSource = new RegistrationsDBDAL();
+            this.incidentDBSource = new IncidentDAL();
+            this.customerDBSource = new CustomerDAL();
+            this.productDBSource = new ProductDAL();
+            this.registrationDBSource = new RegistrationsDAL();
         }        
 
         //***TECHSUPPORT DB INCIDENT FUNCTIONS***
@@ -34,7 +34,7 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void AddOpenIncident(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             this.incidentDBSource.AddOpenIncident(incident);
         }
 
@@ -45,7 +45,7 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public bool IsIncidentClosed(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             return this.incidentDBSource.IsIncidentClosed(incident);
         }
 
@@ -55,8 +55,8 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void CloseIncident(Incident oldIncident, Incident newIncident)
         {
-            DBDALValidator.ValidateIncidentExists(oldIncident);
-            DBDALValidator.ValidateIncidentExists(newIncident);
+            IncidentValidator.ValidateIncidentExists(oldIncident);
+            IncidentValidator.ValidateIncidentExists(newIncident);
             this.incidentDBSource.CloseOpenIncident(oldIncident, newIncident);
         }
 
@@ -67,8 +67,8 @@ namespace TechSupport.Controller
         /// <param name="incident"></param>
         public void UpdateIncident(Incident oldIncident, Incident newIncident)
         {
-            DBDALValidator.ValidateIncidentExists(oldIncident);
-            DBDALValidator.ValidateIncidentExists(newIncident);
+            IncidentValidator.ValidateIncidentExists(oldIncident);
+            IncidentValidator.ValidateIncidentExists(newIncident);
             this.incidentDBSource.UpdateIncident(oldIncident, newIncident);
         }
 
@@ -89,7 +89,7 @@ namespace TechSupport.Controller
         /// <returns></returns>
         public Incident GetIncidentByID(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             return this.incidentDBSource.GetIncidentByID(incident);
         }
 
@@ -126,7 +126,7 @@ namespace TechSupport.Controller
         /// <returns>True if registration exists</returns>
         public bool ProductIsRegisteredToCustomer(Incident incident)
         {
-            DBDALValidator.ValidateIncidentNotNull(incident);
+            IncidentValidator.ValidateIncidentNotNull(incident);
             if (incident.Customer == null || incident.Customer == "")
             {
                 throw new ArgumentException("Customer name cannot be null or empty");
