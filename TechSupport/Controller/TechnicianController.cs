@@ -16,12 +16,13 @@ namespace TechSupport.Controller
         }
 
         /// <summary>
-        /// Gets a list of all Technicians from TechSupport db source.
+        /// Gets a list of all Technicians from TechSupport db source
+        /// who have been assigned an incident in the past.
         /// </summary>
         /// <returns></returns>
-        public List<Technician> GetAllTechnicians()
+        public List<Technician> GetAllTechniciansWithIncidentHistory()
         {
-            return TechnicianDAL.GetAllTechnicians();
+            return TechnicianDAL.GetAllTechniciansWithIncidentHistory();
         }
 
         /// <summary>

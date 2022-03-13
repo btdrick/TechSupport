@@ -18,11 +18,12 @@ namespace TechSupport.DAL
         /// from Technicians table.
         /// </summary>
         /// <returns></returns>
-        public static List<Technician> GetAllTechnicians()
+        public static List<Technician> GetAllTechniciansWithIncidentHistory()
         {
             List<Technician> technicians = new List<Technician>();
-            string selectStatement = "SELECT TechID, Name, Email, Phone " +
-                                        "FROM Technicians";
+            string selectStatement = "SELECT DISTINCT t.TechID, t.Name, t.Email, t.Phone " +
+                                        "FROM Technicians t " +
+                                        "JOIN Incidents i ON i.TechID = t.TechID";
 
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {

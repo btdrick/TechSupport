@@ -32,7 +32,7 @@ namespace TechSupport.UserControls
         /// <param name="e"></param>
         private void ViewIncidentsByTechnicianUserControlLoad(object sender, System.EventArgs e)
         {
-            this.technicians = technicianController.GetAllTechnicians();
+            this.technicians = technicianController.GetAllTechniciansWithIncidentHistory();
             this.nameComboBox.DataSource = technicians;
         }
 
