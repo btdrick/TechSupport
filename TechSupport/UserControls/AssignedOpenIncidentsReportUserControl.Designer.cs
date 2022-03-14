@@ -29,34 +29,75 @@ namespace TechSupport.UserControls
         /// </summary>
         private void InitializeComponent()
         {
-            this.reportTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.components = new System.ComponentModel.Container();
+            this.assignedOpenIncidentsReportTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.assignedOpenIncidentsReportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.openAssignedIncidentsTableAdapter = new TechSupport.TechSupportDataSetTableAdapters.OpenAssignedIncidentsTableAdapter();
+            this.techSupportDataSet = new TechSupport.TechSupportDataSet();
+            this.openAssignedIncidentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.assignedOpenIncidentsReportTableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.techSupportDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.openAssignedIncidentsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // reportTableLayoutPanel
+            // assignedOpenIncidentsReportTableLayoutPanel
             // 
-            this.reportTableLayoutPanel.ColumnCount = 1;
-            this.reportTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.reportTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reportTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
-            this.reportTableLayoutPanel.Name = "reportTableLayoutPanel";
-            this.reportTableLayoutPanel.RowCount = 1;
-            this.reportTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.reportTableLayoutPanel.Size = new System.Drawing.Size(650, 450);
-            this.reportTableLayoutPanel.TabIndex = 0;
+            this.assignedOpenIncidentsReportTableLayoutPanel.ColumnCount = 1;
+            this.assignedOpenIncidentsReportTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.assignedOpenIncidentsReportTableLayoutPanel.Controls.Add(this.assignedOpenIncidentsReportViewer, 0, 0);
+            this.assignedOpenIncidentsReportTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.assignedOpenIncidentsReportTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
+            this.assignedOpenIncidentsReportTableLayoutPanel.Name = "assignedOpenIncidentsReportTableLayoutPanel";
+            this.assignedOpenIncidentsReportTableLayoutPanel.RowCount = 1;
+            this.assignedOpenIncidentsReportTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.assignedOpenIncidentsReportTableLayoutPanel.Size = new System.Drawing.Size(650, 450);
+            this.assignedOpenIncidentsReportTableLayoutPanel.TabIndex = 0;
+            // 
+            // assignedOpenIncidentsReportViewer
+            // 
+            this.assignedOpenIncidentsReportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.assignedOpenIncidentsReportViewer.LocalReport.ReportEmbeddedResource = "TechSupport.Reports.AssignedOpenIncidentsReport.rdlc";
+            this.assignedOpenIncidentsReportViewer.Location = new System.Drawing.Point(3, 3);
+            this.assignedOpenIncidentsReportViewer.Name = "assignedOpenIncidentsReportViewer";
+            this.assignedOpenIncidentsReportViewer.ServerReport.BearerToken = null;
+            this.assignedOpenIncidentsReportViewer.Size = new System.Drawing.Size(644, 444);
+            this.assignedOpenIncidentsReportViewer.TabIndex = 0;
+            this.assignedOpenIncidentsReportViewer.Load += new System.EventHandler(this.AssignedOpenIncidentsReportViewerLoad);
+            // 
+            // openAssignedIncidentsTableAdapter
+            // 
+            this.openAssignedIncidentsTableAdapter.ClearBeforeFill = true;
+            // 
+            // techSupportDataSet
+            // 
+            this.techSupportDataSet.DataSetName = "TechSupportDataSet";
+            this.techSupportDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // openAssignedIncidentsBindingSource
+            // 
+            this.openAssignedIncidentsBindingSource.DataSource = this.techSupportDataSet;
+            this.openAssignedIncidentsBindingSource.Position = 0;
             // 
             // AssignedOpenIncidentsReportUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.reportTableLayoutPanel);
+            this.Controls.Add(this.assignedOpenIncidentsReportTableLayoutPanel);
             this.Name = "AssignedOpenIncidentsReportUserControl";
             this.Size = new System.Drawing.Size(650, 450);
+            this.assignedOpenIncidentsReportTableLayoutPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.techSupportDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.openAssignedIncidentsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel reportTableLayoutPanel;
+        private System.Windows.Forms.TableLayoutPanel assignedOpenIncidentsReportTableLayoutPanel;
+        private Microsoft.Reporting.WinForms.ReportViewer assignedOpenIncidentsReportViewer;
+        private TechSupportDataSetTableAdapters.OpenAssignedIncidentsTableAdapter openAssignedIncidentsTableAdapter;
+        private TechSupportDataSet techSupportDataSet;
+        private System.Windows.Forms.BindingSource openAssignedIncidentsBindingSource;
     }
 }
