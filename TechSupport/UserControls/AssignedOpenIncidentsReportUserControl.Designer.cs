@@ -30,14 +30,15 @@ namespace TechSupport.UserControls
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             this.assignedOpenIncidentsReportTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.assignedOpenIncidentsReportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.openAssignedIncidentsTableAdapter = new TechSupport.TechSupportDataSetTableAdapters.OpenAssignedIncidentsTableAdapter();
             this.techSupportDataSet = new TechSupport.TechSupportDataSet();
-            this.openAssignedIncidentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.assignedOpenIncidentsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.assignedOpenIncidentsTableAdapter = new TechSupport.TechSupportDataSetTableAdapters.AssignedOpenIncidentsTableAdapter();
             this.assignedOpenIncidentsReportTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.techSupportDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.openAssignedIncidentsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.assignedOpenIncidentsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // assignedOpenIncidentsReportTableLayoutPanel
@@ -56,27 +57,29 @@ namespace TechSupport.UserControls
             // assignedOpenIncidentsReportViewer
             // 
             this.assignedOpenIncidentsReportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            reportDataSource1.Name = "AssignedOpenIncidentsDataSet";
+            reportDataSource1.Value = this.assignedOpenIncidentsBindingSource;
+            this.assignedOpenIncidentsReportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.assignedOpenIncidentsReportViewer.LocalReport.ReportEmbeddedResource = "TechSupport.Reports.AssignedOpenIncidentsReport.rdlc";
             this.assignedOpenIncidentsReportViewer.Location = new System.Drawing.Point(3, 3);
             this.assignedOpenIncidentsReportViewer.Name = "assignedOpenIncidentsReportViewer";
             this.assignedOpenIncidentsReportViewer.ServerReport.BearerToken = null;
             this.assignedOpenIncidentsReportViewer.Size = new System.Drawing.Size(644, 444);
             this.assignedOpenIncidentsReportViewer.TabIndex = 0;
-            this.assignedOpenIncidentsReportViewer.Load += new System.EventHandler(this.AssignedOpenIncidentsReportViewerLoad);
-            // 
-            // openAssignedIncidentsTableAdapter
-            // 
-            this.openAssignedIncidentsTableAdapter.ClearBeforeFill = true;
             // 
             // techSupportDataSet
             // 
             this.techSupportDataSet.DataSetName = "TechSupportDataSet";
             this.techSupportDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
-            // openAssignedIncidentsBindingSource
+            // assignedOpenIncidentsBindingSource
             // 
-            this.openAssignedIncidentsBindingSource.DataSource = this.techSupportDataSet;
-            this.openAssignedIncidentsBindingSource.Position = 0;
+            this.assignedOpenIncidentsBindingSource.DataMember = "AssignedOpenIncidents";
+            this.assignedOpenIncidentsBindingSource.DataSource = this.techSupportDataSet;
+            // 
+            // assignedOpenIncidentsTableAdapter
+            // 
+            this.assignedOpenIncidentsTableAdapter.ClearBeforeFill = true;
             // 
             // AssignedOpenIncidentsReportUserControl
             // 
@@ -85,9 +88,10 @@ namespace TechSupport.UserControls
             this.Controls.Add(this.assignedOpenIncidentsReportTableLayoutPanel);
             this.Name = "AssignedOpenIncidentsReportUserControl";
             this.Size = new System.Drawing.Size(650, 450);
+            this.Load += new System.EventHandler(this.AssignedOpenIncidentsReportUserControlLoad);
             this.assignedOpenIncidentsReportTableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.techSupportDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.openAssignedIncidentsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.assignedOpenIncidentsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -96,8 +100,8 @@ namespace TechSupport.UserControls
 
         private System.Windows.Forms.TableLayoutPanel assignedOpenIncidentsReportTableLayoutPanel;
         private Microsoft.Reporting.WinForms.ReportViewer assignedOpenIncidentsReportViewer;
-        private TechSupportDataSetTableAdapters.OpenAssignedIncidentsTableAdapter openAssignedIncidentsTableAdapter;
         private TechSupportDataSet techSupportDataSet;
-        private System.Windows.Forms.BindingSource openAssignedIncidentsBindingSource;
+        private System.Windows.Forms.BindingSource assignedOpenIncidentsBindingSource;
+        private TechSupportDataSetTableAdapters.AssignedOpenIncidentsTableAdapter assignedOpenIncidentsTableAdapter;
     }
 }

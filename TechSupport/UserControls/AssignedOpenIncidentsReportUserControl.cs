@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace TechSupport.UserControls
 {
@@ -15,10 +14,15 @@ namespace TechSupport.UserControls
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AssignedOpenIncidentsReportViewerLoad(object sender, System.EventArgs e)
+        private void AssignedOpenIncidentsReportUserControlLoad(object sender, System.EventArgs e)
         {
-            this.openAssignedIncidentsTableAdapter.Fill(this.techSupportDataSet.OpenAssignedIncidents);
-            this.assignedOpenIncidentsReportViewer.Refresh();
+            this.RefreshReportData();   
+        }
+
+        public void RefreshReportData()
+        {
+            this.assignedOpenIncidentsTableAdapter.Fill(this.techSupportDataSet.AssignedOpenIncidents);
+            this.assignedOpenIncidentsReportViewer.RefreshReport();
         }
     }
 }

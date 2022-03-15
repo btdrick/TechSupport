@@ -56,6 +56,11 @@ namespace TechSupport.View
                     break;
                 case 2:
                     break;
+                case 3:
+                    break;
+                case 4:
+                    this.assignedOpenIncidentsReportUserControl.RefreshReportData();
+                    break;
                 default:
                     break;
             }
