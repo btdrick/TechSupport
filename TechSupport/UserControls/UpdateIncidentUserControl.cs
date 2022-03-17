@@ -16,6 +16,7 @@ namespace TechSupport.UserControls
     {
         private readonly IncidentController incidentController;
         private readonly TechnicianController technicianController;
+        private Incident oldIncident;
 
         /// <summary>
         /// Initialize the control.
@@ -37,8 +38,8 @@ namespace TechSupport.UserControls
             try
             {
                 this.updateIncidentStatusLabel.Text = "";                
-                Incident incident = this.GetIncidentWithIDField();
-                this.SetFields(incident);              
+                this.oldIncident = this.GetIncidentWithIDField();
+                this.SetFields(this.oldIncident);              
             }
             catch (FormatException)
             {
@@ -61,7 +62,6 @@ namespace TechSupport.UserControls
         {
             try
             {
-                Incident oldIncident = this.GetIncidentWithIDField();
                 Incident newIncident = this.GetIncidentWithIDField();
                 this.UpdateTechnicianWithTechnicianComboBox(newIncident);
                 this.ValidateChangedFields(newIncident);                                  
@@ -88,7 +88,7 @@ namespace TechSupport.UserControls
                 
                 if (this.ConfirmUpdateIncident(newIncident) == DialogResult.OK)
                 {
-                    this.FinalizeUpdateIncident(oldIncident, newIncident);                   
+                    this.FinalizeUpdateIncident(this.oldIncident, newIncident);                   
                 }
             }
             catch (ArgumentException)
@@ -110,14 +110,13 @@ namespace TechSupport.UserControls
         {
             try
             {
-                Incident oldIncident = this.GetIncidentWithIDField();
                 Incident newIncident = this.GetIncidentWithIDField();
                 this.ValidateIncidentCanBeClosed(newIncident);
                 newIncident.DateClosed = DateTime.Now;
                 if (this.ConfirmUpdateIncident(newIncident) == DialogResult.OK)
                 {
-                    this.incidentController.UpdateIncident(oldIncident, newIncident);
-                    this.incidentController.CloseIncident(oldIncident, newIncident);
+                    this.incidentController.UpdateIncident(this.oldIncident, newIncident);
+                    this.incidentController.CloseIncident(this.oldIncident, newIncident);
                     newIncident = this.incidentController.GetIncidentByID(newIncident);
                     this.SetFields(newIncident);
                     this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been closed", false);
@@ -431,7 +430,7 @@ namespace TechSupport.UserControls
             this.ValidateIncident(incident);
             var selectedTechnician = this.technicianComboBox.SelectedValue.ToString();
             var addedText = this.textToAddTextBox.Text;
-            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician != selectedTechnician)
+            if (((incident.Technician == null && selectedTechnician == "** Unassigned **") || incident.Technician == selectedTechnician)
                 && addedText == "")
             {
                 throw new ArgumentException("Cannot update an incident with no changes made");

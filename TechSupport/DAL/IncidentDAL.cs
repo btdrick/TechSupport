@@ -145,10 +145,12 @@ namespace TechSupport.DAL
             IncidentValidator.ValidateIncidentExists(oldIncident);
             IncidentValidator.ValidateIncidentExists(newIncident);
             string updateStatement = "UPDATE Incidents " +
-                                     "SET TechID = @techid, \"Description\" = replace(@newDescription, '\n', char(13)+char(10)) " +
-                                     "WHERE IncidentID = @oldIncidentid " + 
-                                     "AND DateClosed IS NULL " +
-                                     "AND \"Description\" = @oldDescription";
+                                     "SET TechID = @NewTechID, Description = replace(@NewDescription, '\n', char(13)+char(10)) " +
+                                     "WHERE IncidentID = @OldIncidentID " +
+                                     "AND (TechID = @OldTechID " +
+                                     "OR TechID IS NULL AND @OldTechID IS NULL)" +
+                                     "AND (DateClosed IS NULL AND @OldDateClosed IS NULL)" +
+                                     "AND Description = @OldDescription";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();
@@ -156,16 +158,35 @@ namespace TechSupport.DAL
                 {
                     if (newIncident.Technician == null)
                     {
-                        selectCommand.Parameters.AddWithValue("techid", DBNull.Value);
+                        selectCommand.Parameters.AddWithValue("NewTechID", DBNull.Value);
                     }
                     else
                     {
-                        selectCommand.Parameters.AddWithValue("techid", GetTechnicianIDByTechnicianName(newIncident));
+                        selectCommand.Parameters.AddWithValue("NewTechID", GetTechnicianIDByTechnicianName(newIncident));
                     }
-                    selectCommand.Parameters.AddWithValue("newDescription", newIncident.Description);
-                    selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID); 
-                    selectCommand.Parameters.AddWithValue("oldDescription", oldIncident.Description);
-                    selectCommand.ExecuteScalar();
+                    if (oldIncident.Technician == null)
+                    {
+                        selectCommand.Parameters.AddWithValue("OldTechID", DBNull.Value);
+                    }
+                    else
+                    {
+                        selectCommand.Parameters.AddWithValue("OldTechID", oldIncident.TechID);
+                    }
+                    if (!IsIncidentClosed(oldIncident))
+                    {
+                        selectCommand.Parameters.AddWithValue("OldDateClosed", DBNull.Value);
+                    }
+                    else
+                    {
+                        selectCommand.Parameters.AddWithValue("OldDateClosed", oldIncident.DateClosed);
+                    }
+                    selectCommand.Parameters.AddWithValue("NewDescription", newIncident.Description);
+                    selectCommand.Parameters.AddWithValue("OldIncidentID", oldIncident.IncidentID);
+                    selectCommand.Parameters.AddWithValue("OldDescription", oldIncident.Description);
+                    if (selectCommand.ExecuteNonQuery() == 0)
+                    {
+                        throw new Exception("Incident has been updated before form submission by another user");
+                    }
                 }
             }
         }
@@ -191,19 +212,35 @@ namespace TechSupport.DAL
             IncidentValidator.ValidateIncidentExists(oldIncident);
             IncidentValidator.ValidateIncidentExists(newIncident);
             string updateStatement = "UPDATE Incidents " +
-                                     "SET DateClosed = @today " +
-                                     "WHERE IncidentID = @oldIncidentid " +
-                                     "AND DateClosed IS NULL " +
-                                     "AND \"Description\" = @oldDescription";
+                                     "SET TechID = @NewTechID, DateClosed = @Today, Description = @NewDescription " +
+                                     "WHERE IncidentID = @OldIncidentID " +
+                                     "AND (TechID = @OldTechID " +
+                                     "OR TechID IS NULL AND @OldTechID IS NULL) " +
+                                     "AND (DateClosed IS NULL AND @OldDateClosed IS NULL)" +
+                                     "AND Description = @OldDescription";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();
                 using (SqlCommand selectCommand = new SqlCommand(updateStatement, connection))
-                {                   
-                    selectCommand.Parameters.AddWithValue("today", newIncident.DateClosed);
-                    selectCommand.Parameters.AddWithValue("oldIncidentid", oldIncident.IncidentID);
-                    selectCommand.Parameters.AddWithValue("oldDescription", oldIncident.Description);
-                    selectCommand.ExecuteScalar();
+                {
+                    if (!IsIncidentClosed(oldIncident))
+                    {
+                        selectCommand.Parameters.AddWithValue("OldDateClosed", DBNull.Value);
+                    }
+                    else
+                    {
+                        selectCommand.Parameters.AddWithValue("OldDateClosed", oldIncident.DateClosed);
+                    }
+                    selectCommand.Parameters.AddWithValue("NewTechID", newIncident.TechID);
+                    selectCommand.Parameters.AddWithValue("Today", newIncident.DateClosed);
+                    selectCommand.Parameters.AddWithValue("NewDescription", newIncident.Description);
+                    selectCommand.Parameters.AddWithValue("OldIncidentID", oldIncident.IncidentID);
+                    selectCommand.Parameters.AddWithValue("OldTechID", oldIncident.TechID);
+                    selectCommand.Parameters.AddWithValue("OldDescription", oldIncident.Description);
+                    if (selectCommand.ExecuteNonQuery() == 0)
+                    {
+                        throw new Exception("Incident has been updated before form submission by another user");
+                    }
                 }
             }
         }
