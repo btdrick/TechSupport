@@ -217,7 +217,7 @@ namespace TechSupport.DAL
                                      "AND (TechID = @OldTechID " +
                                      "OR TechID IS NULL AND @OldTechID IS NULL) " +
                                      "AND (DateClosed IS NULL AND @OldDateClosed IS NULL)" +
-                                     "AND Description = @OldDescription";
+                                     "AND Description = replace(@OldDescription, '\n', char(13)+char(10))";
             using (SqlConnection connection = TechSupportDBConnection.GetConnection())
             {
                 connection.Open();

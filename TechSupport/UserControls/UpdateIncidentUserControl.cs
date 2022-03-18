@@ -63,8 +63,8 @@ namespace TechSupport.UserControls
             try
             {
                 Incident newIncident = this.GetIncidentWithIDField();
-                this.UpdateTechnicianWithTechnicianComboBox(newIncident);
-                this.ValidateChangedFields(newIncident);                                  
+                this.ValidateChangedFields(newIncident);
+                this.UpdateTechnicianWithTechnicianComboBox(newIncident);                                               
                
                 if (this.textToAddTextBox.Text != "")
                 {
@@ -88,7 +88,8 @@ namespace TechSupport.UserControls
                 
                 if (this.ConfirmUpdateIncident(newIncident) == DialogResult.OK)
                 {
-                    this.FinalizeUpdateIncident(this.oldIncident, newIncident);                   
+                    this.FinalizeUpdateIncident(this.oldIncident, newIncident);
+                    this.oldIncident = this.incidentController.GetIncidentByID(this.oldIncident);
                 }
             }
             catch (ArgumentException)
@@ -119,6 +120,7 @@ namespace TechSupport.UserControls
                     this.incidentController.CloseIncident(this.oldIncident, newIncident);
                     newIncident = this.incidentController.GetIncidentByID(newIncident);
                     this.SetFields(newIncident);
+                    this.oldIncident = this.incidentController.GetIncidentByID(this.oldIncident);
                     this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been closed", false);
                 }
             }
@@ -342,7 +344,7 @@ namespace TechSupport.UserControls
             this.incidentController.UpdateIncident(oldIncident, newIncident);
             newIncident = this.incidentController.GetIncidentByID(newIncident);
             this.SetFields(newIncident);
-            this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been updated.", false);          
+            this.UpdateIncidentStatusLabel("Incident with ID of " + newIncident.IncidentID + " has been updated.", false);
         }
 
         /// <summary>
